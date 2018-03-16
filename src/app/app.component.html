@@ -1,44 +1,17 @@
-<div style="height: 100vh;">
+<div class="container" [class.is-mobile]="mobileQuery.matches">
 
-  <mat-toolbar color="primary">
-    <div fxShow="true" fx.gt-sm="true">
-      <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
-     </div>
-    <h1 class="app-name">SGP</h1>
-         <span class="spacer"></span>
-    <app-search-bar></app-search-bar>
-      </mat-toolbar>
+  <app-header [idsidenav]="sidenav">
+  </app-header>
 
-  <mat-sidenav-container fxFlexFill class="example-container">
-
-    <mat-sidenav #sidenav fxLayout="column">
-
-
-
-      <div fxLayout="column">
-
-        <div *ngFor="let menu of menus">
-
-        </div>
-        <a href="#" mat-button>Menu Item 1</a>
-
-        <a href="#" mat-button>Menu Item 2</a>
-
-        <a href="#" mat-button>Menu Item 3</a>
-
-        <a href="#" mat-button>Menu Item 4</a>
-
-        <a href="#" mat-button>Menu Item 5</a>
-
-        <a href="#" mat-button>Menu Item 6</a>
-
-      </div>
-
+  <mat-sidenav-container class="sidenav-container"
+                         [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+    <mat-sidenav #sidenav [mode]="'side'"
+                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <app-menus></app-menus>
     </mat-sidenav>
 
-    <mat-sidenav-content fxFlexFill>
+   <mat-sidenav-content class="layout-content">
       <router-outlet></router-outlet>
-      </mat-sidenav-content>
+    </mat-sidenav-content>
   </mat-sidenav-container>
-
 </div>

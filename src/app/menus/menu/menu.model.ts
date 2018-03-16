@@ -1,4 +1,8 @@
 export interface Menu {
-  nome: string;
-  url: string;
+  menuId: number;
+  menuNome: string;
+  menuDescricao: string;
+  menuUrl: string;
+  menuSequencia: string;
+  menuPaiId?: number;
 }

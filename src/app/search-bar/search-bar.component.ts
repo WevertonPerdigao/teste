@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-search-bar',
@@ -7,12 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchBarComponent implements OnInit {
 
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
-  pesquisar(campoPesquisa: string ): void {
+  pesquisar(campoPesquisa: string): void {
     console.log('valor campo' + campoPesquisa);
   }
 
