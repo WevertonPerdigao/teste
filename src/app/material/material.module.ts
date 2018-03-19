@@ -1,15 +1,35 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {LayoutModule} from '@angular/cdk/layout';
 import {
   MatToolbarModule,
-  MatIconModule, MatButtonModule, MatMenuModule, MatCardModule, MatSidenavModule, MatListModule, MatTabsModule, MatInputModule
+  MatIconModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatCardModule,
+  MatSidenavModule,
+  MatListModule,
+  MatTabsModule,
+  MatInputModule,
+  MatGridListModule
 } from '@angular/material';
-import {LayoutModule} from '@angular/cdk/layout';
+
 
 @NgModule({
   imports: [CommonModule, LayoutModule],
   exports: [
-    MatToolbarModule, MatIconModule, MatButtonModule, MatMenuModule, MatCardModule, MatSidenavModule, MatListModule, MatTabsModule, MatInputModule
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatListModule,
+    MatTabsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule {

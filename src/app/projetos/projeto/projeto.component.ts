@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Projeto} from './projeto.model';
+import {Situacao} from '../../situacao/situacao.model';
+import {SituacaoService} from '../../situacao/situacao.service';
 
 @Component({
   selector: 'app-projeto',
@@ -8,12 +10,16 @@ import {Projeto} from './projeto.model';
 })
 export class ProjetoComponent implements OnInit {
 
-
   @Input() projeto: Projeto;
+  situacao: Situacao;
 
-  constructor() { }
+  constructor(private situacaoService: SituacaoService) {
+  }
 
   ngOnInit() {
   }
 
+  totalOrcamento(projId: number): number {
+    return 1000;
+  }
 }

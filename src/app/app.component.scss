@@ -8,11 +8,10 @@
   background-color: #E8F5E9;
 }
 
-.layout-content{
-  background-color: white;
+.layout-content {
+  background-color: #FAFAFA;
   color: #000;
 }
-
 
 .container {
   display: flex;
@@ -22,6 +21,7 @@
   bottom: 0;
   left: 0;
   right: 0;
+
 }
 
 .is-mobile .toolbar {

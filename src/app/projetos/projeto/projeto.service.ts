@@ -11,8 +11,13 @@ export class ProjetoService {
   }
 
   listProjetosByUserId(userId: number) {
-    return this.http.get(`${GPITBAM_API}/Projetos${userId}`);
+    return this.http.get(`${GPITBAM_API}/Projetos/${userId}`);
   }
+
+  listProjetos() {
+    return this.http.get(`${GPITBAM_API}/Projetos`);
+  }
+
 
 
 }

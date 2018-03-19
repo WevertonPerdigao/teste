@@ -1,1 +1,7 @@
-<app-projeto *ngFor="let projeto of projetos" [projeto]="projeto"></app-projeto>
+<div fxLayout="row"
+     fxLayout.xs="column"
+     fxFlexFill class="content">
+
+  <app-projeto class="projeto" *ngFor="let projeto of projetos" [projeto]="projeto"></app-projeto>
+</div>
+

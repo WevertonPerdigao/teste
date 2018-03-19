@@ -1,19 +1,29 @@
-<mat-card class="card">
+<mat-card class="left">
   <mat-card-header>
-
-    <mat-card-title></mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <mat-card-title> Em Andamento</mat-card-title>
+    <mat-card-subtitle>{{projeto.projNome}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+
   <mat-card-content>
-    <p>
-      The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-      bred for hunting.
-    </p>
+    <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
+    <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
+    <p>Cronograma</p>
+
+    <p>Custo</p>
+
+
   </mat-card-content>
-  <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions>
+  <mat-card-footer class="left">
+    <div class="dispendio">
+      <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
+      <p style="font-size: 20px;margin-top: 0px;">{{totalOrcamento(projeto.projId) | currency: 'BRL': 'symbol' }}</p>
+    </div>
+    <div class="orcamento">
+      <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
+      <p style="font-size: 20px;margin-top: 0px;">{{projeto.projVerbaInicial | currency: 'BRL': 'symbol'}}</p>
+    </div>
+
+  </mat-card-footer>
 </mat-card>
+
+

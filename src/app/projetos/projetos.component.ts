@@ -18,7 +18,17 @@ export class ProjetosComponent implements OnInit {
 
   ngOnInit() {
     this.getPrimeiroUsuario();
-    this.getListProjetosByUsuario();
+    this.getListProjetos();
+  }
+
+  getListProjetos() {
+    this.projetoService.listProjetos().subscribe(
+      data => {
+        this.projetos = data;
+      },
+      err => console.error(err),
+      () => console.log('done loading getListProjetos')
+    );
   }
 
   getListProjetosByUsuario() {
@@ -27,7 +37,7 @@ export class ProjetosComponent implements OnInit {
         this.projetos = data;
       },
       err => console.error(err),
-      () => console.log('done loading project')
+      () => console.log('done loading listProjetosByUserId')
     );
   }
 
@@ -40,5 +50,6 @@ export class ProjetosComponent implements OnInit {
       () => console.log('done loading getPrimeiroUsuario')
     );
   }
+
 
 }
