@@ -7,13 +7,21 @@
   <mat-card-content>
     <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
     <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
-    <p>Cronograma</p>
+    <mat-divider></mat-divider>
+    <div class="custo">
+      <p>Cronograma</p>
+      <label>Alter Ego</label>
+      <label>Alter Ego</label>
+    </div>
 
-    <p>Custo</p>
+    <div class="custo">
+      <p>Custo</p>
+    </div>
 
 
   </mat-card-content>
   <mat-card-footer class="left">
+    <mat-divider></mat-divider>
     <div class="dispendio">
       <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
       <p style="font-size: 20px;margin-top: 0px;">{{totalOrcamento(projeto.projId) | currency: 'BRL': 'symbol' }}</p>
