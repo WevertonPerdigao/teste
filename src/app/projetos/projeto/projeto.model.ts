@@ -6,11 +6,11 @@ export interface Projeto {
   projDescricao: string;
   projUsuaId: number;
   projEmprId: number;
-  projPrevDataInicial: string;
-  projPrevDataFinal: string;
-  projDataInicial: string;
-  projDataFinal: string;
+  projPrevDataInicial: Date;
+  projPrevDataFinal: Date;
+  projDataInicial: Date;
+  projDataFinal: Date;
   projVerbaInicial: number;
-  proj_situ_id: Situacao;
+  proj_situ_id: number;
 }
 

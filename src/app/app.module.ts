@@ -35,6 +35,7 @@ import {SituacaoComponent} from './situacao/situacao.component';
 import {SituacaoService} from './situacao/situacao.service';
 import ptBr from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
+import { RangeSliderComponent } from './range-slider/range-slider.component';
 
 registerLocaleData(ptBr);
 
@@ -59,7 +60,8 @@ registerLocaleData(ptBr);
     UsuarioComponent,
     HeaderComponent,
     CardComponent,
-    SituacaoComponent
+    SituacaoComponent,
+    RangeSliderComponent
   ],
   imports: [
     CommonModule,

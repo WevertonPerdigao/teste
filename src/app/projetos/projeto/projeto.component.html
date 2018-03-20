@@ -8,14 +8,17 @@
     <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
     <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
     <mat-divider></mat-divider>
-    <div class="custo">
+    <div class="cronograma">
       <p>Cronograma</p>
-      <label>Alter Ego</label>
-      <label>Alter Ego</label>
+      <app-range-slider [minParam]="0" [maxParam]="100"
+      [valueParam]="getCronogramaByProjeto()">
+
+      </app-range-slider>
     </div>
 
     <div class="custo">
       <p>Custo</p>
+      <app-range-slider ></app-range-slider>
     </div>
 
 
