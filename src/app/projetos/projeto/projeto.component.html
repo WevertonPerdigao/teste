@@ -1,6 +1,6 @@
 <mat-card class="left">
   <mat-card-header>
-    <mat-card-title> Em Andamento</mat-card-title>
+    <mat-card-title></mat-card-title>
     <mat-card-subtitle>{{projeto.projNome}}</mat-card-subtitle>
   </mat-card-header>
 
@@ -11,14 +11,14 @@
     <div class="cronograma">
       <p>Cronograma</p>
       <app-range-slider [minParam]="0" [maxParam]="100"
-      [valueParam]="getCronogramaByProjeto()">
+                        [valueParam]="getCronogramaByProjeto()">
 
       </app-range-slider>
     </div>
 
     <div class="custo">
       <p>Custo</p>
-      <app-range-slider ></app-range-slider>
+      <app-range-slider></app-range-slider>
     </div>
 
 
@@ -27,11 +27,11 @@
     <mat-divider></mat-divider>
     <div class="dispendio">
       <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
-      <p style="font-size: 20px;margin-top: 0px;">{{totalOrcamento(projeto.projId) | currency: 'BRL': 'symbol' }}</p>
+      <p style="font-size: 20px;margin-top: 0px;">{{totalOrcamento() | currency: 'BRL': 'symbol' }}</p>
     </div>
     <div class="orcamento">
       <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
-      <p style="font-size: 20px;margin-top: 0px;">{{projeto.projVerbaInicial | currency: 'BRL': 'symbol'}}</p>
+      <p style="font-size: 20px;margin-top: 0px;">{{projeto.projValor | currency: 'BRL': 'symbol'}}</p>
     </div>
 
   </mat-card-footer>
