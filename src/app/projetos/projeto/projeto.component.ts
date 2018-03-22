@@ -48,6 +48,6 @@ export class ProjetoComponent implements OnInit {
 
   goToProjectDetail() {
     console.log('teste click');
-    this.router.navigate(['/projeto-detail']);
+    this.router.navigate([`/projeto-detail/${this.projeto.projId}`]);
   }
 }
