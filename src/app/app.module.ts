@@ -14,7 +14,6 @@ import {FooterComponent} from './footer/footer.component';
 import {MenuComponent} from './menus/menu/menu.component';
 import {MenusComponent} from './menus/menus.component';
 import {ROUTES} from './app.routes';
-import {TabComponent} from './tab/tab.component';
 import {AtividadesComponent} from './atividades/atividades.component';
 import {OrcamentoComponent} from './orcamento/orcamento.component';
 import {CronogramaComponent} from './cronograma/cronograma.component';
@@ -28,15 +27,21 @@ import {UsuarioComponent} from './usuarios/usuario/usuario.component';
 import {MenuService} from './menus/menu/menu.service';
 import {HttpClientModule} from '@angular/common/http';
 import {HeaderComponent} from './header/header.component';
-import {CardComponent} from './card/card.component';
 import {UsuarioService} from './usuarios/usuario/usuario.service';
 import {ProjetoService} from './projetos/projeto/projeto.service';
 import {SituacaoComponent} from './situacao/situacao.component';
 import {SituacaoService} from './situacao/situacao.service';
 import ptBr from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
-import { RangeSliderComponent } from './range-slider/range-slider.component';
-import { ProjetoDispendioComponent } from './projeto-dispendio/projeto-dispendio.component';
+import {RangeSliderComponent} from './range-slider/range-slider.component';
+import {ProjetoDispendioComponent} from './projeto-dispendio/projeto-dispendio.component';
+import {VwprojetovalorService} from './projeto-valor/vwprojetovalor.service';
+import {ProjetoDetailComponent} from './projeto-detail/projeto-detail.component';
+import {ProjetoCronogramaComponent} from './projeto-detail/projeto-cronograma/projeto-cronograma.component';
+import {ProjetoOrcamentoComponent} from './projeto-detail/projeto-orcamento/projeto-orcamento.component';
+import {ProjetoEquipeComponent} from './projeto-detail/projeto-equipe/projeto-equipe.component';
+import {ProjetoAtividadesComponent} from './projeto-detail/projeto-atividades/projeto-atividades.component';
+import {ProjetoRelatoriosComponent} from './projeto-detail/projeto-relatorios/projeto-relatorios.component';
 
 registerLocaleData(ptBr);
 
@@ -48,7 +53,6 @@ registerLocaleData(ptBr);
     FooterComponent,
     MenuComponent,
     SearchBarComponent,
-    TabComponent,
     AtividadesComponent,
     OrcamentoComponent,
     CronogramaComponent,
@@ -60,10 +64,15 @@ registerLocaleData(ptBr);
     MenusComponent,
     UsuarioComponent,
     HeaderComponent,
-    CardComponent,
     SituacaoComponent,
     RangeSliderComponent,
-    ProjetoDispendioComponent
+    ProjetoDispendioComponent,
+    ProjetoDetailComponent,
+    ProjetoCronogramaComponent,
+    ProjetoOrcamentoComponent,
+    ProjetoEquipeComponent,
+    ProjetoAtividadesComponent,
+    ProjetoRelatoriosComponent
   ],
   imports: [
     CommonModule,
@@ -81,6 +90,7 @@ registerLocaleData(ptBr);
     ProjetoService,
     UsuarioService,
     SituacaoService,
+    VwprojetovalorService
   ],
   bootstrap: [AppComponent]
 })

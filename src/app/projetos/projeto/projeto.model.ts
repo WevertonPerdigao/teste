@@ -1,4 +1,4 @@
-import {Situacao} from '../../situacao/situacao.model';
+import {Vwprojetovalor} from '../../projeto-valor/vwprojetovalor.model';
 
 export interface Projeto {
   projId: number;
@@ -10,5 +10,6 @@ export interface Projeto {
   projDataFinal: Date;
   projValor: number;
   proj_situ_id: number;
-}
+  projetoValor?: Vwprojetovalor;
+ }
 

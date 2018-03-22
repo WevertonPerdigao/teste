@@ -1,7 +1,11 @@
 <div fxLayout="row"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0"
      fxLayout.xs="column"
-     fxFlexFill class="content">
+     fxLayoutAlign="left"
+     fxFlexFill class="container">
+    <app-projeto class="projeto" *ngFor="let projeto of projetos" [projeto]="projeto"
+    ></app-projeto>
 
-  <app-projeto class="projeto" *ngFor="let projeto of projetos" [projeto]="projeto"></app-projeto>
 </div>
 

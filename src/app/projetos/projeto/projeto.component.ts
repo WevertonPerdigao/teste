@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, DoCheck, OnInit} from '@angular/core';
 import {Projeto} from './projeto.model';
-import {Situacao} from '../../situacao/situacao.model';
 import {SituacaoService} from '../../situacao/situacao.service';
 import {Utils} from '../../utils/utils';
-import {Constants} from '../../utils/constants';
-import {Decimal} from 'decimal.js';
+import {Vwprojetovalor} from '../../projeto-valor/vwprojetovalor.model';
+import {VwprojetovalorService} from '../../projeto-valor/vwprojetovalor.service';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-projeto',
@@ -14,19 +15,17 @@ import {Decimal} from 'decimal.js';
 export class ProjetoComponent implements OnInit {
 
   @Input() projeto: Projeto;
-  situacao = 'tetse';
+  @Input() vwProjetoValor: Vwprojetovalor;
 
-  constructor(private situacaoService: SituacaoService) {
+
+  constructor(private situacaoService: SituacaoService,
+              private vwProjetoValorService: VwprojetovalorService,
+              private router: Router,) {
   }
 
   ngOnInit() {
   }
 
-
-  totalOrcamento(): number {
-    console.log('chamou');
-    return 1000;
-  }
 
   getCronogramaByProjeto(): number {
 
@@ -47,4 +46,8 @@ export class ProjetoComponent implements OnInit {
   }
 
 
+  goToProjectDetail() {
+    console.log('teste click');
+    this.router.navigate(['/projeto-detail']);
+  }
 }

@@ -1,40 +1,41 @@
-<mat-card class="left">
-  <mat-card-header>
-    <mat-card-title></mat-card-title>
-    <mat-card-subtitle>{{projeto.projNome}}</mat-card-subtitle>
-  </mat-card-header>
+<div fxFlex="15%">
+  <mat-card class="left" (click)="goToProjectDetail()" >
+    <mat-card-header>
+      <mat-card-title></mat-card-title>
+      <mat-card-subtitle>{{projeto.projNome}}</mat-card-subtitle>
+    </mat-card-header>
 
-  <mat-card-content>
-    <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
-    <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
-    <mat-divider></mat-divider>
-    <div class="cronograma">
-      <p>Cronograma</p>
-      <app-range-slider [minParam]="0" [maxParam]="100"
-                        [valueParam]="getCronogramaByProjeto()">
+    <mat-card-content>
+      <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
+      <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
+      <mat-divider></mat-divider>
+      <div class="cronograma">
+        <p>Cronograma</p>
+        <app-range-slider [minParam]="0" [maxParam]="100"
+                          [valueParam]="getCronogramaByProjeto()">
 
-      </app-range-slider>
-    </div>
+        </app-range-slider>
+      </div>
 
-    <div class="custo">
-      <p>Custo</p>
-      <app-range-slider></app-range-slider>
-    </div>
+      <div class="custo">
+        <p>Custo</p>
+        <app-range-slider [minParam]="0" [maxParam]="100"
+                          [valueParam]="getCronogramaByProjeto()"></app-range-slider>
+      </div>
 
 
-  </mat-card-content>
-  <mat-card-footer class="left">
-    <mat-divider></mat-divider>
-    <div class="dispendio">
-      <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
-      <p style="font-size: 20px;margin-top: 0px;">{{totalOrcamento() | currency: 'BRL': 'symbol' }}</p>
-    </div>
-    <div class="orcamento">
-      <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
-      <p style="font-size: 20px;margin-top: 0px;">{{projeto.projValor | currency: 'BRL': 'symbol'}}</p>
-    </div>
-
-  </mat-card-footer>
-</mat-card>
-
+    </mat-card-content>
+    <mat-card-footer class="left">
+      <mat-divider></mat-divider>
+      <div class="Total dispendio">
+        <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
+        <p style="font-size: 20px;margin-top: 0px;">{{2000 | currency: 'BRL': 'symbol' }}</p>
+      </div>
+      <div class="orcamento">
+        <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
+        <p style="font-size: 20px;margin-top: 0px;">{{1000 | currency: 'BRL': 'symbol'}}</p>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>
 

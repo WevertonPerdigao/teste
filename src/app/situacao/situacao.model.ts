@@ -1,4 +1,4 @@
-export class Situacao {
+export class SituacaoProjeto {
   situNome: string;
   situDescricao: string;
 
