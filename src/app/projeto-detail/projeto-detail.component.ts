@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ProjetoDetailComponent implements OnInit {
 
-  projeto: Projeto;
+  public projeto: Projeto = new Projeto();
 
   constructor(private projetoService: ProjetoService,
               private activatedRoute: ActivatedRoute) {

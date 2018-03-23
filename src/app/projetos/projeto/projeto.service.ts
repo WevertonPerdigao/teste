@@ -14,8 +14,8 @@ export class ProjetoService {
     return this.http.get(`${GPITBAM_API}/Projetos/${userId}`);
   }
 
-  listProjetos() {
-    return this.http.get(`${GPITBAM_API}/Projetos`);
+  listProjetos(): Observable<Projeto[]> {
+    return this.http.get<Projeto[]>(`${GPITBAM_API}/Projetos`);
   }
 
   findByProjId(projId: number): Observable<Projeto> {

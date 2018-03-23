@@ -14,7 +14,7 @@ import {Projeto} from './projeto/projeto.model';
 
 export class ProjetosComponent implements OnInit {
 
-  public projetos;
+  public projetos: Projeto[];
   public usuario;
 
   constructor(private projetoService: ProjetoService,
@@ -29,27 +29,13 @@ export class ProjetosComponent implements OnInit {
   }
 
   getListProjetos() {
-    let projes: any;
-    this.projetoService.listProjetos().subscribe(
-      data => {
-        this.projetos = data;
-        projes = data;
-      },
-      err => console.error(err),
-      () => console.log('done loading getListProjetos')
-    );
+    this.projetoService.listProjetos().subscribe(projetos => this.projetos = projetos);
 
-    console.log('proje' + projes);
   }
 
   getListProjetosByUsuario() {
-    this.projetoService.listProjetosByUserId(this.usuario.usuaId).subscribe(
-      data => {
-        this.projetos = data;
-      },
-      err => console.error(err),
-      () => console.log('done loading listProjetosByUserId')
-    );
+    this.projetoService.listProjetos().subscribe(projetos => this.projetos = projetos);
+
   }
 
   getPrimeiroUsuario() {

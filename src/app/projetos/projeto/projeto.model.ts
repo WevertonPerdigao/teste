@@ -1,6 +1,6 @@
 import {Vwprojetovalor} from '../../projeto-valor/vwprojetovalor.model';
 
-export interface Projeto {
+export class Projeto {
   projId: number;
   projNome: string;
   projDescricao: string;

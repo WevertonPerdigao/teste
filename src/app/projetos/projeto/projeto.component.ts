@@ -28,11 +28,8 @@ export class ProjetoComponent implements OnInit {
 
 
   getCronogramaByProjeto(): number {
-
     if (this.projeto.projDataInicial && this.projeto.projDataFinal) {
-
       return this.calcPercentCronograma(this.projeto.projDataInicial, this.projeto.projDataFinal);
-
     }
   }
 
@@ -42,12 +39,16 @@ export class ProjetoComponent implements OnInit {
 
     const qtdeDayAtualProj = Utils.getQtdDayByDtinicialAndDtFinal(dtinicio, new Date());
 
-    return Utils.getPercent(qtdeDayAtualProj, qtdeDiasTotalProj);
+    if (qtdeDayAtualProj > qtdeDiasTotalProj) {
+      return 100;
+    } else {
+      return Utils.getPercent(qtdeDayAtualProj, qtdeDiasTotalProj);
+    }
   }
 
 
   goToProjectDetail() {
     console.log('teste click');
-    this.router.navigate([`/projeto-detail/${this.projeto.projId}`]);
+    this.router.navigate(['/projeto-detail/', this.projeto.projId]);
   }
 }

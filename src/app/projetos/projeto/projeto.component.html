@@ -1,5 +1,5 @@
 <div fxFlex="15%">
-  <mat-card class="left" (click)="goToProjectDetail()" >
+  <mat-card class="left" (click)="goToProjectDetail()">
     <mat-card-header>
       <mat-card-title></mat-card-title>
       <mat-card-subtitle>{{projeto.projNome}}</mat-card-subtitle>
@@ -19,8 +19,8 @@
 
       <div class="custo">
         <p>Custo</p>
-        <app-range-slider [minParam]="0" [maxParam]="100"
-                          [valueParam]="getCronogramaByProjeto()"></app-range-slider>
+        <app-range-slider [minParam]="0" [maxParam]="100" percent
+                          [valueParam]="getCronogramaByProjeto() "></app-range-slider>
       </div>
 
 

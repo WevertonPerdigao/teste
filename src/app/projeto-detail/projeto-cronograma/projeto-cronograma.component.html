@@ -1,3 +1,40 @@
-<p>
-  projeto-cronograma works!
-</p>
+<div fxFlex="15%">
+  <mat-card class="left">
+    <mat-card-header class="cronograma">
+      <mat-card-title>Cronograma</mat-card-title>
+      <mat-card-subtitle></mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <p>Período</p>
+      <p style="font-size: 20px;margin-top: 0px;">
+        {{projeto?.projDataInicial | date:'dd/MM/yyyy'}} - {{projeto?.projDataFinal | date:'dd/MM/yyyy'}}</p>
+
+
+      <div class="cronograma">
+        <p>Cronograma</p>
+        <app-range-slider [minParam]="0" [maxParam]="100"
+                          [valueParam]="calcCronogramaByProjeto(projeto?.projDataInicial,projeto?.projDataFinal)">
+        </app-range-slider>
+      </div>
+
+      <div class="content">
+        <p>Total Horas</p>
+        <p style="float: right;">{{calcTotalHorasProjeto(projeto?.projDataInicial,projeto?.projDataFinal)}}</p>
+      </div>
+
+      <div class="content">
+        <p>Horas Concluías</p>
+        <p>{{calcTotalHorasConcluidas(projeto?.projDataInicial)}}</p>
+      </div>
+
+
+    </mat-card-content>
+    <mat-card-footer class="center">
+      <a class="mat-card-link" routerLink="['/ativiades']">VER ATIVIDADES</a>
+
+    </mat-card-footer>
+  </mat-card>
+
+</div>
+
