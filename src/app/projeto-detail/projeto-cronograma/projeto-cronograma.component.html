@@ -14,26 +14,27 @@
       <div class="cronograma">
         <p>Cronograma</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
-                          [valueParam]="calcCronogramaByProjeto(projeto?.projDataInicial,projeto?.projDataFinal)">
+                          [valueParam]="percCronograma">
         </app-range-slider>
       </div>
 
       <div class="content">
+
         <p>Total Horas</p>
-        <p style="float: right;">{{calcTotalHorasProjeto(projeto?.projDataInicial,projeto?.projDataFinal)}}</p>
+        <p>{{diasProjeto}}</p>
       </div>
 
       <div class="content">
         <p>Horas Concluías</p>
-        <p>{{calcTotalHorasConcluidas(projeto?.projDataInicial)}}</p>
+        <p>{{diasEmUso}}</p>
       </div>
 
 
-    </mat-card-content>
-    <mat-card-footer class="center">
-      <a class="mat-card-link" routerLink="['/ativiades']">VER ATIVIDADES</a>
+      <div class="center">
+        <a class="mat-card-link" routerLink="['/ativiades']">VER ATIVIDADES</a>
 
-    </mat-card-footer>
+      </div>
+    </mat-card-content>
   </mat-card>
 
 </div>

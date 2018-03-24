@@ -42,6 +42,8 @@ import {ProjetoOrcamentoComponent} from './projeto-detail/projeto-orcamento/proj
 import {ProjetoEquipeComponent} from './projeto-detail/projeto-equipe/projeto-equipe.component';
 import {ProjetoAtividadesComponent} from './projeto-detail/projeto-atividades/projeto-atividades.component';
 import {ProjetoRelatoriosComponent} from './projeto-detail/projeto-relatorios/projeto-relatorios.component';
+import {DoughnutChartComponent} from './doughnut-chart/doughnut-chart.component';
+import {ChartsModule} from 'ng2-charts/ng2-charts';
 
 registerLocaleData(ptBr);
 
@@ -72,7 +74,8 @@ registerLocaleData(ptBr);
     ProjetoOrcamentoComponent,
     ProjetoEquipeComponent,
     ProjetoAtividadesComponent,
-    ProjetoRelatoriosComponent
+    ProjetoRelatoriosComponent,
+    DoughnutChartComponent
   ],
   imports: [
     CommonModule,
@@ -83,6 +86,7 @@ registerLocaleData(ptBr);
     FlexLayoutModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ChartsModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},
@@ -90,7 +94,7 @@ registerLocaleData(ptBr);
     ProjetoService,
     UsuarioService,
     SituacaoService,
-    VwprojetovalorService
+    VwprojetovalorService,
   ],
   bootstrap: [AppComponent]
 })

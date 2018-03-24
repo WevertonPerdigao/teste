@@ -20,7 +20,7 @@ export class ProjetoComponent implements OnInit {
 
   constructor(private situacaoService: SituacaoService,
               private vwProjetoValorService: VwprojetovalorService,
-              private router: Router,) {
+              private router: Router) {
   }
 
   ngOnInit() {

@@ -15,10 +15,12 @@ export class ProjetoService {
   }
 
   listProjetos(): Observable<Projeto[]> {
+
     return this.http.get<Projeto[]>(`${GPITBAM_API}/Projetos`);
   }
 
   findByProjId(projId: number): Observable<Projeto> {
+    console.log('chamos findy');
     return this.http.get<Projeto>(`${GPITBAM_API}/Projetos/${projId}`);
   }
 

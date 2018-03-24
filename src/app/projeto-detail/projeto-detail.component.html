@@ -1,18 +1,19 @@
-<div fxLayout="row"
-     fxLayoutGap="10px"
-     fxLayoutGap.xs="0"
-     fxLayout.xs="column"
-     fxLayoutAlign="left"
-     fxFlexFill class="container">
 
-  <mat-tab-group class="tab-group">
+  <mat-tab-group>
+
     <mat-tab label="INFORMAÇÕES GERAIS" class="mat-tab-label">
-      <app-projeto-cronograma [projeto]="projeto"></app-projeto-cronograma>
-      <app-projeto-orcamento></app-projeto-orcamento>
+
+      <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
+                              [diasEmUso]="qtdDiasUtilizados" [percCronograma]="percCronogramaUtilizado">
+      </app-projeto-cronograma>
+
+      <app-pie-chart></app-pie-chart>
+
     </mat-tab>
     <mat-tab label="ORÇAMENTOS">
       <div class="demo-tab-content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
+        Lorem ipsum dolor sit amet, consectetur adipiscing e
+        lit. Nulla venenatis ante augue.
         Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus.
         In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec,
         feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor,
@@ -53,5 +54,4 @@
       </div>
     </mat-tab>
   </mat-tab-group>
-</div>
 
