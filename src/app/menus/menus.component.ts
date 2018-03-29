@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from './menu/menu.service';
+import {LoginService} from '../services/login.service';
 
 @Component({
   selector: 'app-menus',
@@ -10,16 +11,31 @@ export class MenusComponent implements OnInit {
 
   public menus;
 
-  constructor(private menuService: MenuService) {
+  constructor(private menuService: MenuService, private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.getListMenus();
+    if (this.loginService.isLoggedIn) {
+      this.getListMenus();
+    }
   }
 
-
   getListMenus() {
-    this.menuService.listMenuByNome().subscribe(
+    if (this.loginService.isLoggedIn) {
+
+      //   if (this.loginService.usuario.usuaPerfId.perfAcessoCompleto) {
+      this.getAllMenus();
+      //   }else{
+
+      //     }
+///
+      //  console.log('Erro de autenticação no sistem');
+    }
+  }
+
+  getAllMenus() {
+
+    this.menuService.listMenuByUserId().subscribe(
       // the first argument is a function which runs on success
       data => {
         this.menus = data;
@@ -29,6 +45,9 @@ export class MenusComponent implements OnInit {
       // the third argument is a function which runs on completion
       () => console.log('done loading foods')
     );
+  }
+
+  getMenusByFuncionario() {
 
   }
 

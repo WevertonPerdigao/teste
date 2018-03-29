@@ -1,9 +1,7 @@
-import {Component, Input, DoCheck, OnInit} from '@angular/core';
-import {Projeto} from './projeto.model';
-import {SituacaoService} from '../../situacao/situacao.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {Projeto} from '../../models/projeto.model';
+import {SituacaoProjetoService} from '../../services/situacaoprojeto.service';
 import {Utils} from '../../utils/utils';
-import {Vwprojetovalor} from '../../projeto-valor/vwprojetovalor.model';
-import {VwprojetovalorService} from '../../projeto-valor/vwprojetovalor.service';
 import {Router} from '@angular/router';
 
 
@@ -15,12 +13,10 @@ import {Router} from '@angular/router';
 export class ProjetoComponent implements OnInit {
 
   @Input() projeto: Projeto;
-  @Input() vwProjetoValor: Vwprojetovalor;
 
 
-  constructor(private situacaoService: SituacaoService,
-              private vwProjetoValorService: VwprojetovalorService,
-              private router: Router) {
+  constructor(private situacaoService: SituacaoProjetoService,
+                  private router: Router) {
   }
 
   ngOnInit() {
@@ -48,7 +44,6 @@ export class ProjetoComponent implements OnInit {
 
 
   goToProjectDetail() {
-    console.log('teste click');
     this.router.navigate(['/projeto-detail/', this.projeto.projId]);
   }
 }

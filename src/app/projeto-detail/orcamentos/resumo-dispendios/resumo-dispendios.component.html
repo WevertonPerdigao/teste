@@ -1,0 +1,20 @@
+<div fxFlex="15%">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Resumo de Dispêndios</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <p>Valores{{listDispendios}} depois</p>
+        <app-pie-chart [chartData]="listValorDispendio"
+                       [chartLabel]="listDispendios">
+        </app-pie-chart>
+      </div>
+
+      <div class="content">
+
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+</div>

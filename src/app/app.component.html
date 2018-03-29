@@ -1,4 +1,4 @@
-<div class="container" [class.is-mobile]="mobileQuery.matches">
+<div class="container" [class.is-mobile]="mobileQuery.matches" *ngIf="isLogin">
 
   <app-header [idsidenav]="sidenav">
   </app-header>
@@ -10,8 +10,11 @@
       <app-menus></app-menus>
     </mat-sidenav>
 
-   <mat-sidenav-content class="layout-content">
-      <router-outlet></router-outlet>
+    <mat-sidenav-content class="layout-content">
+
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+<app-login *ngIf="!isLogin" ></app-login>
+
+<router-outlet></router-outlet>

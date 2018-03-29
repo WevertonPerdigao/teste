@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+
 @Component({
   selector: 'app-pie-chart',
   templateUrl: './doughnut-chart.component.html',
@@ -7,8 +8,13 @@ import {Component} from '@angular/core';
 export class DoughnutChartComponent {
 
   // Doughnut
-  public doughnutChartLabels: string[] = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-  public doughnutChartData: number[] = [350, 450, 100];
+  @Input() chartLabel: string[];
+  @Input() chartData: number[];
+
+  chartOptions = {
+    responsive: true
+  };
+
   public doughnutChartType: string = 'doughnut';
 
   // events

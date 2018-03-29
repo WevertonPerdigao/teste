@@ -1,0 +1,40 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+
+}
+
+.mat-card-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #388E3C;
+  font-family: 'Open Sans', 'Condensed Bold';
+}
+
+.mat-card {
+  min-width: 302px;
+  min-height: 300px;
+}
+
+.mat-card-title {
+  font-size: 20px;
+  font-family: 'Open Sans', 'Condensed Bold';
+  font-weight: bold;
+}
+
+.left {
+  text-align: left !important;
+  margin-left: 0px;
+}
+
+.mat-card-header {
+  text-align: left !important;
+  margin-left: 0px;
+}
+

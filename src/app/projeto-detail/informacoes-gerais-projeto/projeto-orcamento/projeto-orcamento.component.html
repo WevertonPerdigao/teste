@@ -1,0 +1,27 @@
+<div fxFlex="15%">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Orçamento</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>
+        <app-pie-chart [chartData]="[valorTotal,custoTotal]"
+                       [chartLabel]="['Valor Total','Custo Total']"></app-pie-chart>
+      </div>
+      <div class="content valor">
+        <p>Verba Total</p>
+        <p>{{valorTotal }}</p>
+      </div>
+
+      <div class="content custo">
+        <p>Custo Total</p>
+        <p>{{custoTotal }}</p>
+      </div>
+      <div class="content">
+        <p class="salto-text">Saldo</p>
+        <p class="saldo">{{(valorTotal - custoTotal) }}</p>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+</div>

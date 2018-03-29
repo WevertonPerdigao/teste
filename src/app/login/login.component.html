@@ -1,0 +1,31 @@
+<div class="signin-content">
+
+  <mat-card>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+        <p>Login</p>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="E-mail" type="email"
+                 formControlName="email" required>
+          <mat-error *ngIf="isFieldInvalid('email')">
+            Informe seu email
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput type="password" placeholder="Senha"
+                 formControlName="senha" required>
+          <mat-error *ngIf="isFieldInvalid('senha')">
+            Informa sua senha
+          </mat-error>
+        </mat-input-container>
+
+        <button mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">Login</button>
+      </form>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

@@ -1,8 +1,9 @@
-<p> Olá Pie chart</p>
-<div style="display: block">
+<div>
   <canvas baseChart
-          [data]="doughnutChartData"
-          [labels]="doughnutChartLabels"
+          [data]="chartData"
+          [labels]="chartLabel"
+          [legend]="false"
+          [options]="chartOptions"
           [chartType]="doughnutChartType"
           (chartHover)="chartHovered($event)"
           (chartClick)="chartClicked($event)"></canvas>

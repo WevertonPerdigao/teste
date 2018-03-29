@@ -1,0 +1,61 @@
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  font-size: 16px;
+  font-family: 'Open Sans', 'Condensed Bold';
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+
+}
+
+.mat-card-link {
+  font-size: 16px;
+  font-weight: bold;
+  color: #388E3C;
+  font-family: 'Open Sans', 'Condensed Bold';
+}
+
+.mat-card {
+  min-width: 302px;
+  min-height: 300px;
+
+}
+
+.mat-card-title {
+  font-size: 20px;
+  font-family: 'Open Sans', 'Condensed Bold';
+  font-weight: bold;
+}
+
+.left {
+  text-align: left !important;
+  margin-left: 0px;
+}
+
+.mat-card-header {
+  text-align: left !important;
+  margin-left: 0px;
+}
+
+.custo {
+  color: #F44336;
+  opacity: 0.87;
+}
+
+.saldo {
+  color: #388E3C;
+  opacity: 0.54;
+  font-size: 24px;
+}
+
+.salto-text {
+  color: #000000;
+  opacity: 0.54;
+  font-size: 16px;
+}
+

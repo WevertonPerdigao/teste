@@ -1,10 +1,7 @@
-import {Component, Injectable, OnInit} from '@angular/core';
-import {ProjetoService} from './projeto/projeto.service';
-import {UsuarioService} from '../usuarios/usuario/usuario.service';
-import {Vwprojetovalor} from '../projeto-valor/vwprojetovalor.model';
-import {VwprojetovalorService} from './../projeto-valor/vwprojetovalor.service';
-import {inject} from '@angular/core/src/render3';
-import {Projeto} from './projeto/projeto.model';
+import {Component, OnInit} from '@angular/core';
+import {ProjetoService} from '../services/projeto.service';
+import {Projeto} from '../models/projeto.model';
+import {LoginService} from '../services/login.service';
 
 @Component({
   selector: 'app-projetos',
@@ -15,48 +12,20 @@ import {Projeto} from './projeto/projeto.model';
 export class ProjetosComponent implements OnInit {
 
   public projetos: Projeto[];
-  public usuario;
 
   constructor(private projetoService: ProjetoService,
-              private usuarioService: UsuarioService,
-              private vwProjetovalorService: VwprojetovalorService) {
+              private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.getPrimeiroUsuario();
-    this.getListProjetos();
-
+    const userid = this.loginService.funcionario.funcId;
+    this.getListProjetosByUsuario(userid);
   }
 
-  getListProjetos() {
-    this.projetoService.listProjetos().subscribe(projetos => this.projetos = projetos);
+  getListProjetosByUsuario(userid: number) {
+    this.projetoService.listProjetosByUserId(userid)
+      .subscribe(projetos => this.projetos = projetos);
 
-  }
-
-  getListProjetosByUsuario() {
-    this.projetoService.listProjetos().subscribe(projetos => this.projetos = projetos);
-
-  }
-
-  getPrimeiroUsuario() {
-    this.usuarioService.getPrimeiroUsuario().subscribe(
-      data => {
-        this.usuario = data;
-      },
-      err => console.error(err),
-      () => console.log('done loading getPrimeiroUsuario')
-    );
-  }
-
-  getProjetoValor(projId: number): any {
-    console.log('Chamosu sfdsfsdfd');
-    this.vwProjetovalorService.getProjetoValorByProjId(projId).subscribe(
-      data => {
-        return data;
-      },
-      err => console.error(err),
-      () => console.log('done loading getProjetoValorByProjId')
-    );
   }
 
 

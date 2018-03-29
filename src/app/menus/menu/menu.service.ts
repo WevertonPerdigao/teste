@@ -9,10 +9,14 @@ export class MenuService {
   constructor(private http: HttpClient) {
   }
 
-  listMenuByNome() {
+  listAllMenu() {
     return this.http.get(`${GPITBAM_API}/Menus`);
   }
 
+
+  listMenuByUserId() {
+    return this.http.get(`${GPITBAM_API}/Menus`);
+  }
 
 }
 

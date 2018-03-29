@@ -1,8 +1,10 @@
 import {Component, OnInit, Input} from '@angular/core';
-import {ProjetoService} from '../projetos/projeto/projeto.service';
-import {Projeto} from '../projetos/projeto/projeto.model';
+import {ProjetoService} from '../services/projeto.service';
+import {Projeto} from '../models/projeto.model';
 import {ActivatedRoute} from '@angular/router';
 import {Utils} from '../utils/utils';
+import {ProjetoDispendioService} from '../services/projetodispendio.service';
+import 'rxjs/add/observable/forkJoin';
 
 @Component({
   selector: 'app-projeto-detail',
@@ -15,9 +17,11 @@ export class ProjetoDetailComponent implements OnInit {
   qtdDiasProjeto = 0;
   qtdDiasUtilizados = 0;
   percCronogramaUtilizado = 0;
-
+  listDispendioNome: string[] = [];
+  listDispendioValor: number[] = [];
 
   constructor(private projetoService: ProjetoService,
+              private projetoDispendioService: ProjetoDispendioService,
               private activatedRoute: ActivatedRoute) {
   }
 
@@ -27,13 +31,14 @@ export class ProjetoDetailComponent implements OnInit {
         this.projeto = projeto;
         this.setPropertyCronograma();
       });
-  }
 
+
+  }
 
   setPropertyCronograma() {
     this.calcQtdeDiasProjeto(this.projeto.projDataInicial, this.projeto.projDataFinal);
     this.calcQtdeDiasConcluidos(this.projeto.projDataInicial);
-    this.calcCronogramaByProjeto();
+    this.calcPercentCronograma();
   }
 
   calcQtdeDiasProjeto(dtinicio: Date, dtfim: Date) {
@@ -48,13 +53,17 @@ export class ProjetoDetailComponent implements OnInit {
     }
   }
 
-
-  calcCronogramaByProjeto() {
+  calcPercentCronograma() {
     if (this.qtdDiasUtilizados !== 0 && this.qtdDiasUtilizados > this.qtdDiasProjeto) {
       this.percCronogramaUtilizado = 100; // projeto atrasado
     } else if (this.qtdDiasUtilizados !== 0) {
       this.percCronogramaUtilizado = Utils.getPercent(this.qtdDiasUtilizados, this.qtdDiasProjeto);
     }
   }
+
+  findProjetoValorByProjId(): void {
+    console.log('findProjetoValorByProjId');
+  }
+
 }
 

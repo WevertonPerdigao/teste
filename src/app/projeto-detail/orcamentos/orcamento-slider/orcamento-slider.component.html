@@ -1,0 +1,31 @@
+<div fxFlex="15%">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Orçamento</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <app-range-slider [minParam]="0" [maxParam]="100"
+                        [valueParam]="percOrcamento"></app-range-slider>
+
+      <div class="content">
+        <p>Verba Total</p>
+        <p>{{valorTotal | currency: 'BRL'}}</p>
+      </div>
+
+      <div class="content custo">
+        <p>Custo Total</p>
+        <p>{{custoTotal | currency: 'BRL'}}</p>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="content">
+        <p class="salto-text">Saldo</p>
+        <p class="saldo">{{(valorTotal - custoTotal) | currency: 'BRL' }}</p>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>
