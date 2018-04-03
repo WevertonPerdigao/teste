@@ -1,4 +1,4 @@
-<div class="container" [class.is-mobile]="mobileQuery.matches">
+<div class="container" [class.is-mobile]="mobileQuery.matches" *ngIf="!(isLoggedIn$ | async) as isLoggedIn">
 
   <mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()">

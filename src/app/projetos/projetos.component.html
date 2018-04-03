@@ -4,8 +4,16 @@
      fxLayout.xs="column"
      fxLayoutAlign="left"
      fxFlexFill class="container">
-    <app-projeto class="projeto" *ngFor="let projeto of projetos" [projeto]="projeto"
-    ></app-projeto>
+
+  <div *ngFor="let projeto of projetos">
+    <app-projeto class="projeto" [projeto]="projeto"></app-projeto>
+  </div>
+  <div *ngIf="projetos?.length === 0">
+    <p>
+      Não foram encontrados itens para a sua busca.
+    </p>
+  </div>
+
 
 </div>
 

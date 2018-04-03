@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {LoginService} from '../services/login.service';
 import {Login} from '../models/login.model';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../services/notification.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,11 +14,14 @@ import {NotificationService} from '../services/notification.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private formSubmit: boolean;
+  navigateTo: string;
 
   constructor(private fb: FormBuilder,
               private loginService: LoginService,
               private notificationService: NotificationService,
-              private router: Router) {
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
+    this.navigateTo = this.activatedRoute.snapshot.params['to'] || btoa('/');
   }
 
   ngOnInit() {
@@ -36,11 +40,12 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.loginService.login(new Login(this.loginForm.value.email, this.loginForm.value.senha))
-      .subscribe(funcionario => this.notificationService.notify(`Bem vindo, ${funcionario.funcNome}`),
+      .subscribe(funcionario => this.notificationService.notify(`Olá, ${funcionario.funcNome}`),
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message),
-        () => { this.router.navigate(['/']);
-      });
+        () => {
+          this.router.navigate([atob(this.navigateTo)]);
+        });
   }
 
 }

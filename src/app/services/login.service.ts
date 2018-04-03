@@ -9,15 +9,14 @@ import {Observable} from 'rxjs/Observable';
 import {Router, NavigationEnd} from '@angular/router';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';//1
 @Injectable()
 export class LoginService {
 
   funcionario: Funcionario;
   lastUrl: string;
 
-  private loggedIn = new BehaviorSubject<boolean>(false);
+    private loggedIn = new BehaviorSubject<boolean>(false);//2
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -28,6 +27,10 @@ export class LoginService {
 
   isLoggedIn(): boolean {
     return this.funcionario !== undefined;
+  }
+
+  get isLoggedIn2() {
+    return this.loggedIn.asObservable();
   }
 
   logout() {

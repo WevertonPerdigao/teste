@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LoginService} from '../services/login.service';
-
+import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -11,6 +11,7 @@ import {LoginService} from '../services/login.service';
 export class HeaderComponent implements OnDestroy, OnInit {
   mobileQuery: MediaQueryList;
   isLogin: boolean;
+  isLoggedIn$: Observable<boolean>;
 
   private _mobileQueryListener: () => void;
 
@@ -23,6 +24,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.isLogin = this.loginService.isLoggedIn();
+    this.isLoggedIn$ = this.loginService.isLoggedIn2;
   }
 
   onLogout() {
