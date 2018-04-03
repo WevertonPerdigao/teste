@@ -1,10 +1,10 @@
 export class Login {
-  matricula: number;
+  email: string;
   senha: string;
 
-  constructor(matricula: number, senha: string) {
+  constructor(email: string, senha: string) {
     this.senha = senha;
-    this.matricula = matricula;
+    this.email = email;
   }
 
 }

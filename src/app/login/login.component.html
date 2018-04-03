@@ -1,14 +1,15 @@
-<div class="signin-content">
-
+<div style="background: #4CAF50;">
   <mat-card>
+    <div>
+      <img src="/assets/images/sgpitbam.svg" style="width: 50%;padding: 5%;">
+
+    </div>
 
     <mat-card-content>
-      <form [formGroup]="loginForm">
-        <p>Login</p>
 
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="E-mail" type="email"
-                 formControlName="email" required>
+      <form [formGroup]="loginForm">
+              <mat-input-container class="full-width-input">
+          <input matInput placeholder="E-mail" type="email" formControlName="email" required>
           <mat-error *ngIf="isFieldInvalid('email')">
             Informe seu email
           </mat-error>
@@ -22,7 +23,9 @@
           </mat-error>
         </mat-input-container>
 
-        <button mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">Login</button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">
+          Login
+        </button>
       </form>
 
     </mat-card-content>

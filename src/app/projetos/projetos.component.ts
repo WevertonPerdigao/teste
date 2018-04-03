@@ -18,12 +18,12 @@ export class ProjetosComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userid = this.loginService.funcionario.funcId;
-    this.getListProjetosByUsuario(userid);
+   // const userid = this.loginService.funcionario.funcId;
+    this.getListProjetosByUsuario();
   }
 
-  getListProjetosByUsuario(userid: number) {
-    this.projetoService.listProjetosByUserId(userid)
+  getListProjetosByUsuario(userid?: number) {
+    this.projetoService.listProjetos()
       .subscribe(projetos => this.projetos = projetos);
 
   }

@@ -10,15 +10,15 @@ export class ProjetoService {
   }
 
   listProjetosByUserId(userId: number): Observable<Projeto[]> {
-    return this.http.get<Projeto[]>(`${GPITBAM_API}/Projetos/${userId}`);
+    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos/${userId}`);
   }
 
   listProjetos(): Observable<Projeto[]> {
-    return this.http.get<Projeto[]>(`${GPITBAM_API}/Projetos`);
+    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos`);
   }
 
   findByProjId(projId: number): Observable<Projeto> {
-    return this.http.get<Projeto>(`${GPITBAM_API}/Projetos/${projId}`);
+    return this.http.get<Projeto>(`${GPITBAM_API}/projetos/${projId}`);
   }
 
 

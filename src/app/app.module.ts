@@ -23,6 +23,9 @@ import {SituacaoProjetoService} from './services/situacaoprojeto.service';
 import {MenuService} from './menus/menu/menu.service';
 import {ProjetoDispendioService} from './services/projetodispendio.service';
 import {LoginService} from './services/login.service';
+import {FuncionarioService} from './services/funcionario.service';
+import {NotificationService} from './services/notification.service';
+import {LoggedInGuard} from './login/loggedin.guard';
 
 import {HomeComponent} from './home/home.component';
 import {HeaderComponent} from './header/header.component';
@@ -51,10 +54,9 @@ import {OrcamentoSliderComponent} from './projeto-detail/orcamentos/orcamento-sl
 import {ResumoDispendiosComponent} from './projeto-detail/orcamentos/resumo-dispendios/resumo-dispendios.component';
 import {SolicitacoesComponent} from './projeto-detail/orcamentos/solicitacoes/solicitacoes.component';
 import {LoginComponent} from './login/login.component';
-import { FuncionariosComponent } from './funcionarios/funcionarios.component';
-import { FuncionarioComponent } from './funcionarios/funcionario/funcionario.component';
-import {FuncionarioService} from './services/funcionario.service';
-
+import {FuncionariosComponent} from './funcionarios/funcionarios.component';
+import {FuncionarioComponent} from './funcionarios/funcionario/funcionario.component';
+import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
 
 @NgModule({
   declarations: [
@@ -82,14 +84,14 @@ import {FuncionarioService} from './services/funcionario.service';
     ProjetoAtividadesComponent,
     ProjetoRelatoriosComponent,
     DoughnutChartComponent,
-
     ProjetoContatosComponent,
     OrcamentoSliderComponent,
     ResumoDispendiosComponent,
     SolicitacoesComponent,
     LoginComponent,
     FuncionariosComponent,
-    FuncionarioComponent
+    FuncionarioComponent,
+    SnackbarComponent,
   ],
   imports: [
     CommonModule,
@@ -109,7 +111,9 @@ import {FuncionarioService} from './services/funcionario.service';
     SituacaoProjetoService,
     ProjetoDispendioService,
     FuncionarioService,
-    LoginService
+    LoginService,
+    NotificationService,
+    LoggedInGuard
   ],
   bootstrap: [AppComponent]
 })

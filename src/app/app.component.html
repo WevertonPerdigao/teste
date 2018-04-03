@@ -1,20 +1,3 @@
-<div class="container" [class.is-mobile]="mobileQuery.matches" *ngIf="isLogin">
-
-  <app-header [idsidenav]="sidenav">
-  </app-header>
-
-  <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
-    <mat-sidenav #sidenav [mode]="'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <app-menus></app-menus>
-    </mat-sidenav>
-
-    <mat-sidenav-content class="layout-content">
-
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<app-login *ngIf="!isLogin" ></app-login>
-
+<app-header></app-header>
+<app-snackbar></app-snackbar>
 <router-outlet></router-outlet>
