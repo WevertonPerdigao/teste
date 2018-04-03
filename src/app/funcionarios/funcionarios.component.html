@@ -1,11 +1,6 @@
-<div fxLayout="row"
-     fxLayoutGap="10px"
-     fxLayoutGap.xs="0"
-     fxLayout.xs="column"
-     fxLayoutAlign="left"
-     fxFlexFill class="container">
+<div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
   <app-funcionario *ngFor="let funcionario of funcionarios" [funcionario]="funcionario">
   </app-funcionario>
-
 </div>
+
 

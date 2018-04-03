@@ -1,8 +1,19 @@
-mat-card {
+
+.main-div{
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.mat-card {
   max-width: 400px;
   background-color: #4CAF50;
   margin: auto;
   text-align: center;
+  vertical-align: middle;
 }
 .signin-content {
   padding: 60px 1rem;
@@ -11,3 +22,4 @@ mat-card {
   color: white;;
   width: 100%;
 }
+
