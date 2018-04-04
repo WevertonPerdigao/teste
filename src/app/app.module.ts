@@ -57,6 +57,9 @@ import {LoginComponent} from './login/login.component';
 import {FuncionariosComponent} from './funcionarios/funcionarios.component';
 import {FuncionarioComponent} from './funcionarios/funcionario/funcionario.component';
 import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
+import { ProjetoCreateComponent } from './projeto-create/projeto-create.component';
+
+
 
 @NgModule({
   declarations: [
@@ -92,6 +95,7 @@ import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
     FuncionariosComponent,
     FuncionarioComponent,
     SnackbarComponent,
+    ProjetoCreateComponent,
   ],
   imports: [
     CommonModule,

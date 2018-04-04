@@ -6,13 +6,15 @@ import {ProjetoDetailComponent} from './projeto-detail/projeto-detail.component'
 import {LoggedInGuard} from './login/loggedin.guard';
 import {FuncionariosComponent} from './funcionarios/funcionarios.component';
 import {LoginComponent} from './login/login.component';
+import {ProjetoCreateComponent} from './projeto-create/projeto-create.component';
 
 export const ROUTES: Routes = [
-  {path: '', component: HomeComponent,}, //canActivate: [LoggedInGuard]
+  {path: '', component: HomeComponent,},
   {path: 'login', component: LoginComponent},
   {path: 'login/:to', component: LoginComponent},
-  {path: 'projetos', component: ProjetosComponent},
+  {path: 'projetos', component: ProjetosComponent, canActivate: [LoggedInGuard]},
   {path: 'funcionarios', component: FuncionariosComponent},
+  {path: 'projeto-create', component: ProjetoCreateComponent},
   {path: 'projeto-detail/:id', component: ProjetoDetailComponent},
   {path: '**', component: NotFoundComponent}
 ];

@@ -13,10 +13,11 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';//1
 @Injectable()
 export class LoginService {
 
+  myStorage = window.localStorage;
   funcionario: Funcionario;
   lastUrl: string;
 
-    private loggedIn = new BehaviorSubject<boolean>(false);//2
+  private loggedIn = new BehaviorSubject<boolean>(false);//2
 
   constructor(private http: HttpClient,
               private router: Router) {
@@ -26,7 +27,7 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    return this.funcionario !== undefined;
+    return this.myStorage.getItem('currentUser') != null;
   }
 
   get isLoggedIn2() {
@@ -40,7 +41,10 @@ export class LoginService {
   login(login: Login): Observable<Funcionario> {
     return this.http.post<Funcionario>(`${GPITBAM_API}/funcionarios/login`,
       {email: login.email, senha: login.senha})
-      .do(funcionario => this.funcionario = funcionario);
+      .do(funcionario => {
+        this.funcionario = funcionario;
+        this.myStorage.setItem('currentUser', `${funcionario.funcId}`);
+      });
   }
 
 

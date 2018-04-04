@@ -1,0 +1,82 @@
+<div class="main-div">
+
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title> Novo Projeto</mat-card-title>
+      <mat-divider></mat-divider>
+
+      <form [formGroup]="projetoForm">
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Título" type="text" formControlName="projNome" required>
+          <mat-error *ngIf="isFieldInvalid('projNome')">
+            Informe um título para o projeto
+          </mat-error>
+        </mat-input-container>
+
+        <table class="full-width-input" cellspacing="0">
+          <tr>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput type="date" placeholder="Prazo"
+                       formControlName="projDataInicial" required>
+                <mat-error *ngIf="isFieldInvalid('projDataInicial')">
+                  Informe o prazo
+                </mat-error>
+              </mat-input-container>
+            </td>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker" placeholder="Prazo" formControlName="projDataFinal" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+
+                <mat-error *ngIf="isFieldInvalid('projDataFinal')">
+                  Informe o prazo
+                </mat-error>
+              </mat-input-container>
+            </td>
+          </tr>
+        </table>
+
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Responsável" type="text" formControlName="projResponsavel" required>
+          <mat-error *ngIf="isFieldInvalid('projResponsavel')">
+            Informe o responsável pelo projeto
+          </mat-error>
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Tipo de Projeto" type="text" formControlName="projTipos" required>
+          <mat-error *ngIf="isFieldInvalid('projTipos')">
+            Informe o tipo de projeto
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Verba Inicial" type="text" formControlName="projTipos" required>
+          <mat-error *ngIf="isFieldInvalid('projTipos')">
+            Informe o tipo de projeto
+          </mat-error>
+        </mat-input-container>
+
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <div class="content">
+        <a mat-button routerLink="">
+          Cancelar
+        </a>
+        <a mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="projetoForm.invalid">
+          CRIAR
+        </a>
+      </div>
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+  </mat-card>
+</div>

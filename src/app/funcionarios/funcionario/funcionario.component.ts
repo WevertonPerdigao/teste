@@ -18,7 +18,6 @@ export class FuncionarioComponent implements OnInit {
   ngOnInit() {
   }
 
-
   goToUsuarioDetail() {
     this.router.navigate(['/funcionario-detail/', this.funcionario.funcFuncId]);
   }

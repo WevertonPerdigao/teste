@@ -14,7 +14,8 @@ import {
   MatInputModule,
   MatGridListModule,
   MatSliderModule,
-  MatDividerModule
+  MatDividerModule,
+  MatDatepickerModule
 } from '@angular/material';
 
 
@@ -33,7 +34,8 @@ import {
     MatFormFieldModule,
     MatGridListModule,
     MatDividerModule,
-    MatSliderModule
+    MatSliderModule,
+    MatDatepickerModule
   ]
 })
 export class MaterialModule {
