@@ -3,12 +3,24 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../services/notification.service';
 import {ViewEncapsulation} from '@angular/core';
-
+import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 @Component({
   selector: 'app-projeto-create',
   templateUrl: './projeto-create.component.html',
   styleUrls: ['./projeto-create.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 })
 export class ProjetoCreateComponent implements OnInit {
 
@@ -18,7 +30,9 @@ export class ProjetoCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
-              private router: Router) {
+              private router: Router,
+              private adapter: DateAdapter<any>) {
+
   }
 
   ngOnInit() {

@@ -110,7 +110,7 @@ import { ProjetoCreateComponent } from './projeto-create/projeto-create.componen
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},
-    MenuService,
+       MenuService,
     ProjetoService,
     SituacaoProjetoService,
     ProjetoDispendioService,

@@ -6,11 +6,13 @@
     </button>
     <h1 class="app-name">SGP</h1>
     <div class="fill-remaining-space"></div>
-    <app-search-bar></app-search-bar>
+      <input matInput type="text">
+      <button mat-button>PESQUISAR</button>
+
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+                         [style.marginTop.px]="mobileQuery.matches ? 64 : 0">
     <mat-sidenav #sidenav mode="'side'"
                  fixedInViewport="mobileQuery.matches" fixedTopGap="64">
       <app-menus></app-menus>
