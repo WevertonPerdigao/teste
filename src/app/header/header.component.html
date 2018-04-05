@@ -1,4 +1,4 @@
-<div class="container" [class.is-mobile]="mobileQuery.matches" >
+<div class="container" [class.is-mobile]="mobileQuery.matches">
 
   <mat-toolbar color="primary" class="toolbar">
     <button mat-icon-button (click)="sidenav.toggle()">
@@ -6,8 +6,7 @@
     </button>
     <h1 class="app-name">SGP</h1>
     <div class="fill-remaining-space"></div>
-      <input matInput type="text">
-      <button mat-button>PESQUISAR</button>
+    <button mat-button>PESQUISAR</button>
 
   </mat-toolbar>
 
@@ -15,6 +14,15 @@
                          [style.marginTop.px]="mobileQuery.matches ? 64 : 0">
     <mat-sidenav #sidenav mode="'side'"
                  fixedInViewport="mobileQuery.matches" fixedTopGap="64">
+
+      <mat-card class="card-usuario">
+        <mat-card-header>
+          <div mat-card-avatar class="avatar-image"></div>
+          <mat-card-title>
+            <a routerLink="">Emanuel Junior </a></mat-card-title>
+          <mat-card-subtitle>  <a routerLink="">LOGOUT</a></mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
       <app-menus></app-menus>
     </mat-sidenav>
     <mat-sidenav-content>
