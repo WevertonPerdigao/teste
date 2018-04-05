@@ -1,0 +1,38 @@
+.work {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 123px !important;
+  width: 282px !important;
+
+}
+
+.mat-card .mat-card-content {
+  flex: 1;
+  padding: 0.25em 0.3em 0;
+}
+
+.mat-card .mat-card-content p {
+  font-size: 1em;
+  line-height: 1.055em;
+  margin-bottom: 0.5em;
+}
+
+@media only screen and (min-width: 37.50em) {
+  .mat-card {
+    max-width: calc(40% - 20px);
+  }
+}
+
+@media only screen and (min-width: 75em) {
+  .mat-card {
+    width: calc(23.33333% - 20px);
+  }
+}
