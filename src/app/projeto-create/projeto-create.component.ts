@@ -6,13 +6,14 @@ import {ViewEncapsulation} from '@angular/core';
 import {DateAdapter} from '@angular/material/core';
 import {FuncionarioService} from '../services/funcionario.service';
 import {Funcionario} from '../models/funcionario.model';
-import { ViewChild } from '@angular/core';
+import {ViewChild} from '@angular/core';
 import {MatAutocompleteSelectedEvent, MatInput} from '@angular/material';
 import {TipoprojetoService} from '../services/tipoprojeto.service';
 import {Tipoprojeto} from '../models/tipoprojeto.model';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
 import {SituacaoProjeto} from '../models/situacaoprojeto.model';
+import {Empresa} from '../models/empresa.model';
 
 @Component({
   selector: 'app-projeto-create',
@@ -44,11 +45,10 @@ export class ProjetoCreateComponent implements OnInit {
 
     this.projetoForm = this.fb.group({
       projNome: this.fb.control('', [Validators.required]),
-      projDataInicial: this.fb.control('', [Validators.required]),
+      projDataInicial: this.fb.control('', [Validators.required]),// validar data
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.fb.control('', [Validators.required]),
-  //    projTipos: this.fb.control('', ),
-      projValor: this.fb.control(0.00, [Validators.required])
+      projValor: this.fb.control('', [Validators.required])
     });
 
 
@@ -59,12 +59,18 @@ export class ProjetoCreateComponent implements OnInit {
       .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
   }
 
-  isFieldInvalid(field: string) { // {6}
+  isFieldInvalid(field: string) {
     return (
-      (!this.projetoForm.get(field).valid && this.projetoForm.get(field).touched) ||
-      (this.projetoForm.get(field).untouched && this.formSubmit)
-    );
+      (!this.projetoForm.get(field).valid && this.projetoForm.get(field).touched));
   }
+
+  getErrorMessage() {
+    if (this.projetoForm.get('projDataInicial') >= this.projetoForm.get('projDataFinal')) {
+      return 'Data incial não pode ser maior que a data inicial';
+    }
+
+  }
+
 
   displayFuncionario(funcionario?: Funcionario): string | undefined {
     return funcionario ? funcionario.funcNome : undefined;
@@ -76,16 +82,23 @@ export class ProjetoCreateComponent implements OnInit {
 
   onSubmit(projeto: Projeto) {
     projeto.projSiprId = this.situacaoInicial;
-    console.log('Olá projeto:' + JSON.stringify(projeto));
+    projeto.projTipos = (this.chips);
+    projeto.projEmprId = new Empresa(1);
+
+    console.log('Projeto Formato JSON => ' + JSON.stringify(projeto));
+
     this.projetoService.createProjeto(projeto)
-      .subscribe((projetotmp: Projeto) => {
-        this.router.navigate(['/']);
-      });
-}
+      .subscribe(() => this.notificationService.notify(`Projeto criado com sucesso`),
+        response => // HttpErrorResponse
+          this.notificationService.notify(response.error.message),
+        () => {
+          this.router.navigate(['projetos']);
+        });
+  }
 
 
   remove(chip: Tipoprojeto): void {
-       const index = this.chips.indexOf(chip);
+    const index = this.chips.indexOf(chip);
     if (index >= 0) {
       this.chips.splice(index, 1);
     }

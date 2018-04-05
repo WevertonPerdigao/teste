@@ -2,7 +2,7 @@
 
   <mat-card>
     <mat-card-content>
-      <mat-card-title> Novo Projeto</mat-card-title>
+      <mat-card-title style="opacity: 0.87 !important;"> Novo Projeto</mat-card-title>
       <mat-divider></mat-divider>
 
       <form [formGroup]="projetoForm">
@@ -37,10 +37,10 @@
         </table>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Responsável" type="text" aria-label="Responsável"
-                 formControlName="projFuncId" [matAutocomplete]="auto">
+          <input matInput placeholder="Responsável" type="text"
+                 formControlName="projFuncId" [matAutocomplete]="auto" required>
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFuncionario">
-            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario">
+            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario" class="options">
               {{ funcionario.funcNome }}
             </mat-option>
           </mat-autocomplete>
@@ -60,7 +60,7 @@
           </mat-chip-list>
           <mat-autocomplete #autoTipos="matAutocomplete"
                             [displayWith]="displayTipo" (optionSelected)="add($event)">
-            <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo">
+            <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo" class="options">
               <span>{{ tipo.tiprNome }}</span>
             </mat-option>
           </mat-autocomplete>
@@ -69,10 +69,8 @@
         <mat-input-container class="full-width-input">
           <input matInput placeholder="Verba Inicial" class="right-align"
                  type="number" formControlName="projValor" required>
-          <span matPrefix>R$&nbsp;</span>
-
           <mat-error *ngIf="isFieldInvalid('projValor')">
-            Informe o tipo de projeto
+            Informe valor do projeto
           </mat-error>
         </mat-input-container>
 
@@ -85,9 +83,10 @@
         <a mat-button routerLink="">
           Cancelar
         </a>
-        <a mat-raised-button color="primary" (click)="onSubmit(projetoForm.value)" type="submit" [disabled]="projetoForm.invalid">
+        <button mat-raised-button color="primary" (click)="onSubmit(projetoForm.value)" type="submit"
+                [disabled]="projetoForm.invalid">
           CRIAR
-        </a>
+        </button>
       </div>
     </mat-card-actions>
     <mat-card-footer>

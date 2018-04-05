@@ -16,6 +16,6 @@ export class Projeto {
   projSiprId: SituacaoProjeto;
   projTeadId?: Termoaditivo;
   custoTotal?: number;
-  tipoProjeto?: Tipoprojeto[] = [];
+  projTipos?: Tipoprojeto[] = [];
 }
 
