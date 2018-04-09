@@ -1,6 +1,6 @@
 <div style="background: #4CAF50;" class="main-div">
 
-  <mat-card class="z-depth center" flex="50" >
+  <mat-card class="z-depth center" flex="50">
     <div>
       <img mat-card-image class="img" src="/assets/images/sgpitbam.svg" style="width: 50%;padding: 5%;">
     </div>
@@ -11,7 +11,7 @@
         <mat-input-container class="full-width-input">
           <input matInput placeholder="E-mail" type="email" formControlName="email" required>
           <mat-error *ngIf="isFieldInvalid('email')">
-            Informe seu email
+            {{getErrorMessage()}}
           </mat-error>
         </mat-input-container>
 
@@ -26,17 +26,20 @@
     </mat-card-content>
 
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">
-        Login
-      </button>
+
+      <div class="content">
+        <a routerLink="" mat-button style="color: white">
+          Esqueci minha senha
+        </a>
+        <button mat-button color="primary" (click)="onSubmit()" type="submit" [disabled]="loginForm.invalid">
+          Login
+        </button>
+      </div>
     </mat-card-actions>
     <mat-card-footer>
       <div>
         <img mat-card-image class="img" src="/assets/images/itbam.svg" style="width: 50%;padding: 5%;">
       </div>
-
-
     </mat-card-footer>
-
   </mat-card>
 </div>

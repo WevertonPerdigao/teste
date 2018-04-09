@@ -4,6 +4,7 @@ import {LoginService} from '../services/login.service';
 import {Login} from '../models/login.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NotificationService} from '../services/notification.service';
+import {ApplicationErrorHandler} from '../app.error-handler';
 
 
 @Component({
@@ -36,6 +37,11 @@ export class LoginComponent implements OnInit {
       (!this.loginForm.get(field).valid && this.loginForm.get(field).touched) ||
       (this.loginForm.get(field).untouched && this.formSubmit)
     );
+  }
+  getErrorMessage() {
+    return this.loginForm.get('email').hasError('required') ? 'Informe um e-mail' :
+      this.loginForm.get('email') ? 'Informe um e-mail válido' :
+        '';
   }
 
   onSubmit() {

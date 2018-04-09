@@ -25,7 +25,6 @@ export class MenusComponent implements OnInit {
       // the first argument is a function which runs on success
       data => {
         this.menus = data;
-        console.log('sdasd ');
       },
       // the second argument is a function which runs on error
       err => console.error(err),

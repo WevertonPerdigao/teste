@@ -1,0 +1,50 @@
+.main-div {
+  height: 60vh;
+  display: flex;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-family: 'Open Sans', 'Condensed Bold';
+  opacity: 1;
+}
+
+.mat-form-field-label {
+  color: #4CAF50;
+}
+
+.mat-form-field-underline {
+  background-color: #4CAF50;
+}
+
+.mat-card {
+  max-width: 700px;
+  margin: auto;
+  text-align: left;
+}
+
+.signin-content {
+  padding: 60px 1rem;
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.width-divide {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.right-align {
+  text-align: right;
+  font-size: 42px !important;
+  opacity: 0.37;
+}
+
+.options {
+  font-size: 16px !important;
+}

@@ -1,3 +1,7 @@
+<div class="flex-end">
+  <a routerLink="/projeto-create" mat-button>NOVO PROJETO</a>
+</div>
+
 <div fxLayout="row"
      fxLayoutGap="10px"
      fxLayoutGap.xs="0"
@@ -5,15 +9,15 @@
      fxLayoutAlign="left"
      fxFlexFill class="container">
 
+
   <div *ngFor="let projeto of projetos">
     <app-projeto class="projeto" [projeto]="projeto"></app-projeto>
   </div>
   <div *ngIf="projetos?.length === 0">
     <p>
-      Não foram encontrados itens para a sua busca.
+      Funcionário não faz parte de nenhum projeto
     </p>
   </div>
-
 
 </div>
 

@@ -5,7 +5,7 @@ import {StatusFuncionario} from './statusfuncionario.model';
 import {Perfil} from './perfil.model';
 import {Unidade} from './Unidade.model';
 
-export interface Funcionario {
+export class Funcionario {
   funcId: number;
   funcMatricula: number;
   funcNome: string;
@@ -23,4 +23,8 @@ export interface Funcionario {
   funcPerfId: Perfil;
   funcStfuId: StatusFuncionario;
   funcUnidId: Unidade;
+
+  public construtor(funcNome: string) {
+    this.funcNome = funcNome;
+  }
 }

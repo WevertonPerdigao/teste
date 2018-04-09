@@ -1,7 +1,8 @@
 import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LoginService} from '../services/login.service';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -19,7 +20,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-
   }
 
   ngOnInit() {

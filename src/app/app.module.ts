@@ -25,6 +25,7 @@ import {ProjetoDispendioService} from './services/projetodispendio.service';
 import {LoginService} from './services/login.service';
 import {FuncionarioService} from './services/funcionario.service';
 import {NotificationService} from './services/notification.service';
+import {TipoprojetoService} from './services/tipoprojeto.service';
 import {LoggedInGuard} from './login/loggedin.guard';
 
 import {HomeComponent} from './home/home.component';
@@ -39,7 +40,6 @@ import {CronogramaComponent} from './cronograma/cronograma.component';
 import {RelatoriosComponent} from './relatorios/relatorios.component';
 import {ProjetosComponent} from './projetos/projetos.component';
 import {ProjetoComponent} from './projetos/projeto/projeto.component';
-import {SearchBarComponent} from './search-bar/search-bar.component';
 import {RangeSliderComponent} from './range-slider/range-slider.component';
 import {ProjetoDispendioComponent} from './projeto-dispendio/projeto-dispendio.component';
 import {ProjetoDetailComponent} from './projeto-detail/projeto-detail.component';
@@ -57,6 +57,8 @@ import {LoginComponent} from './login/login.component';
 import {FuncionariosComponent} from './funcionarios/funcionarios.component';
 import {FuncionarioComponent} from './funcionarios/funcionario/funcionario.component';
 import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
+import {ProjetoCreateComponent} from './projeto-create/projeto-create.component';
+
 
 @NgModule({
   declarations: [
@@ -65,14 +67,12 @@ import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
     NotFoundComponent,
     FooterComponent,
     MenuComponent,
-    SearchBarComponent,
     AtividadesComponent,
     OrcamentoComponent,
     CronogramaComponent,
     RelatoriosComponent,
     ProjetosComponent,
     ProjetoComponent,
-    SearchBarComponent,
     MenusComponent,
     HeaderComponent,
     RangeSliderComponent,
@@ -92,6 +92,7 @@ import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
     FuncionariosComponent,
     FuncionarioComponent,
     SnackbarComponent,
+    ProjetoCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -113,7 +114,8 @@ import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
     FuncionarioService,
     LoginService,
     NotificationService,
-    LoggedInGuard
+    LoggedInGuard,
+    TipoprojetoService
   ],
   bootstrap: [AppComponent]
 })

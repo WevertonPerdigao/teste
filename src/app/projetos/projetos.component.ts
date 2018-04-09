@@ -18,9 +18,11 @@ export class ProjetosComponent implements OnInit {
   }
 
   ngOnInit() {
-    const userid = this.loginService.funcionario.funcId;
+    const userid = +this.loginService.myStorage.getItem('currentUser');
+    console.log(userid);
     this.getListProjetosByUsuario(userid);
   }
+
 
   getListProjetosByUsuario(userid?: number) {
     this.projetoService.listProjetosByUserId(userid)
