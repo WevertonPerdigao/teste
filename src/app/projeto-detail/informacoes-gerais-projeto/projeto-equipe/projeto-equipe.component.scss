@@ -17,11 +17,6 @@
   font-family: 'Open Sans', 'Condensed Bold';
 }
 
-.mat-card {
-  min-width: 302px;
-  min-height: 300px;
-}
-
 .mat-card-title {
   font-size: 20px;
   font-family: 'Open Sans', 'Condensed Bold';
@@ -38,3 +33,10 @@
   margin-left: 0px;
 }
 
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 311px !important;
+  width: 399px !important;
+}

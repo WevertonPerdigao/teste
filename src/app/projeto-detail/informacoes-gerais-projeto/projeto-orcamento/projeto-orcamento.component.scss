@@ -1,12 +1,4 @@
-.mat-card {
-  min-width: 302px;
-  min-height: 300px;
-}
-
 .content {
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
   font-size: 16px;
   font-family: 'Open Sans', 'Condensed Bold';
 }
@@ -14,7 +6,6 @@
 .center {
   display: flex;
   justify-content: center;
-
 }
 
 .mat-card-link {
@@ -30,15 +21,7 @@
   font-weight: bold;
 }
 
-.left {
-  text-align: left !important;
-  margin-left: 0px;
-}
 
-.mat-card-header {
-  text-align: left !important;
-  margin-left: 0px;
-}
 
 .custo {
   color: #F44336;
@@ -61,3 +44,14 @@
   opacity: 0.54;
   font-size: 16px;
 }
+
+
+.mat-card {
+  display: flex;
+  flex-direction: column;
+margin: 10px;
+  height: 311px !important;
+  width: 399px !important;
+}
+
+

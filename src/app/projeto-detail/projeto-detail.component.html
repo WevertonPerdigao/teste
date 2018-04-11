@@ -1,18 +1,22 @@
 <mat-tab-group (selectedTabChange)="onLinkClick($event)">
 
-  <mat-tab label="INFORMAÇÕES GERAIS" class="mat-tab-label">
+  <mat-tab label="INFORMAÇÕES GERAIS">
+    <div class="info-gerais">
+      <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
+                              [diasEmUso]="qtdDiasUtilizados" [percCronograma]="percCronogramaUtilizado">
+      </app-projeto-cronograma>
 
-    <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
-                            [diasEmUso]="qtdDiasUtilizados" [percCronograma]="percCronogramaUtilizado">
-    </app-projeto-cronograma>
+      <app-projeto-orcamento [custoTotal]="projeto.custo"
+                             [valorTotal]="projeto.projValor">
 
-    <app-projeto-orcamento [custoTotal]="projeto.custo"
-                           [valorTotal]="projeto.projValor">
+      </app-projeto-orcamento>
+      <app-projeto-contatos></app-projeto-contatos>
+      <app-projeto-equipe></app-projeto-equipe>
+      <app-justificativa></app-justificativa>
+      <app-escopo></app-escopo>
 
-    </app-projeto-orcamento>
-    <app-projeto-contatos></app-projeto-contatos>
-    <app-projeto-equipe></app-projeto-equipe>
 
+    </div>
   </mat-tab>
   <mat-tab label="ORÇAMENTOS">
     <app-orcamento-slider [custoTotal]="projeto.custo"

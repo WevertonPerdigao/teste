@@ -40,7 +40,6 @@ import {MenusComponent} from './menus/menus.component';
 import {OrcamentoComponent} from './orcamento/orcamento.component';
 import {RelatoriosComponent} from './relatorios/relatorios.component';
 import {ProjetosComponent} from './projetos/projetos.component';
-import {ProjetoComponent} from './projetos/projeto/projeto.component';
 import {RangeSliderComponent} from './range-slider/range-slider.component';
 import {ProjetoDispendioComponent} from './projeto-dispendio/projeto-dispendio.component';
 import {ProjetoDetailComponent} from './projeto-detail/projeto-detail.component';
@@ -62,6 +61,8 @@ import {FuncionarioCreateComponent} from './funcionario-create/funcionario-creat
 import {ApplicationErrorHandler} from './app.error-handler';
 import {LocalStorageModule} from '@ngx-pwa/local-storage';
 import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/atividade-create/atividade-create.component';
+import { EscopoComponent } from './projeto-detail/informacoes-gerais-projeto/escopo/escopo.component';
+import { JustificativaComponent } from './projeto-detail/informacoes-gerais-projeto/justificativa/justificativa.component';
 
 
 @NgModule({
@@ -73,8 +74,7 @@ import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/ativ
     OrcamentoComponent,
     RelatoriosComponent,
     ProjetosComponent,
-    ProjetoComponent,
-    MenusComponent,
+     MenusComponent,
     HeaderComponent,
     RangeSliderComponent,
     ProjetoDispendioComponent,
@@ -95,6 +95,8 @@ import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/ativ
     ProjetoCreateComponent,
     FuncionarioCreateComponent,
     AtividadeCreateComponent,
+    EscopoComponent,
+    JustificativaComponent,
   ],
   imports: [
     CommonModule,
