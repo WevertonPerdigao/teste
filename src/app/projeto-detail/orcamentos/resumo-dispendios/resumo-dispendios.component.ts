@@ -15,5 +15,4 @@ export class ResumoDispendiosComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

@@ -37,9 +37,7 @@ import {NotFoundComponent} from './not-found/not-found.component';
 import {FooterComponent} from './footer/footer.component';
 import {MenuComponent} from './menus/menu/menu.component';
 import {MenusComponent} from './menus/menus.component';
-import {AtividadesComponent} from './atividades/atividades.component';
 import {OrcamentoComponent} from './orcamento/orcamento.component';
-import {CronogramaComponent} from './cronograma/cronograma.component';
 import {RelatoriosComponent} from './relatorios/relatorios.component';
 import {ProjetosComponent} from './projetos/projetos.component';
 import {ProjetoComponent} from './projetos/projeto/projeto.component';
@@ -62,19 +60,17 @@ import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
 import {ProjetoCreateComponent} from './projeto-create/projeto-create.component';
 import {FuncionarioCreateComponent} from './funcionario-create/funcionario-create.component';
 import {ApplicationErrorHandler} from './app.error-handler';
-import { LocalStorageModule } from '@ngx-pwa/local-storage';
-import { AtividadeCreateComponent } from './projeto-detail/projeto-atividades/atividade-create/atividade-create.component';
+import {LocalStorageModule} from '@ngx-pwa/local-storage';
+import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/atividade-create/atividade-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-        NotFoundComponent,
+    NotFoundComponent,
     FooterComponent,
     MenuComponent,
-    AtividadesComponent,
     OrcamentoComponent,
-    CronogramaComponent,
     RelatoriosComponent,
     ProjetosComponent,
     ProjetoComponent,
