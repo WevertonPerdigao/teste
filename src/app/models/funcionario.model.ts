@@ -7,22 +7,22 @@ import {Unidade} from './Unidade.model';
 
 export class Funcionario {
   funcId: number;
-  funcMatricula: number;
+  funcMatricula?: number;
   funcNome: string;
-  funcCpf: string;
+  funcCpf?: string;
   funcEmail: string;
   funcSenha: string;
-  funcDescricao: string;
-  funcDataAdmissão: Date;
-  funcAprovador: boolean;
-  funcSalario: number;
-  funcHorasMes: number;
-  funcCargId: Cargo;
-  funcFuncId: Funcao;
-  funcSetoId: Setor;
-  funcPerfId: Perfil;
-  funcStfuId: StatusFuncionario;
-  funcUnidId: Unidade;
+  funcDescricao?: string;
+  funcDataAdmissão?: Date;
+  funcAprovador?: boolean;
+  funcSalario?: number;
+  funcHorasMes?: number;
+  funcCargId?: Cargo;
+  funcFuncId?: Funcao;
+  funcSetoId?: Setor;
+  funcPerfId?: Perfil;
+  funcStfuId?: StatusFuncionario;
+  funcUnidId?: Unidade;
 
   public construtor(funcNome: string) {
     this.funcNome = funcNome;

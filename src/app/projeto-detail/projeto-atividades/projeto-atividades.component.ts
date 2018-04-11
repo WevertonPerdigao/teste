@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort} from '@angular/material';
+import {Projetoatividade} from '../../models/projetoatividade.model';
+import {ProjetoatividadeService} from '../../services/projetoatividade.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-projeto-atividades',
   templateUrl: './projeto-atividades.component.html',
   styleUrls: ['./projeto-atividades.component.scss']
 })
-export class ProjetoAtividadesComponent implements OnInit {
+export class ProjetoAtividadesComponent {
 
-  constructor() { }
+  @Input() atividades: Projetoatividade[];
+  @Input() projId: number;
+  displayedColumns = ['atividade', 'membros', 'prazo'];
 
-  ngOnInit() {
+
+  constructor(private projetoatividadeService: ProjetoatividadeService,
+              private route: ActivatedRoute,
+              private router: Router) {
+  }
+
+  goToAtividadeCreate() {
+    this.router.navigate(['/atividade-create/', this.projId]);
   }
 
 }

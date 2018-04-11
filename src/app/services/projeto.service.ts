@@ -10,7 +10,8 @@ export class ProjetoService {
   }
 
   listProjetosByUserId(userId: number): Observable<Projeto[]> {
-    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos/funcionario/${userId}`);
+    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos`);
+   // return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos/funcionario/${userId}`);
   }
 
   listProjetos(): Observable<Projeto[]> {
@@ -22,7 +23,6 @@ export class ProjetoService {
   }
   createProjeto(projeto: Projeto): Observable<Projeto> {
     return this.http.post<Projeto>(`${GPITBAM_API}/projetos/salvar`, projeto);
-
   }
 
 }

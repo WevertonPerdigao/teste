@@ -2,22 +2,70 @@
   <a routerLink="/projeto-create" mat-button>NOVO PROJETO</a>
 </div>
 
-<div fxLayout="row"
-     fxLayoutGap="10px"
-     fxLayoutGap.xs="0"
-     fxLayout.xs="column"
-     fxLayoutAlign="left"
-     fxFlexFill class="container">
+<div class="content-projetos">
+
+  <mat-card *ngFor="let projeto of projetos" (click)="goToProjectDetail(projeto)">
+
+    <mat-card-header>
+
+      <mat-card-title>
+        <span class="title">{{projeto.projSiprId.siprNome.toUpperCase()}}</span>
+      </mat-card-title>
+
+      <mat-card-subtitle>
+        <span style="font-size: 18px;margin-top: 0px;color: #000000">{{projeto.projNome}}</span>
+      </mat-card-subtitle>
+
+    </mat-card-header>
+
+    <mat-card-content>
+      <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
+      <p style="font-size: 18px;margin-top: 0px;color: #000000">{{projeto.projFuncId.funcNome}}</p>
+      <mat-divider></mat-divider>
+      <div class="cronograma">
+        <p style="margin-bottom: 20px">Cronograma</p>
+        <app-range-slider [minParam]="0" [maxParam]="100"
+                          [valueParam]="projeto.cronograma">
+        </app-range-slider>
+      </div>
+
+      <div class="custo">
+        <p style="margin-bottom: 20px">Custo</p>
+        <app-range-slider [minParam]="0" [maxParam]="100"
+                          [valueParam]="((projeto.custo * 100)/projeto.projValor).toFixed(2)">
+        </app-range-slider>
+      </div>
 
 
-  <div *ngFor="let projeto of projetos">
-    <app-projeto class="projeto" [projeto]="projeto"></app-projeto>
-  </div>
-  <div *ngIf="projetos?.length === 0">
-    <p>
-      Funcionário não faz parte de nenhum projeto
-    </p>
-  </div>
+      <mat-divider></mat-divider>
+
+      <div class="custo" *ngIf="projeto.custo && projeto.custo>0; else cadastrar ">
+        <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
+        <p style="font-size: 20px;margin-top: 0px;">{{projeto.custo | currency: 'BRL':
+          'symbol' }}</p>
+      </div>
+      <ng-template #cadastrar>
+        <p class="cadastrar">COMPLETE O CADASTRO</p>
+      </ng-template>
+
+
+      <div class="orcamento">
+        <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
+        <p style="font-size: 20px;margin-top: 0px;">{{projeto.projValor | currency: 'BRL':
+          'symbol'}}</p>
+      </div>
+
+    </mat-card-content>
+  </mat-card>
 
 </div>
+
+
+<div *ngIf="projetos?.length === 0">
+  <p>
+    Funcionário não faz parte de nenhum projeto
+  </p>
+</div>
+
+
 

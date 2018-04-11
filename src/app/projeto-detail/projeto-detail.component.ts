@@ -1,10 +1,11 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Utils} from '../utils/utils';
 import {ProjetoDispendioService} from '../services/projetodispendio.service';
 import 'rxjs/add/observable/forkJoin';
+import {MatTabChangeEvent} from '@angular/material';
 
 @Component({
   selector: 'app-projeto-detail',
@@ -17,12 +18,11 @@ export class ProjetoDetailComponent implements OnInit {
   qtdDiasProjeto = 0;
   qtdDiasUtilizados = 0;
   percCronogramaUtilizado = 0;
-  listDispendioNome: string[] = [];
-  listDispendioValor: number[] = [];
 
   constructor(private projetoService: ProjetoService,
               private projetoDispendioService: ProjetoDispendioService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -31,8 +31,15 @@ export class ProjetoDetailComponent implements OnInit {
         this.projeto = projeto;
         this.setPropertyCronograma();
       });
+  }
 
-
+  onLinkClick(event: MatTabChangeEvent) {
+    console.log('onLinkClick');
+    switch (event.index) {
+      case 2:
+        console.log('case 2');
+      // this.router.navigate(['../atividades'], {relativeTo: this.activatedRoute}); não funcionando
+    }
   }
 
   setPropertyCronograma() {

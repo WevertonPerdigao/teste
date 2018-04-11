@@ -1,6 +1,6 @@
 // modules
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, LOCALE_ID} from '@angular/core';
+import {NgModule, LOCALE_ID, ErrorHandler} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialModule} from './material/material.module';
 import {RouterModule, PreloadAllModules} from '@angular/router';
@@ -27,8 +27,11 @@ import {FuncionarioService} from './services/funcionario.service';
 import {NotificationService} from './services/notification.service';
 import {TipoprojetoService} from './services/tipoprojeto.service';
 import {LoggedInGuard} from './login/loggedin.guard';
+import {CargoService} from './services/cargo.service';
+import {PerfilService} from './services/perfil.service';
+import {ProjetoatividadeService} from './services/projetoatividade.service';
 
-import {HomeComponent} from './home/home.component';
+// compoonents
 import {HeaderComponent} from './header/header.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {FooterComponent} from './footer/footer.component';
@@ -55,16 +58,18 @@ import {ResumoDispendiosComponent} from './projeto-detail/orcamentos/resumo-disp
 import {SolicitacoesComponent} from './projeto-detail/orcamentos/solicitacoes/solicitacoes.component';
 import {LoginComponent} from './login/login.component';
 import {FuncionariosComponent} from './funcionarios/funcionarios.component';
-import {FuncionarioComponent} from './funcionarios/funcionario/funcionario.component';
 import {SnackbarComponent} from './shared/messages/snackbar/snackbar.component';
 import {ProjetoCreateComponent} from './projeto-create/projeto-create.component';
+import {FuncionarioCreateComponent} from './funcionario-create/funcionario-create.component';
+import {ApplicationErrorHandler} from './app.error-handler';
+import { LocalStorageModule } from '@ngx-pwa/local-storage';
+import { AtividadeCreateComponent } from './projeto-detail/projeto-atividades/atividade-create/atividade-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    NotFoundComponent,
+        NotFoundComponent,
     FooterComponent,
     MenuComponent,
     AtividadesComponent,
@@ -90,9 +95,10 @@ import {ProjetoCreateComponent} from './projeto-create/projeto-create.component'
     SolicitacoesComponent,
     LoginComponent,
     FuncionariosComponent,
-    FuncionarioComponent,
     SnackbarComponent,
     ProjetoCreateComponent,
+    FuncionarioCreateComponent,
+    AtividadeCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -103,10 +109,12 @@ import {ProjetoCreateComponent} from './projeto-create/projeto-create.component'
     FlexLayoutModule,
     HttpClientModule,
     ReactiveFormsModule,
+    LocalStorageModule,
     ChartsModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},
+    {provide: ErrorHandler, useClass: ApplicationErrorHandler},
     MenuService,
     ProjetoService,
     SituacaoProjetoService,
@@ -115,7 +123,10 @@ import {ProjetoCreateComponent} from './projeto-create/projeto-create.component'
     LoginService,
     NotificationService,
     LoggedInGuard,
-    TipoprojetoService
+    TipoprojetoService,
+    CargoService,
+    PerfilService,
+    ProjetoatividadeService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,14 @@
- <div class="content-funcionarios" >
-  <mat-card  *ngFor="let funcionario of funcionarios" >
+<div class="flex-end">
+
+  <a routerLink="/funcionario-create" mat-button>NOVO USUÁRIO</a>
+
+</div>
+
+<div class="content-funcionarios">
+
+  <mat-card *ngFor="let funcionario of funcionarios" (click)="goToUsuarioDetail(funcionario)">
     <mat-card-header>
+
       <mat-card-title>
         <span class="title">{{funcionario.funcNome}}</span>
       </mat-card-title>
@@ -10,7 +18,7 @@
     <mat-card-content>
       <mat-divider></mat-divider>
       <p>{{funcionario.funcEmail}}</p>
-      <p>{{funcionario.funcFuncId?.funcNome}}</p>
+      <p>{{funcionario.funcCargId?.cargNome}}</p>
     </mat-card-content>
   </mat-card>
- </div>
+</div>

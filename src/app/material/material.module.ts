@@ -19,7 +19,8 @@ import {
   MatDividerModule,
   MatDatepickerModule,
   MatAutocompleteModule,
-  MatChipsModule
+  MatChipsModule,
+  MatTableModule
 } from '@angular/material';
 
 
@@ -41,7 +42,8 @@ import {
     MatSliderModule,
     MatDatepickerModule,
     MatAutocompleteModule,
-    MatChipsModule
+    MatChipsModule,
+    MatTableModule
   ],
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at

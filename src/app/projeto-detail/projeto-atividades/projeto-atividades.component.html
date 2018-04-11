@@ -1,0 +1,30 @@
+<div class="flex-end">
+  <a (click)="goToAtividadeCreate()" mat-button>NOVA ATIVIDADE</a>
+
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="atividades">
+
+    <ng-container matColumnDef="atividade">
+      <mat-header-cell *matHeaderCellDef>Atividades</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.nome}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="membros">
+      <mat-header-cell *matHeaderCellDef>Membros</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.pratAtividadeMembro?.funcNome}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="prazo">
+      <mat-header-cell *matHeaderCellDef>Prazo</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.data_inicial}} {{element.data_final}}</mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+

@@ -1,13 +1,9 @@
+import {Tipodispendio} from './tipodispendio.model';
+
 export interface ProjetoDispendio {
   prdiId: number;
-  prdiTidiId: number;
-  prdiProjId: number;
-  prdiTituloFatura: string;
+  prdiTidiId: Tipodispendio;
   prdiDescricao: string;
-  prdiJustificativa: string;
-  prdiCnpj: string;
-  prdiDataNotaFiscal: Date;
-  prdiNotaFiscal: string;
-  prdiDataPagamento: Date;
   prdiValor: number;
+  prdiTituloFatura: string;
 }

@@ -9,9 +9,7 @@ import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 export class ResumoDispendiosComponent implements OnInit {
 
 
-  @Input() listDispendios: string[];
-  @Input() listValorDispendio: string[];
-
+  @Input() dispendios: ProjetoDispendio[];
   constructor() {
   }
 

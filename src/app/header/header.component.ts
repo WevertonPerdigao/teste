@@ -24,9 +24,11 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.isLogin = this.loginService.isLoggedIn();
-    this.isLoggedIn$ = this.loginService.isLoggedIn2;
   }
 
+// getNomeUser(){
+//   return this.loginService.getNomeUser();
+// }
   onLogout() {
     this.loginService.logout();
   }

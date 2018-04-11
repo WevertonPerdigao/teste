@@ -1,11 +1,49 @@
-.content {
-  min-width: 300px;
-  min-height: 400px;
+.content-projetos {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.projeto {
-  padding-top: 20px;
-  text-align: center
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  height: 380px !important;
+  width: 282px !important;
+
+}
+
+.mat-card .mat-card-content {
+  flex: 1;
+  padding: 0.25em 0.3em 0;
+}
+
+.mat-card .mat-card-content p {
+  font-size: 1em;
+  line-height: 1.055em;
+  margin-bottom: 0.5em;
+}
+
+.title {
+  margin-bottom: 0.1em;
+  font-family: "Open Sans", "Condensed Bold";
+  font-weight: bold;
+  color: #00C853;
+  font-size: 12px;
+
+}
+
+@media only screen and (min-width: 37.50em) {
+  .mat-card {
+    max-width: calc(40% - 20px);
+  }
+}
+
+@media only screen and (min-width: 75em) {
+  .mat-card {
+    width: calc(23.33333% - 20px);
+  }
 }
 
 .flex-end {
@@ -18,7 +56,31 @@
 
 .mat-button {
   font-family: "Open Sans", "Condensed Bold";
-  font-size: 16px;
+  font-size: 16px !important;
   font-weight: bold;
-  opacity: 1;
+}
+
+.orcamento {
+  color: #000000;
+}
+
+.dispendio {
+  color: #03A9F4;
+}
+
+.custo {
+  color: #00C853;
+}
+
+.cronograma {
+  color: #00C853;
+}
+
+.cadastrar {
+  font-family: "Open Sans", "Condensed Bold";
+  font-size: 16px;
+  color: #388E3C;
+  margin-top: 10px;
+  font-weight: bold;
+
 }

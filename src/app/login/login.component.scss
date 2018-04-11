@@ -35,14 +35,11 @@
   width: 100%;
 }
 
-.ng-invalid {
-  color: #FFEA82;
-}
 .mat-error {
   color: #FFEA82;
 }
 
-.mat-form-field-invalid .mat-input-element {
+.mat-form-field-invalid{
   color: #FFEA82 !important;
  }
 

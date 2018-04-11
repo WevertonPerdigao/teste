@@ -1,0 +1,78 @@
+<div class="main-div">
+
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title style="opacity: 0.87 !important;"> Nova Atividade</mat-card-title>
+      <mat-divider></mat-divider>
+
+      <form [formGroup]="atividadeForm">
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Título" type="text" formControlName="nome" required>
+          <mat-error *ngIf="isFieldInvalid('nome')">
+            Informe um título para o projeto
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let tag of chips" (remove)="remove(tag)">
+              {{tag.funcNome}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" placeholder="Membros"
+                   [matChipInputAddOnBlur]="false"
+                   [matAutocomplete]="autocompleteMembros"
+                   #chipInput>
+          </mat-chip-list>
+          <mat-autocomplete #autocompleteMembros="matAutocomplete"
+                            [displayWith]="displayFuncionario" (optionSelected)="addFuncionario($event)">
+            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario" class="options">
+              <span>{{ funcionario.funcNome }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
+        <table class="full-width-input" cellspacing="0">
+          <tr>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker" placeholder="Prazo" formControlName="data_inicial" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="isFieldInvalid('data_inicial')">Informe o prazo</mat-error>
+              </mat-input-container>
+            </td>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker2" formControlName="data_final" required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+
+                <mat-error *ngIf="isFieldInvalid('data_final')">Informe o prazo</mat-error>
+              </mat-input-container>
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+      <div class="content">
+        <a mat-button routerLink="">
+          Cancelar
+        </a>
+        <button mat-raised-button (click)="salvarAtividade(atividadeForm.value)" type="submit"
+        >
+          CRIAR
+        </button>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+
+
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+  </mat-card>
+</div>

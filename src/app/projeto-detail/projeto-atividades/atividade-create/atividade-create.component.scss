@@ -20,8 +20,9 @@
 }
 
 .mat-card {
-  max-width: 717px;
-  max-height: 343px;
+  resize: horizontal;
+  width: 667px;
+  height: 293px;
   margin: auto;
   text-align: left;
 }

@@ -1,0 +1,72 @@
+<div class="main-div">
+
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title style="opacity: 0.87 !important;"> Novo Usuário</mat-card-title>
+      <mat-divider></mat-divider>
+
+      <form [formGroup]="funcionarioForm">
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Nome" type="text" formControlName="funcNome" required>
+          <mat-error *ngIf="isFieldInvalid('funcNome')">
+            Informe o nome do usuário
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Cargo/função" type="text"
+                 formControlName="funcCargId" [matAutocomplete]="autoCargo" required>
+          <mat-autocomplete #autoCargo="matAutocomplete" [displayWith]="displayCargo">
+            <mat-option *ngFor="let cargo of cargos" [value]="cargo" class="options">
+              {{ cargo.cargNome }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Perfil" type="text"
+                 formControlName="funcPerfId" [matAutocomplete]="auto" required>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayPerfil">
+            <mat-option *ngFor="let perfil of perfils" [value]="perfil" class="options">
+              {{ perfil.perfNome }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="E-mail" type="email" formControlName="funcEmail" required>
+          <mat-error *ngIf="isFieldInvalid('funcEmail')">
+            {{getErrorMessage()}}
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput type="password" placeholder="Senha"
+                 formControlName="funcSenha" required>
+          <mat-error *ngIf="isFieldInvalid('funcSenha')">
+            Informa uma senha
+          </mat-error>
+        </mat-input-container>
+      </form>
+    </mat-card-content>
+
+
+    <mat-card-actions>
+
+      <div class="content">
+        <a mat-button routerLink="">
+          Cancelar
+        </a>
+        <button mat-raised-button color="primary" (click)="onSubmit(funcionarioForm.value)" type="submit"
+                [disabled]="funcionarioForm.invalid">
+          CRIAR
+        </button>
+      </div>
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+  </mat-card>
+</div>

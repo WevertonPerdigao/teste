@@ -45,7 +45,7 @@ export class ProjetoCreateComponent implements OnInit {
 
     this.projetoForm = this.fb.group({
       projNome: this.fb.control('', [Validators.required]),
-      projDataInicial: this.fb.control('', [Validators.required]),// validar data
+      projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.fb.control('', [Validators.required]),
       projValor: this.fb.control('', [Validators.required])
@@ -70,7 +70,6 @@ export class ProjetoCreateComponent implements OnInit {
     }
 
   }
-
 
   displayFuncionario(funcionario?: Funcionario): string | undefined {
     return funcionario ? funcionario.funcNome : undefined;
@@ -106,7 +105,6 @@ export class ProjetoCreateComponent implements OnInit {
   }
 
   add(event: MatAutocompleteSelectedEvent): void {
-    console.log('add por MatAutocompleteSelectedEvent' + event.option.value);
     const t: Tipoprojeto = event.option.value;
     this.chips.push(t);
     this.chipInput['nativeElement'].blur();

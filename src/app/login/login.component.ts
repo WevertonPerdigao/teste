@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
       (this.loginForm.get(field).untouched && this.formSubmit)
     );
   }
+
   getErrorMessage() {
     return this.loginForm.get('email').hasError('required') ? 'Informe um e-mail' :
       this.loginForm.get('email') ? 'Informe um e-mail válido' :
@@ -47,10 +48,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.loginService.login(new Login(this.loginForm.value.email, this.loginForm.value.senha))
       .subscribe(funcionario => this.notificationService.notify(`Olá, ${funcionario.funcNome}`),
-        response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message),
+        (error) => this.notificationService.notify(`O e-mail ou senha está incorreto`),
         () => {
-          this.router.navigate([atob(this.navigateTo)]);
+          this.router.navigate(['/projetos']);
         });
   }
 
