@@ -12,7 +12,7 @@ import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/ativ
 
 export const ROUTES: Routes = [
   {path: '', redirectTo: 'projetos', pathMatch: 'full'}, // canActivate: [LoggedInGuard]
-  {path: 'projetos', component: ProjetosComponent, canLoad: [LoggedInGuard], canActivate: [LoggedInGuard]},// , canActivate: [LoggedInGuard]
+  {path: 'projetos', component: ProjetosComponent},// , canActivate: [LoggedInGuard]
   {path: 'login', component: LoginComponent},
   {path: 'login/:to', component: LoginComponent},
   {path: 'funcionarios', component: FuncionariosComponent},
