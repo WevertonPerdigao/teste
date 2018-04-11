@@ -5,8 +5,8 @@
   </mat-card-header>
 
   <mat-card-content>
-    <p style="font-size: 12px;margin-bottom: 0px;">Coordenador</p>
-    <p style="font-size: 20px;margin-top: 0px;">Emanuel Junior da Silveira</p>
+    <span style="font-size: 12px;margin-bottom: 10px;">Coordenador</span>
+    <p style="font-size: 20px;margin-top: 10px;">Emanuel Junior da Silveira</p>
     <mat-divider></mat-divider>
 
     <p>Cronograma</p>
@@ -22,18 +22,20 @@
 
     </app-range-slider>
 
-
-  </mat-card-content>
-  <mat-card-footer>
     <mat-divider></mat-divider>
     <div class="Total dispendio">
-      <p style="font-size: 12px;margin-bottom: 0px;">Total Dispêndios</p>
+      <p style="font-size: 12px;margin-bottom: 10px;">Total Dispêndios</p>
       <p style="font-size: 20px;margin-top: 0px;">{{2000 | currency: 'BRL': 'symbol' }}</p>
     </div>
     <div class="orcamento">
-      <p style="font-size: 12px;margin-bottom: 0px;">Orçamento</p>
-      <p style="font-size: 20px;margin-top: 0px;">{{1000 | currency: 'BRL': 'symbol'}}</p>
+      <p style="font-size: 12px;margin-bottom: 10px !important;">Orçamento</p>
+      <p style="font-size: 20px;margin-bottom: 10px">{{1000 | currency: 'BRL': 'symbol'}}</p>
     </div>
+
+
+  </mat-card-content>
+  <mat-card-footer>
+
   </mat-card-footer>
 </mat-card>
 

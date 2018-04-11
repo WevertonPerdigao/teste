@@ -12,9 +12,9 @@ export class RangeSliderComponent implements OnInit {
 
   @Input() valueParam: number;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
 }
