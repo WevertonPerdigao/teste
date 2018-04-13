@@ -6,6 +6,10 @@ import {Utils} from '../utils/utils';
 import {ProjetoDispendioService} from '../services/projetodispendio.service';
 import 'rxjs/add/observable/forkJoin';
 import {MatTabChangeEvent} from '@angular/material';
+import {TipodispendioService} from '../services/tipodispendio.service';
+import {Tipodispendio} from '../models/tipodispendio.model';
+import {Observable} from 'rxjs/Observable';
+import {ProjetoDispendio} from '../models/projetodispendio.model';
 
 @Component({
   selector: 'app-projeto-detail',
@@ -18,26 +22,40 @@ export class ProjetoDetailComponent implements OnInit {
   qtdDiasProjeto = 0;
   qtdDiasUtilizados = 0;
   percCronogramaUtilizado = 0;
+  dispendiosPendentes: Observable<ProjetoDispendio[]>;
+  tiposDispendiosValor: Observable<Tipodispendio[]>;
+  projId;
+
 
   constructor(private projetoService: ProjetoService,
               private projetoDispendioService: ProjetoDispendioService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private tipoDispendioService: TipodispendioService) {
   }
 
   ngOnInit() {
-    this.projetoService.findByProjId(this.activatedRoute.snapshot.params['id'])
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.projId = params['id'];
+    });
+
+    console.log('id projeto => ' + this.projId);
+
+    this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
         this.setPropertyCronograma();
       });
+
+    this.tiposDispendiosValor = this.tipoDispendioService.listTipoDispendioByProjeto(this.projId );
+    this.dispendiosPendentes = this.projetoDispendioService.listProjetoDispendioByProjId(this.projId );
   }
 
   onLinkClick(event: MatTabChangeEvent) {
     console.log('onLinkClick');
     switch (event.index) {
       case 2:
-        console.log('case 2');
+        console.log('case 3');
       // this.router.navigate(['../atividades'], {relativeTo: this.activatedRoute}); não funcionando
     }
   }
@@ -68,8 +86,8 @@ export class ProjetoDetailComponent implements OnInit {
     }
   }
 
-  findProjetoValorByProjId(): void {
-    console.log('findProjetoValorByProjId');
+  goToDispendioCreate() {
+    this.router.navigate(['/dispendio-create/', this.projeto.projId]);
   }
 
 }

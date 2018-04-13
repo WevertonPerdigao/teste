@@ -1,22 +1,21 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Orçamento</mat-card-title>
-  </mat-card-header>
+  <mat-card-title style="margin-bottom: 0;">Orçamento</mat-card-title>
   <mat-card-content>
-    <app-pie-chart [chartData]="[valorTotal,custoTotal]"
-                   [chartLabel]="['Valor Total','Custo Total']"></app-pie-chart>
-    <div class="content valor">
-      <p>Verba Total</p>
-      <p>{{valorTotal }}</p>
-    </div>
+    <app-pie-chart [colors]="[{backgroundColor: ['#03A9F4', '#F44336']}]"
+                   [chartData]="[valorTotal,custoTotal]"
+                   [chartLabel]="['Verba Total','Custo Total']"></app-pie-chart>
 
-    <div class="content custo">
-      <p>Custo Total</p>
-      <p>{{custoTotal }}</p>
+    <div class="content valor" style="margin-top: -20px;">
+      <p>Verba Total</p>
+      <p>R$ {{valorTotal }}</p>
     </div>
-    <div class="content">
+    <div class="content custo" style="margin-top: -20px">
+      <p>Custo Total</p>
+      <p>R$ {{custoTotal }}</p>
+    </div>
+    <div class="content" style="margin-top: -30px">
       <p class="salto-text">Saldo</p>
-      <p class="saldo">{{(valorTotal - custoTotal) }}</p>
+      <p class="saldo">R$ {{(valorTotal - custoTotal) }}</p>
     </div>
   </mat-card-content>
 </mat-card>

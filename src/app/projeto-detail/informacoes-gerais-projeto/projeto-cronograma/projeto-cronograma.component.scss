@@ -10,17 +10,11 @@
 
 }
 
-.mat-card-link {
-  font-size: 16px;
-  font-weight: bold;
-  color: #388E3C;
-  font-family: 'Open Sans', 'Condensed Bold';
-}
-
 .mat-card-title {
   font-size: 20px;
-  font-family: 'Open Sans', 'Condensed Bold';
+  font-family: 'Open Sans', 'SemiBold';
   font-weight: bold;
+  color: #000000;
 }
 
 .left {
@@ -29,11 +23,12 @@
 
 .mat-card-header {
   text-align: left !important;
-  }
+}
+
 .mat-card {
   display: flex;
   flex-direction: column;
-margin: 10px;
-  height: 311px !important;
-  width: 399px !important;
+  margin: 10px;
+  height: 287px !important;
+  width: 375px !important;
 }

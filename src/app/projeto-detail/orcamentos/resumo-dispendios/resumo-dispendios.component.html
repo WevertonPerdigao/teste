@@ -1,20 +1,32 @@
-<div fxFlex="15%">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Resumo de Dispêndios</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div>
-        <!--   <p>Valores{{listDispendios}} depois</p>
-           <app-pie-chart [chartData]="listValorDispendio"
-                          [chartLabel]="listDispendios">
-           </app-pie-chart>!-->
-      </div>
+<mat-card>
+  <mat-card-title>Resumo de Dispêndios</mat-card-title>
+  <mat-card-content>
 
-      <div class="content">
+    <app-pie-chart [colors]="chartColors"
+                   [chartData]="listaTipoDispendioValor"
+                   [chartLabel]="listaTipoDispendioNome">
+    </app-pie-chart>
 
-      </div>
+    <table class="full-width" cellspacing="0">
+      <tr *ngFor="let dispendio of listaDispendio; let i = index" [ngStyle]="{'font-size.px':14}"
+         [style.color]="color[i]">
+        <td>
+          <span>
+         <mat-icon>fiber_manual_record</mat-icon>
+          </span>
+        </td>
+        <td>
+          <p>{{dispendio.tidiNome}}</p>
+        </td>
+        <td>
+          <p>{{dispendio.total | currency: 'BRL'}}</p>
+        </td>
+      </tr>
+    </table>
+
     </mat-card-content>
 
-  </mat-card>
-</div>
+  <mat-card-footer>
+    <a style="margin-bottom: -20px" class="mat-card-link center" routerLink="['/ativiades']">VER TODOS</a>
+  </mat-card-footer>
+</mat-card>

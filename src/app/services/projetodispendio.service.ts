@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 
 import {GPITBAM_API} from '../app.api';
 import {ProjetoDispendio} from '../models/projetodispendio.model';
+import {Observable} from 'rxjs/Observable';
+import {Projetoatividade} from '../models/projetoatividade.model';
 
 
 @Injectable()
@@ -12,11 +14,11 @@ export class ProjetoDispendioService {
   }
 
   listProjetoDispendioByProjId(projId: number) {
-    return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/ProjetoDispendios/${projId}`);
+    return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/projetos/dispendios/${projId}`);
   }
 
-  listProjetoDispendio() {
-    return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/ProjetoDispendios`);
+  createProjetoDispendio(projetoDispendio: ProjetoDispendio): Observable<ProjetoDispendio> {
+    return this.http.post<ProjetoDispendio>(`${GPITBAM_API}/projetos/adddispendio`, projetoDispendio);
   }
 }
 

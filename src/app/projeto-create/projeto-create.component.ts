@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../services/notification.service';
 import {ViewEncapsulation} from '@angular/core';
 import {DateAdapter} from '@angular/material/core';
@@ -14,6 +14,11 @@ import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
 import {SituacaoProjeto} from '../models/situacaoprojeto.model';
 import {Empresa} from '../models/empresa.model';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-projeto-create',
@@ -25,9 +30,8 @@ export class ProjetoCreateComponent implements OnInit {
 
   @ViewChild('chipInput') chipInput: MatInput;
   projetoForm: FormGroup;
-  private formSubmit: boolean;
-  navigateTo: string;
-  funcionarios: Funcionario[] = [];
+  projFuncId: FormControl;
+  funcionarios: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
   chips: Tipoprojeto[] = [];
   situacaoInicial: SituacaoProjeto = new SituacaoProjeto(1);
@@ -42,18 +46,23 @@ export class ProjetoCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
       projNome: this.fb.control('', [Validators.required]),
       projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
-      projFuncId: this.fb.control('', [Validators.required]),
+      projFuncId: this.projFuncId,
       projValor: this.fb.control('', [Validators.required])
     });
 
 
-    this.funcionarioService.listAllFuncionarios()
+    this.projFuncId.valueChanges.debounceTime(500)
+      .distinctUntilChanged()
+      .switchMap(searchTerm =>
+        this.funcionarioService.listAllFuncionarios(searchTerm)
+          .catch(error => Observable.from([])))
       .subscribe(funcionarios => this.funcionarios = funcionarios);
+
 
     this.tipoprojetoService.listAllTipos()
       .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 
 @Component({
   selector: 'app-solicitacoes',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SolicitacoesComponent implements OnInit {
 
-  constructor() { }
+  @Input() dispendiosPendentes: Observable<ProjetoDispendio[]>;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

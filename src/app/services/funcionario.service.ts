@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {GPITBAM_API} from '../app.api';
 import {Funcionario} from '../models/funcionario.model';
 import {Observable} from 'rxjs/Observable';
@@ -15,8 +15,12 @@ export class FuncionarioService {
     return this.http.get<Funcionario>(`${GPITBAM_API}/funcionarios/${funcId}`);
   }
 
-  listAllFuncionarios(): Observable<Funcionario[]> {
-    return this.http.get<Funcionario[]>(`${GPITBAM_API}/funcionarios`);
+  listAllFuncionarios(nome?: string): Observable<Funcionario[]> {
+    let params: HttpParams = undefined;
+    if (nome) {
+      params = new HttpParams().append('q', nome);
+    }
+    return this.http.get<Funcionario[]>(`${GPITBAM_API}/funcionarios`, {params: params});
   }
 
   create(funcionario: Funcionario): Observable<Funcionario> {

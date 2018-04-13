@@ -19,23 +19,25 @@
     </mat-card-header>
 
     <mat-card-content>
+
       <p style="font-size: 12px;">Coordenador</p>
       <p style="font-size: 18px;margin-top: 0px;color: #000000">{{projeto.projFuncId.funcNome}}</p>
+
       <mat-divider></mat-divider>
-      <div class="cronograma">
+
+  <div class="cronograma"><!-- lentidao aqui !-->
         <p style="margin-bottom: 20px">Cronograma</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
                           [valueParam]="projeto.cronograma">
         </app-range-slider>
       </div>
 
-      <div class="custo">
+      <div class="custo"><!-- lentidao aqui !-->
         <p style="margin-bottom: 20px">Custo</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
                           [valueParam]="((projeto.custo * 100)/projeto.projValor).toFixed(2)">
         </app-range-slider>
       </div>
-
 
       <mat-divider></mat-divider>
 
@@ -57,7 +59,6 @@
 
     </mat-card-content>
   </mat-card>
-
 </div>
 
 

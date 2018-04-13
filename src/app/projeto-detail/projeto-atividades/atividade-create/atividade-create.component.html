@@ -62,17 +62,11 @@
           Cancelar
         </a>
         <button mat-raised-button (click)="salvarAtividade(atividadeForm.value)" type="submit"
-        >
+                [disabled]="atividadeForm.invalid">
           CRIAR
         </button>
       </div>
     </mat-card-content>
 
-    <mat-card-actions>
-
-
-    </mat-card-actions>
-    <mat-card-footer>
-    </mat-card-footer>
   </mat-card>
 </div>

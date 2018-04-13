@@ -1,7 +1,7 @@
 <mat-tab-group (selectedTabChange)="onLinkClick($event)">
 
   <mat-tab label="INFORMAÇÕES GERAIS">
-    <div class="info-gerais">
+    <div class="flex">
       <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
                               [diasEmUso]="qtdDiasUtilizados" [percCronograma]="percCronogramaUtilizado">
       </app-projeto-cronograma>
@@ -19,13 +19,21 @@
     </div>
   </mat-tab>
   <mat-tab label="ORÇAMENTOS">
-    <app-orcamento-slider [custoTotal]="projeto.custo"
-                          [valorTotal]="projeto.projValor"
-                          [percOrcamento]="(((projeto.custo *100)/projeto.projValor).toFixed(2))">
-    </app-orcamento-slider>
+    <div class="flex-end">
+      <a (click)="goToDispendioCreate()" mat-button>NOVO DISPENDIO</a>
 
-    <app-resumo-dispendios [dispendios]="projeto.dispendios">
-    </app-resumo-dispendios>
+    </div>
+    <div class="flex">
+      <app-orcamento-slider [custoTotal]="projeto.custo"
+                            [valorTotal]="projeto.projValor"
+                            [percOrcamento]="(((projeto.custo *100)/projeto.projValor).toFixed(2))">
+      </app-orcamento-slider>
+
+      <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor">
+      </app-resumo-dispendios>
+
+      <app-solicitacoes [dispendiosPendentes]="dispendiosPendentes"></app-solicitacoes>
+    </div>
   </mat-tab>
 
   <mat-tab label="ATIVIDADES">

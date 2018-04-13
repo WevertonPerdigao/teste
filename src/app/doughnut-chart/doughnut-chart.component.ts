@@ -10,12 +10,13 @@ export class DoughnutChartComponent {
   // Doughnut
   @Input() chartLabel: string[];
   @Input() chartData: number[];
+  @Input() colors: any[];
+  @Input() doughnutChartType = 'doughnut';
 
   chartOptions = {
     responsive: true
   };
 
-  public doughnutChartType: string = 'doughnut';
 
   // events
   public chartClicked(e: any): void {

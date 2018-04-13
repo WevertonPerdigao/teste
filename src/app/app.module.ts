@@ -30,6 +30,7 @@ import {LoggedInGuard} from './login/loggedin.guard';
 import {CargoService} from './services/cargo.service';
 import {PerfilService} from './services/perfil.service';
 import {ProjetoatividadeService} from './services/projetoatividade.service';
+import {TipodispendioService} from './services/tipodispendio.service';
 
 // compoonents
 import {HeaderComponent} from './header/header.component';
@@ -61,8 +62,9 @@ import {FuncionarioCreateComponent} from './funcionario-create/funcionario-creat
 import {ApplicationErrorHandler} from './app.error-handler';
 import {LocalStorageModule} from '@ngx-pwa/local-storage';
 import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/atividade-create/atividade-create.component';
-import { EscopoComponent } from './projeto-detail/informacoes-gerais-projeto/escopo/escopo.component';
-import { JustificativaComponent } from './projeto-detail/informacoes-gerais-projeto/justificativa/justificativa.component';
+import {EscopoComponent} from './projeto-detail/informacoes-gerais-projeto/escopo/escopo.component';
+import {JustificativaComponent} from './projeto-detail/informacoes-gerais-projeto/justificativa/justificativa.component';
+import {DispendioCreateComponent} from './projeto-detail/orcamentos/dispendio-create/dispendio-create.component';
 
 
 @NgModule({
@@ -74,7 +76,7 @@ import { JustificativaComponent } from './projeto-detail/informacoes-gerais-proj
     OrcamentoComponent,
     RelatoriosComponent,
     ProjetosComponent,
-     MenusComponent,
+    MenusComponent,
     HeaderComponent,
     RangeSliderComponent,
     ProjetoDispendioComponent,
@@ -97,6 +99,7 @@ import { JustificativaComponent } from './projeto-detail/informacoes-gerais-proj
     AtividadeCreateComponent,
     EscopoComponent,
     JustificativaComponent,
+    DispendioCreateComponent,
   ],
   imports: [
     CommonModule,
@@ -124,7 +127,8 @@ import { JustificativaComponent } from './projeto-detail/informacoes-gerais-proj
     TipoprojetoService,
     CargoService,
     PerfilService,
-    ProjetoatividadeService
+    ProjetoatividadeService,
+    TipodispendioService
   ],
   bootstrap: [AppComponent]
 })

@@ -14,6 +14,7 @@ import {Router} from '@angular/router';
 export class ProjetosComponent implements OnInit {
 
   public projetos: Projeto[];
+  skipLocationChange?: boolean
 
   constructor(private projetoService: ProjetoService,
               private loginService: LoginService,
@@ -55,8 +56,7 @@ export class ProjetosComponent implements OnInit {
 
 
   goToProjectDetail(projeto: Projeto) {
-    this.router.navigate(['/projeto-detail/', projeto.projId]);
+    this.router.navigate(['/projeto-detail'],
+      {queryParams: {id: projeto.projId}, skipLocationChange: false});
   }
-
-
 }

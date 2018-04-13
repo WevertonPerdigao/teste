@@ -1,3 +1,35 @@
-<p>
-  solicitacoes works!
-</p>
+<mat-card>
+
+  <mat-card-header>
+    <mat-card-title> Solicitações</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content style="height: 605px; overflow-y: auto">
+    <table class="full-width" cellspacing="0">
+      <tr *ngFor="let dispendio of dispendiosPendentes| async">
+        <td>
+          <p> {{dispendio.prdiTituloFatura}}</p>
+        </td>
+        <td>
+          <p>{{dispendio.prdiValor | currency: 'BRL'}}</p>
+        </td>
+        <td>
+          <span style="color:#4CAF50;"><mat-icon>done</mat-icon></span>
+        </td>
+        <td><span style="color:#F44336;"> <mat-icon>clear</mat-icon></span>
+
+        </td>
+      </tr>
+    </table>
+
+    <!--   <p>Valores{{listDispendios}} depois</p>
+       <app-pie-chart [chartData]="listValorDispendio"
+                      [chartLabel]="listDispendios">
+       </app-pie-chart>!-->
+
+  </mat-card-content>
+  <mat-card-footer>
+    <a class="mat-card-link center" routerLink="['/ativiades']">VER TODOS</a>
+  </mat-card-footer>
+
+</mat-card>
