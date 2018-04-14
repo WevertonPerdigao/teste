@@ -14,10 +14,14 @@
           <p>{{dispendio.prdiValor | currency: 'BRL'}}</p>
         </td>
         <td>
-          <span style="color:#4CAF50;"><mat-icon>done</mat-icon></span>
+          <button mat-icon-button style="color:#4CAF50;" (click)="aprovar(dispendio)">
+            <mat-icon>done</mat-icon>
+          </button>
         </td>
-        <td><span style="color:#F44336;"> <mat-icon>clear</mat-icon></span>
-
+        <td>
+          <button mat-icon-button style="color:#F44336;" (click)="reprovar(dispendio)">
+            <mat-icon>clear</mat-icon>
+          </button>
         </td>
       </tr>
     </table>

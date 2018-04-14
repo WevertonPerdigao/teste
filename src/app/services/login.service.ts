@@ -38,6 +38,12 @@ export class LoginService {
     return this.myStorage.getItem('currentUser') != null;
   }
 
+
+  getFuncionario(): Funcionario {
+    this.funcionario = JSON.parse(localStorage.getItem('currentUser'));
+    return this.funcionario;
+  }
+
   getNomeUser(): string {
     this.funcionario = JSON.parse(localStorage.getItem('currentUser'));
     return this.funcionario.funcNome;

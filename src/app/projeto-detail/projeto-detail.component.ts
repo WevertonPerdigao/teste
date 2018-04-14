@@ -10,6 +10,8 @@ import {TipodispendioService} from '../services/tipodispendio.service';
 import {Tipodispendio} from '../models/tipodispendio.model';
 import {Observable} from 'rxjs/Observable';
 import {ProjetoDispendio} from '../models/projetodispendio.model';
+import {LoginService} from '../services/login.service';
+import {Funcionario} from '../models/funcionario.model';
 
 @Component({
   selector: 'app-projeto-detail',
@@ -31,7 +33,8 @@ export class ProjetoDetailComponent implements OnInit {
               private projetoDispendioService: ProjetoDispendioService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
-              private tipoDispendioService: TipodispendioService) {
+              private tipoDispendioService: TipodispendioService,
+              private loginService: LoginService) {
   }
 
   ngOnInit() {
@@ -47,8 +50,12 @@ export class ProjetoDetailComponent implements OnInit {
         this.setPropertyCronograma();
       });
 
-    this.tiposDispendiosValor = this.tipoDispendioService.listTipoDispendioByProjeto(this.projId );
-    this.dispendiosPendentes = this.projetoDispendioService.listProjetoDispendioByProjId(this.projId );
+    this.tiposDispendiosValor = this.tipoDispendioService.listTipoDispendioByProjeto(this.projId);
+    this.dispendiosPendentes = this.projetoDispendioService.listProjetoDispendioByProjId(this.projId);
+
+    //funcionario = this.loginService.getFuncionario();
+
+   // this.dispendiosPendentes = this.projetoDispendioService.listDispendioByProjIdAndValorInicialAndValorFinal(this.loginService.getFuncionario().);
   }
 
   onLinkClick(event: MatTabChangeEvent) {
@@ -89,6 +96,7 @@ export class ProjetoDetailComponent implements OnInit {
   goToDispendioCreate() {
     this.router.navigate(['/dispendio-create/', this.projeto.projId]);
   }
+
 
 }
 

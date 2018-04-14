@@ -39,6 +39,14 @@
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
+          <input matInput placeholder="Verba Inicial" class="right-align"
+                 type="number" formControlName="prdiValor" required>
+          <mat-error *ngIf="isFieldInvalid('prdiValor')">
+            Informe valor do dispendio
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
           <input matInput placeholder="Nota fiscal nro" type="text" formControlName="prdiNotaFiscal" required>
           <mat-error *ngIf="isFieldInvalid('prdiNotaFiscal')">
             Informe a justificativa

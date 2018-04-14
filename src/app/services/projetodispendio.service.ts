@@ -17,8 +17,17 @@ export class ProjetoDispendioService {
     return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/projetos/dispendios/${projId}`);
   }
 
+
+  listDispendioByProjIdAndValorInicialAndValorFinal(projId: number, valorInicial: number, valorFinal: number, status: number) {
+    return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/projetos/dispendios/${projId}`);
+  }
+
   createProjetoDispendio(projetoDispendio: ProjetoDispendio): Observable<ProjetoDispendio> {
     return this.http.post<ProjetoDispendio>(`${GPITBAM_API}/projetos/adddispendio`, projetoDispendio);
+  }
+
+  alterStatusDispendio(projetoDispendio: ProjetoDispendio) {
+    return this.http.put<ProjetoDispendio>(`${GPITBAM_API}/projetos/adddispendio`, projetoDispendio);
   }
 }
 

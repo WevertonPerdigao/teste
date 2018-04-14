@@ -46,6 +46,7 @@ export class DispendioCreateComponent implements OnInit {
       prdiDataNotaFiscal: this.fb.control('', [Validators.required]),
       prdiDataPagamento: this.fb.control('', [Validators.required]),
       prdiAnexoId: this.fb.control('', []),
+      prdiValor: this.fb.control('', [Validators.required]),
     });
 
     this.tipodispendioService.listAll()

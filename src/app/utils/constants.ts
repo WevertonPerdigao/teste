@@ -7,4 +7,9 @@ export class Constants {
   static readonly EM_ANDAMENTO = 3;
 
   static readonly CONCLUIDO = 4;
+
+  static readonly APROVADO = 1;
+
+  static readonly REPROVADO = 0;
+
 }
