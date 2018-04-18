@@ -1,0 +1,70 @@
+<div class="main-div">
+
+  <mat-card class="mat-card-dispendio">
+    <mat-card-content>
+
+      <form [formGroup]="dispendioForm">
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Título" type="text" formControlName="prdiTituloFatura" required>
+
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Descrição" type="text" formControlName="prdiDescricao" required>
+
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Justificativa" type="text" formControlName="prdiJustificativa" required>
+
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Verba Inicial" class="right-align"
+                 type="number" formControlName="prdiValor" required>
+
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Nota fiscal nro" type="text" formControlName="prdiNotaFiscal" required>
+
+        </mat-input-container>
+
+
+        <table class="full-width-input" cellspacing="0">
+          <tr>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker" placeholder="Data da nota" formControlName="prdiDataNotaFiscal"
+                       required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-input-container>
+            </td>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker2" placeholder="Data do pagamento"
+                       formControlName="prdiDataPagamento" required>
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-input-container>
+            </td>
+          </tr>
+        </table>
+
+      </form>
+
+      <div class="flex-end">
+        <button mat-button (click)="aprovar()">
+          <span class="action-buttons">APROVAR</span>
+        </button>
+        <button mat-button (click)="reprovar()">
+          <span class="action-buttons">REPROVAR</span>
+        </button>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+</div>

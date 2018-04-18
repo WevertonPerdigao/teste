@@ -2,6 +2,7 @@ import {Tipodispendio} from './tipodispendio.model';
 import {Projeto} from './projeto.model';
 import {Projetodispendioanexo} from './projetodispendioanexo';
 import {Projetodispendiostatus} from './projetodispendiostatus.model';
+import {Funcionario} from './funcionario.model';
 
 export interface ProjetoDispendio {
   prdiId: number;
@@ -13,8 +14,9 @@ export interface ProjetoDispendio {
   prdiNotaFiscal: string;
   prdiDataNotaFiscal: Date;
   prdiDataPagamento: Date;
-  prdiProjId : Projeto;
+  prdiProjId: Projeto;
   prdiAnexoId: Projetodispendioanexo;
-  prdsPrdiId : Projetodispendiostatus;
+  prdsPrdiId: Projetodispendiostatus;
+  prdiFuncId?: Funcionario;
   total?: number;
 }

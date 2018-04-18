@@ -16,7 +16,7 @@
 
 .mat-card .mat-card-content {
   flex: 1;
-  padding: 0.25em 0.3em 0;
+  padding: 0 0;
 }
 
 .mat-card .mat-card-content p {
@@ -25,18 +25,9 @@
   margin-bottom: 0.5em;
 }
 
-.title {
-  margin-bottom: 0.1em;
-  font-family: "Open Sans", "Condensed Bold";
-  font-weight: bold;
-  color: #00C853;
-  font-size: 12px;
-
-}
-
 @media only screen and (min-width: 37.50em) {
   .mat-card {
-    max-width: calc(40% - 20px);
+    max-width: calc(40% - 10px);
   }
 }
 
@@ -51,11 +42,10 @@
   justify-content: flex-end;
   color: #388E3C;
   opacity: 1;
-
 }
 
 .mat-button {
-  font-family: "Open Sans", "Condensed Bold";
+  font-family: "Open Sans Condensed Bold";
   font-size: 16px !important;
   font-weight: bold;
 }
@@ -77,17 +67,19 @@
 }
 
 .cadastrar {
-  font-family: "Open Sans", "Condensed Bold";
-  font-size: 16px;
-  color: #388E3C;
+  font-family: "Open Sans Condensed";
+  font-size: 16px !important;
+  color: #707070;
   margin-top: 10px;
   font-weight: bold;
+  opacity: 0.87;
 
 }
 
 .mat-card:hover {
-  border-radius: 2px;
+  //border-radius: 1px;
   cursor: pointer;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: #388E3C;
 
 }
+

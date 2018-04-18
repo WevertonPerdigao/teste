@@ -3,18 +3,20 @@
   <mat-tab label="INFORMAÇÕES GERAIS">
     <div class="flex">
       <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
-                              [diasEmUso]="qtdDiasUtilizados" [percCronograma]="percCronogramaUtilizado">
+                              [diasEmUso]="qtdDiasUtilizados" [percCronograma]="projeto.cronograma">
       </app-projeto-cronograma>
 
       <app-projeto-orcamento [custoTotal]="projeto.custo"
                              [valorTotal]="projeto.projValor">
 
       </app-projeto-orcamento>
-      <app-projeto-contatos></app-projeto-contatos>
+      <app-projeto-contatos [responsavel]="projeto.projFuncId"
+                            [tipos]="projeto.projTipos">
+
+      </app-projeto-contatos>
       <app-projeto-equipe></app-projeto-equipe>
       <app-justificativa></app-justificativa>
       <app-escopo></app-escopo>
-
 
     </div>
   </mat-tab>
@@ -29,10 +31,11 @@
                             [percOrcamento]="(((projeto.custo *100)/projeto.projValor).toFixed(2))">
       </app-orcamento-slider>
 
-      <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor">
+      <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor" [projId]="projeto.projId">
       </app-resumo-dispendios>
 
-      <app-solicitacoes [dispendiosPendentes]="dispendiosPendentes" [projId]="projeto.projId"></app-solicitacoes>
+      <app-solicitacoes *ngIf="this.loginService.getFuncionario().funcAprovador"
+                        [dispendiosPendentes]="dispendiosPendentes" [projId]="projeto.projId"></app-solicitacoes>
     </div>
   </mat-tab>
 
@@ -42,14 +45,8 @@
 
   </mat-tab>
 
-  <mat-tab label="RELATÓRIOS">
+  <mat-tab label="RELATÓRIOS" [disabled]="true">
     <div class="demo-tab-content">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      ....
-      <br/>
-      <br/>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue.
-      ....
     </div>
   </mat-tab>
 

@@ -1,12 +1,9 @@
-  <mat-card class="left">
-    <mat-card-header class="cronograma">
-      <mat-card-title>Cronograma</mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-    </mat-card-header>
+  <mat-card>
+      <mat-card-title class="subtitle-card">Cronograma</mat-card-title>
 
     <mat-card-content>
       <p>Período</p>
-      <p style="font-size: 20px;margin-top: 0px;">
+      <p style="font-size: 20px;margin-top: -10px;">
         {{projeto?.projDataInicial | date:'dd/MM/yyyy'}} - {{projeto?.projDataFinal | date:'dd/MM/yyyy'}}</p>
 
 
@@ -22,14 +19,14 @@
         <p>{{diasProjeto}}</p>
       </div>
 
-      <div class="content">
+      <div class="content" style="margin-top: -10px">
         <p>Horas Concluías</p>
         <p>{{diasEmUso}}</p>
       </div>
 
 
-      <div class="center">
-        <a class="mat-card-link" routerLink="['/ativiades']">VER ATIVIDADES</a>
+      <div class="center" style="margin-top: -10px">
+        <a class="mat-card-link">VER ATIVIDADES</a>
 
       </div>
     </mat-card-content>

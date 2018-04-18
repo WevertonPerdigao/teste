@@ -15,6 +15,11 @@
   font-weight: bold;
   color: #388E3C;
   font-family: 'Open Sans', 'Condensed Bold';
+  padding: 5px;
+}
+
+.mat-card-link:hover {
+  cursor: pointer;
 }
 
 .center {
@@ -27,4 +32,5 @@
   font-family: 'Open Sans', 'Condensed Bold';
   font-weight: bold;
 }
+
 

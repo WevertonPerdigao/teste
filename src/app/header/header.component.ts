@@ -16,7 +16,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private loginService: LoginService) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public loginService: LoginService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -26,9 +26,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
     this.isLogin = this.loginService.isLoggedIn();
   }
 
-// getNomeUser(){
-//   return this.loginService.getNomeUser();
-// }
   onLogout() {
     this.loginService.logout();
   }

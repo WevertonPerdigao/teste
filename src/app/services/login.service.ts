@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, EventEmitter} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {GPITBAM_API} from '../app.api';
@@ -18,13 +18,8 @@ export class LoginService {
   myStorage = window.localStorage;
   funcionario: Funcionario;
   lastUrl: string;
-  schema: JSONSchema = {
-    properties: {
-      funcId: {type: 'number'},
-      funcNome: {type: 'string'}
-    }
-  };
 
+  mostrarMenuEmitter = new EventEmitter<boolean>();
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient,
@@ -35,6 +30,7 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
+    this.mostrarMenuEmitter.emit(true);
     return this.myStorage.getItem('currentUser') != null;
   }
 
@@ -51,21 +47,31 @@ export class LoginService {
 
   logout() {
     this.myStorage.clear();
+    this.handleLogin();
   }
 
   login(login: Login): Observable<Funcionario> {
     return this.http.post<Funcionario>(`${GPITBAM_API}/funcionarios/login`,
       {email: login.email, senha: login.senha})
       .do(funcionario => {
-        this.funcionario = funcionario;
-        this.myStorage.setItem('currentUser', JSON.stringify(this.funcionario));
+        console.log('aqui 2');
+        if (funcionario) {
+          this.mostrarMenuEmitter.emit(true);
+          this.funcionario = funcionario;
+          this.myStorage.setItem('currentUser', JSON.stringify(this.funcionario));
+          console.log('tetse');
+          this.router.navigate(['/projetos']);
+        } else {
+          this.mostrarMenuEmitter.emit(false);
+        }
+
       });
   }
 
   handleLogin(path: string = this.lastUrl) {
+    this.mostrarMenuEmitter.emit(false);
     this.router.navigate(['/login', btoa(path)]);
   }
-
 
 }
 

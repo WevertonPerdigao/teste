@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {Tipoprojeto} from '../../../models/tipoprojeto.model';
+import {Funcionario} from '../../../models/funcionario.model';
 
 @Component({
   selector: 'app-projeto-contatos',
@@ -7,7 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjetoContatosComponent implements OnInit {
 
-  constructor() { }
+  @Input() tipos: Tipoprojeto;
+  @Input() responsavel: Funcionario;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

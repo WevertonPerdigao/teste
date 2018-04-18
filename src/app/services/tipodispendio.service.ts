@@ -16,7 +16,7 @@ export class TipodispendioService {
     return this.http.get<Tipodispendio[]>(`${GPITBAM_API}/projetos/tipodispendios`);
   }
 
-  listTipoDispendioByProjeto(projId: number): Observable<Tipodispendio[]> {
+  listTipoDispendioByProjetoAndStatus(projId: number, status: string): Observable<Tipodispendio[]> {
     return this.http.get<Tipodispendio[]>(`${GPITBAM_API}/projetos/tipodispendios?projetoId=${projId}`);
   }
 }

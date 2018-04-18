@@ -6,17 +6,11 @@
 
   <mat-card *ngFor="let projeto of projetos" (click)="goToProjectDetail(projeto)">
 
-    <mat-card-header>
+    <span class="title-card">{{projeto.projSiprId.siprNome.toUpperCase()}}</span>
 
-      <mat-card-title>
-        <span class="title">{{projeto.projSiprId.siprNome.toUpperCase()}}</span>
-      </mat-card-title>
-
-      <mat-card-subtitle>
-        <span style="font-size: 18px;margin-top: 0px;color: #000000">{{projeto.projNome}}</span>
-      </mat-card-subtitle>
-
-    </mat-card-header>
+    <mat-card-subtitle>
+      <span class="subtitle-card" style="margin-top: 0px;">{{projeto.projNome}}</span>
+    </mat-card-subtitle>
 
     <mat-card-content>
 
@@ -25,15 +19,15 @@
 
       <mat-divider></mat-divider>
 
-  <div class="cronograma"><!-- lentidao aqui !-->
-        <p style="margin-bottom: 20px">Cronograma</p>
+      <div class="cronograma"><!-- lentidao aqui !-->
+        <p style="margin-bottom: 17px">Cronograma</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
                           [valueParam]="projeto.cronograma">
         </app-range-slider>
       </div>
 
-      <div class="custo"><!-- lentidao aqui !-->
-        <p style="margin-bottom: 20px">Custo</p>
+      <div class="custo" style="margin-top: -30px"><!-- lentidao aqui !-->
+        <p style="margin-bottom: 17px">Custo</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
                           [valueParam]="((projeto.custo * 100)/projeto.projValor).toFixed(2)">
         </app-range-slider>

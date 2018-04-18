@@ -48,10 +48,8 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.loginService.login(new Login(this.loginForm.value.email, this.loginForm.value.senha))
       .subscribe(funcionario => this.notificationService.notify(`Olá, ${funcionario.funcNome}`),
-        (error) => this.notificationService.notify(`O e-mail ou senha está incorreto`),
-        () => {
-          this.router.navigate(['/projetos']);
-        });
+        (error) => this.notificationService.notify(`O e-mail ou senha está incorreto`)
+      );
   }
 
 }

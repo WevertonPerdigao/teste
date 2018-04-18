@@ -3,4 +3,7 @@ export interface Perfil {
   perfNome: string;
   perfDescricao: string;
   perfAcessoCompleto: boolean;
+  perfValorInicial: number;
+  perfValorFinal: number;
+
 }

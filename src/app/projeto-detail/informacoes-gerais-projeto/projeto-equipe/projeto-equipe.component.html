@@ -1,17 +1,18 @@
 <mat-card>
-  <mat-card-header class="header">
-    <mat-card-title>Equipe</mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-  </mat-card-header>
+
+  <mat-card-title class="subtitle-card">Equipe</mat-card-title>
 
   <mat-card-content>
 
-    <div class="contatos">
+    <div class="contatos" *ngIf="equipe">
       <p>Usuário Função</p>
       <p>Usuário Função
         <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
         <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a>
       </p>
     </div>
+    <p *ngIf="!equipe">
+      Projeto sem equipe
+    </p>
   </mat-card-content>
 </mat-card>

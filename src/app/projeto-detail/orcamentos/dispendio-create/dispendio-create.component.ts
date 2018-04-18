@@ -8,6 +8,7 @@ import {TipodispendioService} from '../../../services/tipodispendio.service';
 import {Tipodispendio} from '../../../models/tipodispendio.model';
 import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 import {ProjetoDispendioService} from '../../../services/projetodispendio.service';
+import {LoginService} from '../../../services/login.service';
 
 @Component({
   selector: 'app-dispendio-create',
@@ -31,7 +32,8 @@ export class DispendioCreateComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private adapter: DateAdapter<any>,
               private tipodispendioService: TipodispendioService,
-              private projetoDispendioService: ProjetoDispendioService
+              private projetoDispendioService: ProjetoDispendioService,
+              private loginService: LoginService
   ) {
   }
 
@@ -68,6 +70,7 @@ export class DispendioCreateComponent implements OnInit {
     let projeto = new Projeto();
     projeto.projId = this.idprojeto;
     projetoDispendio.prdiProjId = projeto;
+    projetoDispendio.prdiFuncId = this.loginService.getFuncionario();
 
     console.log('dispendio JSON => ' + JSON.stringify(projetoDispendio));
 
@@ -76,7 +79,12 @@ export class DispendioCreateComponent implements OnInit {
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message),
         () => {
-          this.router.navigate(['projetos']);
+          this.goToProjectDetail();
         });
+  }
+
+  goToProjectDetail() {
+    this.router.navigate(['/projeto-detail'],
+      {queryParams: {id: this.idprojeto}, skipLocationChange: false});
   }
 }

@@ -1,8 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import '~material-design-icons/iconfont/material-icons.css';
+
 body,
 html {
   margin: 0;
 }
 
+.title-card {
+  margin-bottom: 10px;
+  font-weight: 400;
+  color: #00C853;
+  font-size: 12px;
+}
+
+.subtitle-card {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}

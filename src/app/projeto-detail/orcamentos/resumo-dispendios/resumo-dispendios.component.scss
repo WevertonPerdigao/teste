@@ -17,7 +17,12 @@
   font-size: 16px;
   font-weight: bold;
   color: #388E3C;
-  font-family: 'Open Sans', 'Condensed Bold';
+  font-family: 'Open Sans Condensed';
+  padding: 20px;
+}
+
+.mat-card-link:hover {
+  cursor: pointer;
 }
 
 .mat-card-title {
@@ -61,7 +66,10 @@
   width: 378px !important;
 }
 
-
 .full-width {
   width: 100%;
+}
+
+.link-tipo:hover {
+  cursor: pointer;
 }

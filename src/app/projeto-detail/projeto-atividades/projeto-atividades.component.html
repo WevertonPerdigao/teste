@@ -1,9 +1,8 @@
 <div class="flex-end">
   <a (click)="goToAtividadeCreate()" mat-button>NOVA ATIVIDADE</a>
-
 </div>
 
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8" *ngIf="atividades?.length>0">
   <mat-table #table [dataSource]="atividades">
 
     <ng-container matColumnDef="atividade">
@@ -27,4 +26,6 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+
+<p class="center" *ngIf="atividades?.length===0"> Nenhuma atividade foi cadastrada para este projeto</p>
 

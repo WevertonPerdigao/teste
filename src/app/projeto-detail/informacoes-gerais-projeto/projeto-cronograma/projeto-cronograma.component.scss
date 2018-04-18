@@ -10,12 +10,16 @@
 
 }
 
-.mat-card-title {
-  font-size: 20px;
-  font-family: 'Open Sans', 'SemiBold';
-  font-weight: bold;
-  color: #000000;
+.mat-card-link {
+  font-size: 16px;
+  font-weight: 700;
+  color: #388E3C;
+  font-family: "Open Sans Condensed";
 }
+.mat-card-link:hover{
+  cursor: pointer;
+}
+
 
 .left {
   text-align: left !important;

@@ -1,34 +1,38 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import {Tipodispendio} from '../../../models/tipodispendio.model';
 import {Observable} from 'rxjs/Observable';
 import {ProjetoDispendio} from '../../../models/projetodispendio.model';
+import {Constants} from '../../../utils/constants';
+import {Funcionario} from '../../../models/funcionario.model';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-resumo-dispendios',
   templateUrl: './resumo-dispendios.component.html',
   styleUrls: ['./resumo-dispendios.component.scss']
 })
-export class ResumoDispendiosComponent implements OnInit {
+export class ResumoDispendiosComponent implements OnInit, OnDestroy {
 
 
   @Input() tiposDispendiosValor: Observable<Tipodispendio[]>;
+  @Input() projId;
+
 
   listaDispendio: Tipodispendio[] = [];
   listaTipoDispendioValor: any[] = [];
   listaTipoDispendioNome: any[] = [];
-  color = ['#F44336', '#8BC34A', '#FFC107', '#00BCD4', '#9C27B0', '#607D8B', '#9E9E9E', '#FFB74D',
-    '#F44336', '#8BC34A', '#FFC107', '#00BCD4', '#9C27B0', '#607D8B', '#9E9E9E', '#FFB74D'];
-
+  color = ['#8BC34A', '#FFC107', '#00BCD4', '#9C27B0', '#607D8B', '#9E9E9E', '#FFB74D',
+    '#8BC34A', '#FFC107', '#00BCD4', '#9C27B0', '#607D8B', '#9E9E9E', '#FFB74D'];
 
   chartColors: Array<any> = [];
+  paramsSubscription: Subscription;
 
-
-  constructor() {
-
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
-    this.tiposDispendiosValor.subscribe(
+    this.paramsSubscription = this.tiposDispendiosValor.subscribe(
       disppendios => {
         this.listaDispendio = disppendios;
         this.setParamGrafico(disppendios);
@@ -44,8 +48,40 @@ export class ResumoDispendiosComponent implements OnInit {
       this.listaTipoDispendioValor.push(dispendios[i].total);
     }
     this.chartColors = [{
-      backgroundColor: this.color.slice(0, this.listaTipoDispendioNome.length - 1)
+      backgroundColor: this.color.slice(0, this.listaTipoDispendioNome.length)
     }];
   }
+
+
+  /*redireciona para tela de lista de dispêndios do projeto, incializando com os pendentes
+*/
+  goToListDispendiosByTipo(tipo: number) {
+    this.router.navigate(['/list-dispendios'],
+      {
+        queryParams: {
+          id: this.projId,
+          tipo: tipo,
+          status: Constants.APROVADO,
+        }, skipLocationChange: false
+      });
+  }
+
+
+  /*redireciona para tela de lista de dispêndios do projeto, incializando com os pendentes
+*/
+  verTodos() {
+    this.router.navigate(['/list-dispendios'],
+      {
+        queryParams: {
+          id: this.projId,
+          status: Constants.APROVADO,
+        }, skipLocationChange: false
+      });
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
+
 
 }

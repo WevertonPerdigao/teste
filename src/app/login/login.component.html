@@ -2,7 +2,7 @@
 
   <mat-card class="z-depth center" flex="50">
     <div>
-      <img mat-card-image class="img" src="/assets/images/sgpitbam.svg" style="width: 50%;padding: 5%;">
+      <img mat-card-image class="img" src="/assets/images/sgpitbam.svg" style="width: 70%;padding: 5%;">
     </div>
 
     <mat-card-content>
@@ -28,12 +28,12 @@
     <mat-card-actions>
 
       <div class="content">
-        <a routerLink="" mat-button style="color: white">
-          Esqueci minha senha
-        </a>
-        <button mat-button color="primary" (keydown.enter)="onSubmit()" (click)="onSubmit()" type="submit"
-                [disabled]="loginForm.invalid">
-          Entrar
+        <button mat-button [disabled]="true">
+          <span class="footer">  Esqueci minha senha</span>
+        </button>
+        <button mat-button (keydown.enter)="onSubmit()"
+                (click)="onSubmit()" type="submit">
+          <span class="footer">Entrar</span>
         </button>
       </div>
     </mat-card-actions>

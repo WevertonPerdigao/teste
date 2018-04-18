@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-title>Resumo de Dispêndios</mat-card-title>
-  <mat-card-content>
+  <mat-card-content *ngIf="listaDispendio.length>0">
 
     <app-pie-chart [colors]="chartColors"
                    [chartData]="listaTipoDispendioValor"
@@ -9,14 +9,14 @@
 
     <table class="full-width" cellspacing="0">
       <tr *ngFor="let dispendio of listaDispendio; let i = index" [ngStyle]="{'font-size.px':14}"
-         [style.color]="color[i]">
+          [style.color]="color[i]">
         <td>
           <span>
          <mat-icon>fiber_manual_record</mat-icon>
           </span>
         </td>
         <td>
-          <p>{{dispendio.tidiNome}}</p>
+          <a class="link-tipo" (click)="goToListDispendiosByTipo(dispendio.tidiId)">{{dispendio.tidiNome}}</a>
         </td>
         <td>
           <p>{{dispendio.total | currency: 'BRL'}}</p>
@@ -24,9 +24,11 @@
       </tr>
     </table>
 
-    </mat-card-content>
+  </mat-card-content>
 
-  <mat-card-footer>
-    <a style="margin-bottom: -20px" class="mat-card-link center" routerLink="['/ativiades']">VER TODOS</a>
+  <mat-card-footer *ngIf="listaDispendio.length>0">
+    <a style="margin-bottom: -20px" class="mat-card-link center" (click)="verTodos()">VER TODOS</a>
   </mat-card-footer>
+
+  <p *ngIf="listaDispendio.length==0">Nenhum dispêndio foi adicionado ao projeto</p>
 </mat-card>

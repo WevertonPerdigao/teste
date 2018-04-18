@@ -1,66 +1,102 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 import {Projetodispendiostatus} from '../../../models/projetodispendiostatus.model';
 import {Constants} from '../../../utils/constants';
-import {FuncionarioService} from '../../../services/funcionario.service';
 import {ProjetoDispendioService} from '../../../services/projetodispendio.service';
 import {NotificationService} from '../../../services/notification.service';
-import {Projeto} from '../../../models/projeto.model';
+import {Router} from '@angular/router';
+import {LoginService} from '../../../services/login.service';
+import {Funcionario} from '../../../models/funcionario.model';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-solicitacoes',
   templateUrl: './solicitacoes.component.html',
   styleUrls: ['./solicitacoes.component.scss']
 })
-export class SolicitacoesComponent implements OnInit {
+export class SolicitacoesComponent implements OnInit, OnDestroy {
 
   @Input() dispendiosPendentes: Observable<ProjetoDispendio[]>;
   @Input() projId;
+  listDispendiosPendentes: ProjetoDispendio[] = [];
+  paramsSubscription: Subscription;
 
-  constructor(private funcionarioService: FuncionarioService,
-              private projetoDispendioService: ProjetoDispendioService,
+  constructor(private projetoDispendioService: ProjetoDispendioService,
               private notificationService: NotificationService,
-              ) {
+              private router: Router,
+              private loginService: LoginService) {
   }
 
-  ngOnInit() {  }
-
-  // solucao enviar apenas o dispendio
-  // com seu id e o seu status no corpo do dispendio
-  // backend com problema
+  ngOnInit() {
+    this.paramsSubscription = this.dispendiosPendentes.subscribe(
+      dispendios => {
+        this.listDispendiosPendentes = dispendios;
+      }
+    );
+  }
 
   /*alterar o status do dispendio de pendente para reprovado
   * */
   reprovar(dispendio: ProjetoDispendio) {
-    const statusDispendio = new Projetodispendiostatus();
-    statusDispendio.prdsData = new Date();
-    statusDispendio.prdsStatus = Constants.REPROVADO;
-    statusDispendio.prdsFuncId = 1;
+    const statusDispendio = new Projetodispendiostatus(Constants.RECUSADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
-    dispendio.prdiProjId = new Projeto(this.projId);
     console.log('json objeto => ' + JSON.stringify(dispendio));
-
     this.projetoDispendioService.alterStatusDispendio(dispendio)
-      .subscribe(() => this.notificationService.notify(`Dispêndio reprovado com sucesso`),
+      .subscribe(() => {
+          this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
+          this.notificationService.notify(`Dispêndio reprovado com sucesso`);
+        },
         response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message || 'Erro ao reprovar dispêndio')
+          this.notificationService.notify(response.error.message || 'Erro ao aprovar dispêndio')
       );
   }
 
   /*alterar o status do dispendio de pendente para aprovado
    * */
   aprovar(dispendio: ProjetoDispendio) {
-    const statusDispendio = new Projetodispendiostatus();
-    statusDispendio.prdsData = new Date();
-    statusDispendio.prdsStatus = Constants.APROVADO;
-    statusDispendio.prdsFuncId = 1;
+    const statusDispendio = new Projetodispendiostatus(Constants.APROVADO, this.loginService.getFuncionario(), new Date());
+    dispendio.prdsPrdiId = statusDispendio;
+    console.log('json objeto => ' + JSON.stringify(dispendio));
     this.projetoDispendioService.alterStatusDispendio(dispendio)
-      .subscribe(() => this.notificationService.notify(`Dispêndio aprovado com sucesso`),
+      .subscribe(() => {
+          this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
+          this.notificationService.notify(`Dispêndio aprovado com sucesso`);
+        },
         response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message || 'Erro ao aprovar dispêndio')
+          this.notificationService.notify(response.error.message + 'Erro ao aprovar dispêndio')
       );
   }
 
+  /*redireciona para tela de lista de dispêndios do projeto, incializando com os pendentes
+  */
+  verTodos() {
+    const funcionario: Funcionario = this.loginService.getFuncionario();
+
+    if (this.loginService.getFuncionario().funcPerfId.perfAcessoCompleto) {
+      this.router.navigate(['/list-dispendios/'],
+        {
+          queryParams: {
+            id: this.projId,
+            status: Constants.PENDENTE
+          }, skipLocationChange: false
+        });
+
+    } else {
+      this.router.navigate(['/list-dispendios/'],
+        {
+          queryParams: {
+            id: this.projId,
+            status: Constants.PENDENTE,
+            vlinicial: funcionario.funcPerfId.perfValorInicial,
+            vlfinal: funcionario.funcPerfId.perfValorFinal
+          }, skipLocationChange: true
+        });
+    }
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 
 }

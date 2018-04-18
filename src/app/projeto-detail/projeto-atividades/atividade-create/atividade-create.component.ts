@@ -71,14 +71,14 @@ export class AtividadeCreateComponent implements OnInit {
     projeto.projId = this.idprojeto;
     atividade.projeto = projeto;
 
-    console.log('Atividade Formato JSON => ' + JSON.stringify(atividade));
-
     this.atividadeService.create(atividade)
       .subscribe(() => this.notificationService.notify(`Atividade adicionada com sucesso`),
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message),
         () => {
-          this.router.navigate(['projetos']);
+
+          this.router.navigate(['/projeto-detail'],
+            {queryParams: {id: this.idprojeto}, skipLocationChange: false});
         });
   }
 

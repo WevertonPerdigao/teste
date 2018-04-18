@@ -65,6 +65,8 @@ import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/ativ
 import {EscopoComponent} from './projeto-detail/informacoes-gerais-projeto/escopo/escopo.component';
 import {JustificativaComponent} from './projeto-detail/informacoes-gerais-projeto/justificativa/justificativa.component';
 import {DispendioCreateComponent} from './projeto-detail/orcamentos/dispendio-create/dispendio-create.component';
+import { ListDispendiosComponent } from './projeto-detail/orcamentos/list-dispendios/list-dispendios.component';
+import { DispendioStatusEditComponent } from './projeto-detail/orcamentos/dispendio-status-edit/dispendio-status-edit.component';
 
 
 @NgModule({
@@ -100,6 +102,8 @@ import {DispendioCreateComponent} from './projeto-detail/orcamentos/dispendio-cr
     EscopoComponent,
     JustificativaComponent,
     DispendioCreateComponent,
+    ListDispendiosComponent,
+    DispendioStatusEditComponent,
   ],
   imports: [
     CommonModule,

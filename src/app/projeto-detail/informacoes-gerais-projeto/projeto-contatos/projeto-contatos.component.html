@@ -1,24 +1,22 @@
-  <mat-card>
-    <mat-card-header class="header">
-      <mat-card-title>Contatos</mat-card-title>
-      <mat-card-subtitle></mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      <p>Tipo de Projeto</p>
-
-      <div class="contatos">
-        <p>Responsavel</p>
-        <p>Responsável
-          <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
-          <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a></p>
+<mat-card>
+  <mat-card-title class="subtitle-card">Contatos</mat-card-title>
 
 
-        <p>Usuário Função</p>
-        <p>Usuário Função
-          <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
-          <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a>
-        </p>
-      </div>
-    </mat-card-content>
-  </mat-card>
+  <mat-card-content>
+    <div class="tipos">
+         <span *ngFor="let tipo of tipos">
+        {{tipo?.tiprNome}}
+      </span>
+    </div>
+
+    <p>Responsável</p>
+    <div class="contatos" fxLayoutGap="10px">
+      <p class="subtitle-card">{{responsavel?.funcNome}}</p>
+      <p>
+        <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
+        <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a>
+      </p>
+
+    </div>
+  </mat-card-content>
+</mat-card>

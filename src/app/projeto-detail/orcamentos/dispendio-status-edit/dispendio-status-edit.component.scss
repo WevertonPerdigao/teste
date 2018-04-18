@@ -1,0 +1,60 @@
+.main-div {
+  height: 60vh;
+  display: flex;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Open Sans Condensed';
+  opacity: 1;
+}
+
+.mat-form-field-label {
+  color: #4CAF50;
+}
+
+.mat-form-field-underline {
+  background-color: #4CAF50;
+}
+
+.mat-card-dispendio {
+  width: 712px;
+  height: 604px;
+  margin: auto;
+  text-align: left;
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.width-divide {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.right-align {
+  font-size: 42px !important;
+  opacity: 0.35;
+}
+
+.options {
+  font-size: 16px !important;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action-buttons {
+  font-size: 16px;
+  color: #388E3C;
+  font-weight: bold;
+  font-family: "'Open Sans Condensed";
+  opacity: 1;
+}

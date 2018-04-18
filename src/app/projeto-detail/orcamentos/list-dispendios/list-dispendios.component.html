@@ -1,0 +1,79 @@
+<mat-tab-group [selectedIndex]="indexTab" #tabGroup>
+
+  <mat-tab label="PENDENTES">
+    <div class="content">
+
+      <mat-card *ngFor="let dispendio of listDispendiosPendentes" (click)="goToEditStatusDispendio(dispendio.prdiId)">
+        <p class="name">{{dispendio.prdiFuncId?.funcNome}}</p>
+        <mat-card-title>
+
+          <span class="title">{{dispendio.prdiDescricao}}</span>
+        </mat-card-title>
+
+        <mat-card-content>
+
+          <p class="valor">R$ {{dispendio.prdiValor}}</p>
+          <p class="tipo">{{dispendio.prdiTidiId.tidiNome}}</p>
+
+          <div class="flex-end">
+            <button mat-icon-button style="color:#4CAF50;" (click)="aprovar(dispendio)">
+              <mat-icon>done</mat-icon>
+            </button>
+
+            <button mat-icon-button style="color:#F44336;" (click)="reprovar(dispendio)">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-tab>
+  <mat-tab label="APROVADOS">
+    <div class="content">
+
+      <mat-card *ngFor="let dispendio of listDispendiosAprovados | async">
+        <mat-card-title>
+          <span class="title">{{dispendio.prdiDescricao}}</span>
+        </mat-card-title>
+
+        <mat-card-content>
+          <p class="valor">R$ {{dispendio.prdiValor}}</p>
+          <p class="tipo">{{dispendio.prdiTidiId.tidiNome}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+  </mat-tab>
+
+  <mat-tab label="REPROVADOS">
+    <div class="content">
+
+      <mat-card *ngFor="let dispendio of listDispendiosReprovados | async">
+        <p class="name">{{dispendio.prdiFuncId?.funcNome}}</p>
+        <mat-card-title>
+          <span class="title">{{dispendio.prdiDescricao}}</span>
+        </mat-card-title>
+
+
+        <mat-card-content>
+
+          <p class="valor">R$ {{dispendio.prdiValor}}</p>
+          <p class="tipo">{{dispendio.prdiTidiId.tidiNome}}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </mat-tab>
+
+</mat-tab-group>
+
+<div class="flex-end">
+  <button mat-fab (click)="goToDispendioCreate()">
+    <span style="font-size: 24px">+</span>
+  </button>
+</div>
+
+
+

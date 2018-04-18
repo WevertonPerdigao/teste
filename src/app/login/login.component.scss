@@ -11,19 +11,22 @@
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  font-size: 16px;
-  font-family: 'Open Sans', 'Condensed Bold';
+  font-size: 16px !important;
+  font-family: 'Open Sans Condensed' !important;
+  font-weight: bold;
   color: #FFFFFF;
   opacity: 1;
   text-decoration: none;
 }
 
 .mat-card {
-  max-width: 400px;
+  width: 322px;
+  height: 600px;
   background-color: #4CAF50;
   margin: auto;
   text-align: center;
   vertical-align: middle;
+  box-shadow:none !important;
 }
 
 .signin-content {
@@ -45,4 +48,10 @@
 
 .mat-button.mat-primary {
   color: #ffffff;
+}
+
+.footer{
+  font-size: 16px;
+  font-family: 'Open Sans Condensed';
+  font-weight: bold;
 }

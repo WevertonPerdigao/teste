@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 export class ProjetosComponent implements OnInit {
 
   public projetos: Projeto[];
-  skipLocationChange?: boolean
+  skipLocationChange?: boolean;
 
   constructor(private projetoService: ProjetoService,
               private loginService: LoginService,
@@ -30,7 +30,11 @@ export class ProjetosComponent implements OnInit {
   getListProjetosByUsuario(userid?: number) {
 
     this.projetoService.listProjetosByUserId(userid)
-      .subscribe(projetos => this.projetos = projetos);
+      .subscribe(projetos => {
+        this.projetos = projetos;
+      });
+
+
   }
 
 

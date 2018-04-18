@@ -7,7 +7,7 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class RangeSliderComponent implements OnInit {
 
-  @Input() maxParam: number;
+  @Input() maxParam = 0.0;
   @Input() minParam: number;
 
   @Input() valueParam: number;

@@ -19,7 +19,7 @@
         <mat-card-header>
           <div mat-card-avatar class="avatar-image"></div>
           <mat-card-title>
-            <a routerLink="/usuario">SGP</a></mat-card-title>
+            <a routerLink="/usuario">{{loginService.getFuncionario()?.funcNome}}</a></mat-card-title>
           <mat-card-subtitle><a routerLink="/login" (click)="onLogout()">Logout</a></mat-card-subtitle>
         </mat-card-header>
       </mat-card>

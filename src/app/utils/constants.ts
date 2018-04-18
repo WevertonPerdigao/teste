@@ -8,8 +8,9 @@ export class Constants {
 
   static readonly CONCLUIDO = 4;
 
-  static readonly APROVADO = 1;
+  static readonly APROVADO = 'APROVADO';
 
-  static readonly REPROVADO = 0;
+  static readonly RECUSADO = 'RECUSADO';
 
+  static readonly PENDENTE = 'PENDENTE';
 }
