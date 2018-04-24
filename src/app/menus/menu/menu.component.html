@@ -1,6 +1,8 @@
 <div fxLayout="column" class="menu-layout">
 
-   <a routerLinkActive="active" routerLink="{{menu.menuUrl}}" mat-button>{{menu.menuNome}}
+  <a routerLinkActive="active"
+     routerLink="{{menu.menuUrl}}" (click)="navClose()"
+     mat-button>{{menu.menuNome}}
     <mat-icon>keyboard_arrow_right</mat-icon>
   </a>
 </div>

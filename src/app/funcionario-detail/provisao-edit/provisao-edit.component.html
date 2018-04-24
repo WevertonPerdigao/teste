@@ -1,0 +1,93 @@
+<div class="main-div">
+
+  <mat-card class="mat-card-provisao">
+    <mat-card-content>
+
+      <form [formGroup]="provisaoForm">
+
+
+        <table class="full-width-input" cellspacing="0">
+          <tr>
+            <td>
+              <mat-input-container class="full-width-input">
+                <mat-select placeholder="Mês de referência"
+                            [formControl]="mesReferencia"
+                            (change)="verificaProvisao($event)"
+                            required>
+                  <mat-option *ngFor="let mes of listMeses" [value]="mes?.ref">
+                    {{mes.name}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="mesReferencia?.getError('incorrect')">
+                  Mês e ano já existe
+                </mat-error>
+              </mat-input-container>
+            </td>
+            <td>
+              <div class="space"></div>
+            </td>
+            <td>
+              <mat-input-container class="full-width-input">
+                <mat-select placeholder="Ano de referência"
+                            [formControl]="yearReferencia" (change)="verificaProvisao($event)"
+                            [errorStateMatcher]="errorMatcher" required>
+                  <mat-option *ngFor="let year of listYears" [value]="year">
+                    {{year}}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="yearReferencia?.getError('incorrect')">
+                  Mês e ano já existe
+                </mat-error>
+              </mat-input-container>
+            </td>
+          </tr>
+        </table>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Provisões" class="valor-provisao"
+                 formControlName="fuprTotalGeral" required
+                 currencyMask
+                 [options]="{ prefix: '', thousands: '.', decimal: ',' }"
+                 (change)="upadateHomeHora()">
+          <mat-error *ngIf="isFieldInvalid('fuprTotalGeral')">
+            Informe o valor da provisão
+          </mat-error>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Horas trabalhadas" required (change)="upadateHomeHora()"
+                 formControlName="fuprHoraTotal">
+          <mat-error *ngIf="isFieldInvalid('fuprHoraTotal')">
+            Informe as quantidade de horas trabalhadas
+          </mat-error>
+        </mat-input-container>
+
+        <mat-divider style="margin-top:30px"></mat-divider>
+
+        <mat-input-container class="full-width-input" style="margin-top:60px">
+          <span matPrefix class="valor-provisao">R$&nbsp;</span>
+          <input class="valor-provisao" matInput
+                 formControlName="fuprHoraHomem" placeholder="Homem hora">
+        </mat-input-container>
+
+      </form>
+
+    </mat-card-content>
+
+    <mat-card-actions>
+
+      <div class="flex-center">
+        <button class="delete" mat-button (click)="deleteProvisao()">
+          <span>EXCLUIR FOLHA</span>
+        </button>
+
+        <button mat-raised-button color="primary" (click)="upadateProvisao(provisaoForm.value)"
+                type="submit" [disabled]="provisaoForm.invalid">
+          SALVAR
+        </button>
+      </div>
+    </mat-card-actions>
+    <mat-card-footer>
+    </mat-card-footer>
+  </mat-card>
+</div>

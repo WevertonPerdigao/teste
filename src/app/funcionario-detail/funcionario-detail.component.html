@@ -1,0 +1,31 @@
+<div class="flex-end">
+  <a (click)="redirectProvisaoCreate()" mat-button>NOVA FOLHA</a>
+</div>
+
+<div class="content-funcionario-detail">
+
+  <mat-card *ngFor="let funcProvisao of listProvisao$ | async">
+    <mat-card-title>
+      <span class="title-mes">{{getMesByReferencia(funcProvisao.fuprReferencia)}}</span>
+    </mat-card-title>
+
+    <mat-card-content>
+
+      <p class="label-subtitle">Provisão total</p>
+      <span class="subtitle-card">R$ {{funcProvisao.fuprTotalGeral}}</span>
+
+      <mat-divider></mat-divider>
+
+      <div class="flex-end">
+
+        <a mat-button (click)="redirectProvisaoEdit(funcProvisao.fuprId)">EDITAR</a>
+
+        <a mat-button routerLink=".">EXCLUIR</a>
+
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>

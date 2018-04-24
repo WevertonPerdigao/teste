@@ -2,10 +2,9 @@
 
   <mat-card class="mat-card-dispendio">
     <mat-card-content>
-      <mat-card-title style="opacity: 0.87 !important;">Adicionar Dispêndio</mat-card-title>
-      <mat-divider></mat-divider>
 
       <form [formGroup]="dispendioForm">
+
 
         <mat-input-container class="full-width-input">
           <input matInput placeholder="Título" type="text" formControlName="prdiTituloFatura" required>
@@ -14,85 +13,54 @@
           </mat-error>
         </mat-input-container>
 
+
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Tipo de dispêndio" type="text"
-                 formControlName="prdiTidiId" [matAutocomplete]="auto" required>
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayTipoDispendio">
+          <mat-select placeholder="Tipo de dispêndio"
+                      formControlName="prdiTidiId" required
+                      [errorStateMatcher]="errorMatcher">
             <mat-option *ngFor="let tipodispendio of tiposdispendios" [value]="tipodispendio" class="options">
               {{ tipodispendio.tidiNome }}
             </mat-option>
-          </mat-autocomplete>
+          </mat-select>
+          <mat-error *ngIf="dispendioForm.get('prdiTidiId').hasError('required')">
+            Informe o tipo de dispêndio
+          </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Descrição" type="text" formControlName="prdiDescricao" required>
+          <input matInput placeholder="Descrição Serviço / Aquisição"
+                 type="text" formControlName="prdiDescricao">
           <mat-error *ngIf="isFieldInvalid('prdiDescricao')">
             Informe a descrição
           </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Justificativa" type="text" formControlName="prdiJustificativa" required>
+          <input matInput placeholder="Justificativa"
+                 type="text"
+                 formControlName="prdiJustificativa" required>
           <mat-error *ngIf="isFieldInvalid('prdiJustificativa')">
-            Informe a justificativa
+            Informe uma justificativa
           </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Verba Inicial" class="right-align"
-                 type="number" formControlName="prdiValor" required>
+          <input class="input-valor" matInput placeholder="Valor"
+                 formControlName="prdiValor" required
+                 currencyMask
+                 [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+
           <mat-error *ngIf="isFieldInvalid('prdiValor')">
-            Informe valor do dispendio
+            {{getErrorMessage()}}
           </mat-error>
         </mat-input-container>
-
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="Nota fiscal nro" type="text" formControlName="prdiNotaFiscal" required>
-          <mat-error *ngIf="isFieldInvalid('prdiNotaFiscal')">
-            Informe a justificativa
-          </mat-error>
-        </mat-input-container>
-
-
-        <table class="full-width-input" cellspacing="0">
-          <tr>
-            <td>
-              <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker" placeholder="Data da nota" formControlName="prdiDataNotaFiscal"
-                       required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="isFieldInvalid('prdiDataNotaFiscal')">Informe a data da nota</mat-error>
-              </mat-input-container>
-            </td>
-            <td>
-              <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker2" placeholder="Data do pagamento"
-                       formControlName="prdiDataPagamento" required>
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-
-                <mat-error *ngIf="isFieldInvalid('prdiDataPagamento')">Informe o prazo</mat-error>
-              </mat-input-container>
-            </td>
-          </tr>
-        </table>
-
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="Anexo" type="text" formControlName="prdiAnexoId">
-        </mat-input-container>
-
 
       </form>
 
-      <div class="content">
-        <a mat-button routerLink="">
-          Cancelar
-        </a>
+      <div class="flex-end">
         <button mat-raised-button (click)="salvarDispendio(dispendioForm.value)" type="submit"
-                [disabled]="dispendioForm.invalid"
-        >
-          ADICIONAR
+                [disabled]="dispendioForm.invalid">
+          <span class="action-buttons">SOLICITAR</span>
         </button>
       </div>
     </mat-card-content>

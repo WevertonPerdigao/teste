@@ -37,11 +37,13 @@
         </table>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Responsável" type="text"
-                 formControlName="projFuncId" [matAutocomplete]="auto" required>
+          <input matInput placeholder="Responsável"
+                 [formControl]="projFuncId"
+                 [matAutocomplete]="auto"
+                 required>
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFuncionario">
             <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario" class="options">
-              {{ funcionario.funcNome }}
+              {{ funcionario?.funcNome }}
             </mat-option>
           </mat-autocomplete>
         </mat-input-container>
@@ -59,7 +61,7 @@
                    #chipInput>
           </mat-chip-list>
           <mat-autocomplete #autoTipos="matAutocomplete"
-                            [displayWith]="displayTipo" (optionSelected)="add($event)">
+                            [displayWith]="displayTipo" (optionSelected)="addTiposProjeto($event)">
             <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo" class="options">
               <span>{{ tipo.tiprNome }}</span>
             </mat-option>
@@ -67,8 +69,8 @@
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Verba Inicial" class="right-align"
-                 type="number" formControlName="projValor" required>
+          <input matInput placeholder="Valor"
+                 formControlName="projValor" required>
           <mat-error *ngIf="isFieldInvalid('projValor')">
             Informe valor do projeto
           </mat-error>

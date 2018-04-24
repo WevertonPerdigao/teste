@@ -14,6 +14,10 @@
 
 }
 
+.mat-card:hover {
+  cursor: pointer;
+}
+
 .mat-card .mat-card-content {
   flex: 1;
   padding: 0.25em 0.3em 0;
@@ -49,11 +53,13 @@
   justify-content: flex-end;
   color: #388E3C;
   opacity: 1;
-
 }
 
-.mat-button{
+.mat-button {
   font-family: "Open Sans", "Condensed Bold";
   font-size: 16px !important;
   font-weight: bold;
+}
+.mat-form-field-label {
+  color: #F44336 !important;
 }

@@ -8,10 +8,10 @@ import {Unidade} from './Unidade.model';
 export class Funcionario {
   funcId: number;
   funcMatricula?: number;
-  funcNome: string;
+  funcNome?: string;
   funcCpf?: string;
-  funcEmail: string;
-  funcSenha: string;
+  funcEmail?: string;
+  funcSenha?: string;
   funcDescricao?: string;
   funcDataAdmissão?: Date;
   funcAprovador?: boolean;
@@ -24,7 +24,7 @@ export class Funcionario {
   funcStfuId?: StatusFuncionario;
   funcUnidId?: Unidade;
 
-  public construtor(funcNome: string) {
-    this.funcNome = funcNome;
+  public construtor(funcId: number) {
+    this.funcId = funcId;
   }
 }

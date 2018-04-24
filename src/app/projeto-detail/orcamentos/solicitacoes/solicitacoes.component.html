@@ -4,7 +4,7 @@
     <mat-card-title> Solicitações</mat-card-title>
   </mat-card-header>
 
-  <mat-card-content style="height: 550px; overflow-y: auto"
+  <mat-card-content
                     *ngIf="listDispendiosPendentes?.length>0">
     <table class="full-width" cellspacing="0">
       <tr *ngFor="let dispendio of listDispendiosPendentes">

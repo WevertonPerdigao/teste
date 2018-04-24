@@ -1,0 +1,33 @@
+.main-div {
+  height: 100vh;
+  display: flex;
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.mat-card-provisao {
+  width: 617px;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 1;
+}
+
+.valor-provisao {
+  color: #000000;
+  opacity: 0.54;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: left !important;
+
+}
+
+.delete {
+  color: #F44336;
+  font-size: 16px;
+  font-family: "Open Sans Condensed";
+  font-weight: bold;
+}

@@ -14,7 +14,6 @@
   font-size: 16px !important;
   font-family: 'Open Sans Condensed' !important;
   font-weight: bold;
-  color: #FFFFFF;
   opacity: 1;
   text-decoration: none;
 }
@@ -22,11 +21,10 @@
 .mat-card {
   width: 322px;
   height: 600px;
-  background-color: #4CAF50;
   margin: auto;
   text-align: center;
   vertical-align: middle;
-  box-shadow:none !important;
+  box-shadow: none !important;
 }
 
 .signin-content {
@@ -34,24 +32,16 @@
 }
 
 .full-width-input {
-  color: white;;
   width: 100%;
 }
 
-.mat-error {
-  color: #FFEA82;
-}
-
-.mat-form-field-invalid{
-  color: #FFEA82 !important;
- }
-
-.mat-button.mat-primary {
-  color: #ffffff;
-}
-
-.footer{
+.footer {
   font-size: 16px;
   font-family: 'Open Sans Condensed';
   font-weight: bold;
+  color: #4CAF50;
+}
+
+.logo {
+  fill: #4CAF50;
 }

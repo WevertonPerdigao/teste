@@ -1,5 +1,6 @@
-import { Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Menu} from './menu.model';
+import {SidenavService} from '../../services/sidenav.service';
 
 @Component({
   selector: 'app-menu',
@@ -10,9 +11,14 @@ export class MenuComponent implements OnInit {
 
   @Input() menu: Menu;
 
-  constructor() { }
+  constructor(private sidenavService: SidenavService) {
+  }
 
   ngOnInit() {
+  }
+
+  navClose() {
+    this.sidenavService.sideNav.close();
   }
 
 }

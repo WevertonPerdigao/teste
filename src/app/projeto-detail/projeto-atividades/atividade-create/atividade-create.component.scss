@@ -2,11 +2,13 @@
   height: 60vh;
   display: flex;
 }
+
 .content {
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  font-family: 'Open Sans', 'Condensed Bold';
+  font-family: 'Open Sans Condensed';
+  font-weight: bold;
   opacity: 1;
 }
 
@@ -43,4 +45,19 @@
 
 .options {
   font-size: 16px !important;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  justify-items: center;
+  align-items: center;
+}
+
+.mat-raised-button {
+  box-shadow: none;
+}
+.mat-raised-button:not([class*=mat-elevation-z]){
+  box-shadow: none;
+
 }

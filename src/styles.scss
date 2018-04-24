@@ -18,4 +18,34 @@ html {
   font-size: 20px;
   font-weight: 600;
   color: black;
+  opacity: 0.87;
+}
+
+.action-buttons {
+  font-size: 16px;
+  color: #388E3C;
+  font-weight: bold;
+  font-family: "'Open Sans Condensed";
+  opacity: 1;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+  color: #388E3C;
+  opacity: 1;
+}
+
+.space {
+  padding: 10px;
+}
+
+.mat-form-field-label {
+  color: #4CAF50 !important;
+  background-color: white;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
 }

@@ -9,20 +9,21 @@ import {Tipodispendio} from '../../../models/tipodispendio.model';
 import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 import {ProjetoDispendioService} from '../../../services/projetodispendio.service';
 import {LoginService} from '../../../services/login.service';
+import {Constants} from '../../../utils/constants';
+import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
 
 @Component({
   selector: 'app-dispendio-create',
   templateUrl: './dispendio-create.component.html',
-  styleUrls: ['./dispendio-create.component.scss'],
+  styleUrls: ['./dispendio-create.component.scss']
 })
 
 export class DispendioCreateComponent implements OnInit {
 
 
   dispendioForm: FormGroup;
-  private formSubmit: boolean;
-  navigateTo: string;
   idprojeto: number;
+  errorMatcher = new ErrorStateMatcherImp();
 
   tiposdispendios: Tipodispendio[] = [];
 
@@ -43,12 +44,8 @@ export class DispendioCreateComponent implements OnInit {
       prdiTidiId: this.fb.control('', [Validators.required]),
       prdiJustificativa: this.fb.control('', [Validators.required]),
       prdiTituloFatura: this.fb.control('', [Validators.required]),
-      prdiDescricao: this.fb.control('', [Validators.required]),
-      prdiNotaFiscal: this.fb.control('', [Validators.required]),
-      prdiDataNotaFiscal: this.fb.control('', [Validators.required]),
-      prdiDataPagamento: this.fb.control('', [Validators.required]),
-      prdiAnexoId: this.fb.control('', []),
-      prdiValor: this.fb.control('', [Validators.required]),
+      prdiDescricao: this.fb.control('', []),
+      prdiValor: this.fb.control('', [Validators.required, Validators.pattern(Constants.DECIMAL_PATTERN)]),
     });
 
     this.tipodispendioService.listAll()
@@ -60,9 +57,10 @@ export class DispendioCreateComponent implements OnInit {
       (!this.dispendioForm.get(field).valid && this.dispendioForm.get(field).touched));
   }
 
-
-  displayTipoDispendio(tipodispendio?: Tipodispendio): string | undefined {
-    return tipodispendio ? tipodispendio.tidiNome : undefined;
+  getErrorMessage() {
+    return this.dispendioForm.get('prdiValor').hasError('required') ? 'campo obrigatório' :
+      !this.dispendioForm.get('prdiValor').valid ? 'Valor inválido' :
+        '';
   }
 
   salvarDispendio(projetoDispendio: ProjetoDispendio) {
@@ -72,10 +70,8 @@ export class DispendioCreateComponent implements OnInit {
     projetoDispendio.prdiProjId = projeto;
     projetoDispendio.prdiFuncId = this.loginService.getFuncionario();
 
-    console.log('dispendio JSON => ' + JSON.stringify(projetoDispendio));
-
     this.projetoDispendioService.createProjetoDispendio(projetoDispendio)
-      .subscribe(() => this.notificationService.notify(`Dispêndio adicionado com sucesso`),
+      .subscribe(() => this.notificationService.notify(`Dispêndio solicitado com sucesso`),
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message),
         () => {
@@ -87,4 +83,5 @@ export class DispendioCreateComponent implements OnInit {
     this.router.navigate(['/projeto-detail'],
       {queryParams: {id: this.idprojeto}, skipLocationChange: false});
   }
+
 }

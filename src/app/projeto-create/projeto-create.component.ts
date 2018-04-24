@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../services/notification.service';
@@ -7,7 +7,7 @@ import {DateAdapter} from '@angular/material/core';
 import {FuncionarioService} from '../services/funcionario.service';
 import {Funcionario} from '../models/funcionario.model';
 import {ViewChild} from '@angular/core';
-import {MatAutocompleteSelectedEvent, MatInput} from '@angular/material';
+import {MatInput} from '@angular/material';
 import {TipoprojetoService} from '../services/tipoprojeto.service';
 import {Tipoprojeto} from '../models/tipoprojeto.model';
 import {ProjetoService} from '../services/projeto.service';
@@ -19,6 +19,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/from';
 import 'rxjs/add/operator/debounceTime';
+import {
+  MatAutocompleteTrigger,
+  MatAutocompleteSelectedEvent
+} from '@angular/material';
+import {Constants} from '../utils/constants';
+import 'rxjs/add/operator/startWith';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-projeto-create',
@@ -26,15 +33,17 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./projeto-create.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ProjetoCreateComponent implements OnInit {
+export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('chipInput') chipInput: MatInput;
   projetoForm: FormGroup;
-  projFuncId: FormControl;
+  projFuncId = new FormControl();
   funcionarios: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
   chips: Tipoprojeto[] = [];
-  situacaoInicial: SituacaoProjeto = new SituacaoProjeto(1);
+  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
+  paramsSubscription: Subscription;
+
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -56,16 +65,28 @@ export class ProjetoCreateComponent implements OnInit {
     });
 
 
-    this.projFuncId.valueChanges.debounceTime(500)
+    this.paramsSubscription = this.projFuncId.valueChanges
+      .startWith('')
+      .debounceTime(400)
       .distinctUntilChanged()
-      .switchMap(searchTerm =>
-        this.funcionarioService.listAllFuncionarios(searchTerm)
+      .switchMap(nameSearch =>
+        this.funcionarioService.listFuncionariosByName(nameSearch)
           .catch(error => Observable.from([])))
       .subscribe(funcionarios => this.funcionarios = funcionarios);
 
-
     this.tipoprojetoService.listAllTipos()
       .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
+  }
+
+
+  ngAfterViewInit() {
+    this.trigger.panelClosingActions.subscribe(
+      nameSearch => {
+        if (!nameSearch || !nameSearch.source) {
+          this.projetoForm.get('projFuncId').setValue(null);
+        }
+      }
+    );
   }
 
   isFieldInvalid(field: string) {
@@ -89,11 +110,9 @@ export class ProjetoCreateComponent implements OnInit {
   }
 
   onSubmit(projeto: Projeto) {
-    projeto.projSiprId = this.situacaoInicial;
+    projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
     projeto.projTipos = (this.chips);
     projeto.projEmprId = new Empresa(1);
-
-    console.log('Projeto Formato JSON => ' + JSON.stringify(projeto));
 
     this.projetoService.createProjeto(projeto)
       .subscribe(() => this.notificationService.notify(`Projeto criado com sucesso`),
@@ -113,11 +132,20 @@ export class ProjetoCreateComponent implements OnInit {
     this.chipInput['nativeElement'].blur();
   }
 
-  add(event: MatAutocompleteSelectedEvent): void {
+  /* Adiciona tipo do projeto selecionado */
+  addTiposProjeto(event: MatAutocompleteSelectedEvent): void {
+
     const t: Tipoprojeto = event.option.value;
-    this.chips.push(t);
+
+    const valor = this.chips.filter((task) => task.tiprId === t.tiprId);
+    if (Object.keys(valor).length === 0) {
+      this.chips.push(t);
+    }
+
     this.chipInput['nativeElement'].blur();
   }
 
-
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

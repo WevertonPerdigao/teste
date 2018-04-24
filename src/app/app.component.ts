@@ -9,7 +9,7 @@ import {Observable} from 'rxjs/Observable';
 })
 export class AppComponent implements OnInit {
 
-  mostrarMenu: boolean = false;
+  mostrarMenu: false;
 
   constructor(private loginService: LoginService) {
 

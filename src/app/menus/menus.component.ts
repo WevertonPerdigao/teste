@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MenuService} from './menu/menu.service';
 import {LoginService} from '../services/login.service';
 import {Menu} from './menu/menu.model';
@@ -10,6 +10,7 @@ import {Menu} from './menu/menu.model';
 })
 export class MenusComponent implements OnInit {
 
+  @Output() navToggle = new EventEmitter<boolean>();
   public menus: Menu[];
 
   constructor(private menuService: MenuService, private loginService: LoginService) {
@@ -29,7 +30,6 @@ export class MenusComponent implements OnInit {
       // the second argument is a function which runs on error
       err => console.error(err),
       // the third argument is a function which runs on completion
-      () => console.log('done listMenuByUserId foods')
     );
   }
 

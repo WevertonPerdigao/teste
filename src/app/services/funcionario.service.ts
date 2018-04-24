@@ -15,10 +15,10 @@ export class FuncionarioService {
     return this.http.get<Funcionario>(`${GPITBAM_API}/funcionarios/${funcId}`);
   }
 
-  listAllFuncionarios(nome?: string): Observable<Funcionario[]> {
+  listFuncionariosByName(nome?: string): Observable<Funcionario[]> {
     let params: HttpParams = undefined;
     if (nome) {
-      params = new HttpParams().append('q', nome);
+      params = new HttpParams().append('nome', nome);
     }
     return this.http.get<Funcionario[]>(`${GPITBAM_API}/funcionarios`, {params: params});
   }

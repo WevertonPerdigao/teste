@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {SituacaoProjeto} from '../models/situacaoprojeto.model';
 
@@ -17,7 +17,11 @@ export class TipodispendioService {
   }
 
   listTipoDispendioByProjetoAndStatus(projId: number, status: string): Observable<Tipodispendio[]> {
-    return this.http.get<Tipodispendio[]>(`${GPITBAM_API}/projetos/tipodispendios?projetoId=${projId}`);
+    const httpParams = new HttpParams()
+      .set('projetoId', projId.toString())
+      .set('status', status);
+
+    return this.http.get<Tipodispendio[]>(`${GPITBAM_API}/projetos/tipodispendios`, {params: httpParams});
   }
 }
 

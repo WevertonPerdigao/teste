@@ -65,12 +65,21 @@ import {AtividadeCreateComponent} from './projeto-detail/projeto-atividades/ativ
 import {EscopoComponent} from './projeto-detail/informacoes-gerais-projeto/escopo/escopo.component';
 import {JustificativaComponent} from './projeto-detail/informacoes-gerais-projeto/justificativa/justificativa.component';
 import {DispendioCreateComponent} from './projeto-detail/orcamentos/dispendio-create/dispendio-create.component';
-import { ListDispendiosComponent } from './projeto-detail/orcamentos/list-dispendios/list-dispendios.component';
-import { DispendioStatusEditComponent } from './projeto-detail/orcamentos/dispendio-status-edit/dispendio-status-edit.component';
-
+import {ListDispendiosComponent} from './projeto-detail/orcamentos/list-dispendios/list-dispendios.component';
+import {DispendioStatusEditComponent} from './projeto-detail/orcamentos/dispendio-status-edit/dispendio-status-edit.component';
+import {SidenavService} from './services/sidenav.service';
+import {FuncionarioDetailComponent} from './funcionario-detail/funcionario-detail.component';
+import {FuncionarioProvisaoService} from './services/funcionarioprovisao.service';
+import {ProvisaoCreateComponent} from './funcionario-detail/provisao-create/provisao-create.component';
+import {ProvisaoEditComponent} from './funcionario-detail/provisao-edit/provisao-edit.component';
+import {YearPickerComponent} from './shared/custom-datepicker/year-picker/year-picker.component';
+import {CustomDatepickerComponent} from './shared/custom-datepicker/custom-datepicker.component';
+import {LoginLayoutComponent} from './layouts/login-layout.component';
+import {CurrencyMaskModule} from 'ng2-currency-mask';
 
 @NgModule({
   declarations: [
+    LoginLayoutComponent,
     AppComponent,
     NotFoundComponent,
     FooterComponent,
@@ -104,6 +113,11 @@ import { DispendioStatusEditComponent } from './projeto-detail/orcamentos/dispen
     DispendioCreateComponent,
     ListDispendiosComponent,
     DispendioStatusEditComponent,
+    FuncionarioDetailComponent,
+    ProvisaoCreateComponent,
+    ProvisaoEditComponent,
+    YearPickerComponent,
+    CustomDatepickerComponent,
   ],
   imports: [
     CommonModule,
@@ -115,6 +129,7 @@ import { DispendioStatusEditComponent } from './projeto-detail/orcamentos/dispen
     HttpClientModule,
     ReactiveFormsModule,
     LocalStorageModule,
+    CurrencyMaskModule,
     ChartsModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
   ],
@@ -130,9 +145,11 @@ import { DispendioStatusEditComponent } from './projeto-detail/orcamentos/dispen
     LoggedInGuard,
     TipoprojetoService,
     CargoService,
+    FuncionarioProvisaoService,
     PerfilService,
     ProjetoatividadeService,
-    TipodispendioService
+    TipodispendioService,
+    SidenavService
   ],
   bootstrap: [AppComponent]
 })

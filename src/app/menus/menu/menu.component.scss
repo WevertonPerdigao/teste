@@ -1,11 +1,18 @@
 .mat-button {
   font-size: 16px;
   text-align: left;
-  font-family: "Open Sans", "Condensed Bold";
+  font-weight: 600;
+}
+
+.menu-layout > .mat-button {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .menu-layout:hover {
-  background-color: rgba(139, 195, 74, 1);
+  background-color: #388E3C;
   color: white;
 
 }

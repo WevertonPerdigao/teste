@@ -7,7 +7,8 @@
   display: flex;
   justify-content: space-between;
   font-size: 16px;
-  font-family: 'Open Sans', 'Condensed Bold';
+  font-weight: bold;
+  font-family: 'Open Sans Condensed';
   opacity: 1;
 }
 
@@ -22,7 +23,6 @@
 .mat-card {
   resize: horizontal;
   width: 717px;
-  max-height: 600px;
   margin: auto;
   text-align: left;
 }
@@ -30,6 +30,8 @@
 .full-width-input {
   width: 100%;
 }
+
+
 
 .width-divide {
   display: flex;

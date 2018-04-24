@@ -16,19 +16,25 @@
 
         <mat-input-container class="full-width-input">
           <mat-chip-list #chipList>
-            <mat-chip *ngFor="let tag of chips" (remove)="remove(tag)">
+            <mat-chip *ngFor="let tag of chips"
+                      (remove)="remove(tag)"
+                      color="primary">
               {{tag.funcNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input [matChipInputFor]="chipList" placeholder="Membros"
-                   [matChipInputAddOnBlur]="false"
+                   [formControl]="projFuncId"
+                   [matChipInputAddOnBlur]="true"
                    [matAutocomplete]="autocompleteMembros"
                    #chipInput>
           </mat-chip-list>
           <mat-autocomplete #autocompleteMembros="matAutocomplete"
-                            [displayWith]="displayFuncionario" (optionSelected)="addFuncionario($event)">
-            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario" class="options">
-              <span>{{ funcionario.funcNome }}</span>
+                            [displayWith]="displayFuncionario"
+                            (optionSelected)="addFuncionario($event)">
+            <mat-option *ngFor="let funcionario of funcionarios"
+                        [value]="funcionario"
+                        class="options">
+              <span>{{ funcionario?.funcNome }}</span>
             </mat-option>
           </mat-autocomplete>
         </mat-input-container>
@@ -57,14 +63,16 @@
 
       </form>
 
-      <div class="content">
-        <a mat-button routerLink="">
-          Cancelar
-        </a>
-        <button mat-raised-button (click)="salvarAtividade(atividadeForm.value)" type="submit"
+      <div class="flex-end">
+        <button class="action-buttons" mat-raised-button (click)="salvarAtividade(atividadeForm.value)" type="submit"
                 [disabled]="atividadeForm.invalid">
-          CRIAR
+          <span class="action-buttons">ADICIONAR</span>
         </button>
+        <div class="fill-remaining-space"></div>
+        <button mat-raised-button button (click)="cancelar()">
+          <span class="action-buttons">CANCELAR</span>
+        </button>
+
       </div>
     </mat-card-content>
 
