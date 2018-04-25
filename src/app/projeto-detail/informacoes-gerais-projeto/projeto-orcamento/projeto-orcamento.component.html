@@ -11,11 +11,11 @@
     </div>
     <div class="content custo" style="margin-top: -20px">
       <p>Custo Total</p>
-      <p>R$ {{custoTotal }}</p>
+      <p>R$ {{(custoTotal || 0) }}</p>
     </div>
     <div class="content" style="margin-top: -30px">
       <p class="salto-text">Saldo</p>
-      <p class="saldo">R$ {{(valorTotal - custoTotal) }}</p>
+      <p class="saldo">R$ {{(valorTotal - (custoTotal || 0)) }}</p>
     </div>
   </mat-card-content>
 </mat-card>

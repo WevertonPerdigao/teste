@@ -1,15 +1,18 @@
 <div class="main-div">
 
-  <mat-card>
+  <mat-card class="card-projeto">
     <mat-card-content>
-      <mat-card-title style="opacity: 0.87 !important;"> Novo Projeto</mat-card-title>
+      <mat-card-title> Novo Projeto</mat-card-title>
       <mat-divider></mat-divider>
 
       <form [formGroup]="projetoForm">
 
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="Título" type="text" formControlName="projNome" required>
-          <mat-error *ngIf="isFieldInvalid('projNome')">
+        <mat-input-container class="full-width-input" hintLabel="Max 80 caracteres">
+          <input matInput placeholder="Título"
+                 type="text" formControlName="projNome" required
+                 maxlength="80">
+          <mat-hint align="end">{{projetoForm.get('projNome').value?.length || 0}}/80</mat-hint>
+          <mat-error *ngIf="projetoForm.get('projNome')?.invalid">
             Informe um título para o projeto
           </mat-error>
         </mat-input-container>
@@ -18,19 +21,31 @@
           <tr>
             <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker" placeholder="Prazo" formControlName="projDataInicial" required>
+                <input matInput [matDatepicker]="picker" placeholder="Prazo"
+                       readonly="true" (focus)="picker.open()" (click)="picker.open()"
+                       formControlName="projDataInicial" required
+                       (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="isFieldInvalid('projDataInicial')">Informe o prazo</mat-error>
+                <mat-error *ngIf="isFieldInvalid('projDataInicial')">
+                  {{getErrorMessageDate('projDataInicial')}}
+                </mat-error>
               </mat-input-container>
             </td>
             <td>
+              <div class="space"></div>
+            </td>
+            <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker2" formControlName="projDataFinal" required>
+                <input matInput [matDatepicker]="picker2" [min]="minDate"
+                       readonly="true" (focus)="picker2.open()" (click)="picker2.open()"
+                       formControlName="projDataFinal" required
+                       (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-
-                <mat-error *ngIf="isFieldInvalid('projDataFinal')">Informe o prazo</mat-error>
+                <mat-error *ngIf="isFieldInvalid('projDataFinal')">
+                  {{getErrorMessageDate('projDataFinal')}}
+                </mat-error>
               </mat-input-container>
             </td>
           </tr>
@@ -46,6 +61,10 @@
               {{ funcionario?.funcNome }}
             </mat-option>
           </mat-autocomplete>
+          <mat-error *ngIf="isFieldInvalid('projFuncId')">
+            Informe o responsável
+          </mat-error>
+
         </mat-input-container>
 
 
@@ -55,7 +74,7 @@
               {{tag.tiprNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input [matChipInputFor]="chipList" placeholder="Tipos de Projeto"
+            <input [matChipInputFor]="chipList" placeholder="Área de Projeto"
                    [matChipInputAddOnBlur]="false"
                    [matAutocomplete]="autoTipos"
                    #chipInput>
@@ -69,24 +88,29 @@
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Valor"
-                 formControlName="projValor" required>
+          <input class="valor-projeto" matInput placeholder="Valor"
+                 formControlName="projValor" required
+                 currencyMask
+                 [options]="{ prefix: '', thousands: '.', decimal: ',' }">
+
           <mat-error *ngIf="isFieldInvalid('projValor')">
-            Informe valor do projeto
+            Informe o valor do projeto
           </mat-error>
         </mat-input-container>
+
 
       </form>
 
       <div class="content">
-        <a mat-button routerLink="">
+        <a mat-button routerLink="/projetos">
           Cancelar
         </a>
-        <button mat-raised-button color="primary" (click)="onSubmit(projetoForm.value)" type="submit"
+        <button mat-button (click)="onSubmit(projetoForm.value)" type="submit"
                 [disabled]="projetoForm.invalid">
-          CRIAR
+          <span class="action-buttons">CRIAR</span>
         </button>
       </div>
+
 
     </mat-card-content>
 

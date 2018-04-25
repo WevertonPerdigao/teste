@@ -26,6 +26,7 @@ export const ROUTES: Routes = [
     path: '',
     component: HeaderComponent,
     canActivate: [LoggedInGuard],
+    canLoad: [LoggedInGuard],
     children: [
       {
         path: 'projetos',
@@ -55,7 +56,5 @@ export const ROUTES: Routes = [
     ]
   },
   {path: '**', component: NotFoundComponent},
-
-
 ];
 

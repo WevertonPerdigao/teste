@@ -43,19 +43,30 @@
           <tr>
             <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker" placeholder="Prazo" formControlName="data_inicial" required>
+                <input matInput [matDatepicker]="picker" [min]="projeto?.projDataInicial" [max]="projeto?.projDataFinal"
+                       placeholder="Prazo" formControlName="data_inicial" required
+                       readonly="true" (focus)="picker.open()" (click)="picker.open()"
+                       (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="isFieldInvalid('data_inicial')">Informe o prazo</mat-error>
+                <mat-error *ngIf="this.atividadeForm.get('data_inicial').hasError('required')">Informe o prazo
+                </mat-error>
               </mat-input-container>
             </td>
             <td>
+              <div class="space">
+              </div>
+            </td>
+            <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker2" formControlName="data_final" required>
+                <input matInput [matDatepicker]="picker2" [min]="minDateInicial" [max]="projeto?.projDataFinal"
+                       formControlName="data_final" required
+                       readonly="true" (focus)="picker2.open()" (click)="picker2.open()"
+                       (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-
-                <mat-error *ngIf="isFieldInvalid('data_final')">Informe o prazo</mat-error>
+                <mat-error *ngIf="this.atividadeForm.get('data_final').hasError('required')">Informe o prazo
+                </mat-error>
               </mat-input-container>
             </td>
           </tr>

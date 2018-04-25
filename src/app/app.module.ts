@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
+import {AvatarModule} from 'ngx-avatar';
 
 import ptBr from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
@@ -42,7 +43,6 @@ import {OrcamentoComponent} from './orcamento/orcamento.component';
 import {RelatoriosComponent} from './relatorios/relatorios.component';
 import {ProjetosComponent} from './projetos/projetos.component';
 import {RangeSliderComponent} from './range-slider/range-slider.component';
-import {ProjetoDispendioComponent} from './projeto-dispendio/projeto-dispendio.component';
 import {ProjetoDetailComponent} from './projeto-detail/projeto-detail.component';
 import {ProjetoCronogramaComponent} from './projeto-detail/informacoes-gerais-projeto/projeto-cronograma/projeto-cronograma.component';
 import {ProjetoOrcamentoComponent} from './projeto-detail/informacoes-gerais-projeto/projeto-orcamento/projeto-orcamento.component';
@@ -90,7 +90,6 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
     MenusComponent,
     HeaderComponent,
     RangeSliderComponent,
-    ProjetoDispendioComponent,
     ProjetoDetailComponent,
     ProjetoCronogramaComponent,
     ProjetoOrcamentoComponent,
@@ -130,6 +129,7 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
     ReactiveFormsModule,
     LocalStorageModule,
     CurrencyMaskModule,
+    AvatarModule,
     ChartsModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
   ],

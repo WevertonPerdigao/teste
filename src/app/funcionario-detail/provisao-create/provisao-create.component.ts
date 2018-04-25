@@ -10,8 +10,7 @@ import {NotificationService} from '../../services/notification.service';
 import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
 import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
-import {MatAutocompleteSelectedEvent, MatOptionSelectionChange} from '@angular/material';
-import {Tipoprojeto} from '../../models/tipoprojeto.model';
+import { MatOptionSelectionChange} from '@angular/material';
 
 @Component({
   selector: 'app-provisao-create',
@@ -101,7 +100,6 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
 
       return +(this.yearReferencia.value.toString() + this.mesReferencia.value.toString());
     }
-
   }
 
   /* Verifica se período referente já foi inserido
@@ -122,7 +120,6 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
       }
     }
   }
-
 
   /*
   * */

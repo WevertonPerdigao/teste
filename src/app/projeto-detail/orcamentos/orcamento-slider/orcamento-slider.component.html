@@ -6,7 +6,7 @@
 
     <app-range-slider [minParam]="0" [maxParam]="100"
                       [valueParam]="percOrcamento"
-                      ></app-range-slider>
+    ></app-range-slider>
 
     <div class="content" style="margin-top: 39px;">
       <p style="font-size: 12px">Verba Total</p>
@@ -15,7 +15,7 @@
 
     <div class="content custo" style="margin-top: 21px;">
       <p style="font-size: 12px">Custos Totais</p>
-      <p style="font-size: 16px">{{custoTotal | currency: 'BRL'}}</p>
+      <p style="font-size: 16px">{{(custoTotal || 0) | currency: 'BRL'}}</p>
     </div>
 
 
@@ -24,7 +24,7 @@
     <div class="content" style="margin-top: 5px;">
 
       <p class="salto-text">Saldo</p>
-      <p class="saldo">{{(valorTotal - custoTotal) | currency: 'BRL' }}</p>
+      <p class="saldo">{{(valorTotal - (custoTotal || 0)) | currency: 'BRL' }}</p>
     </div>
 
   </mat-card-content>

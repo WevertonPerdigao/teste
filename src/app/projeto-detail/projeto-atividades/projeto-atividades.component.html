@@ -13,7 +13,19 @@
 
     <ng-container matColumnDef="membros">
       <mat-header-cell *matHeaderCellDef>Membros</mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.pratAtividadeMembro?.funcNome}}</mat-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="flex-left">
+          <p *ngIf="element.membros?.length==0">___</p>
+
+          <ngx-avatar *ngFor="let membro of element.membros"
+                      bgColor="#388E3C" fgColor="#FFFFFF"
+                      [round]="true" initialsSize="2" class="avatar"
+                      size="42" [name]="membro.funcNome" style="margin-left: 10px !important">
+          </ngx-avatar>
+        </div>
+
+
+      </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="prazo">

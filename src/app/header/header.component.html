@@ -17,7 +17,12 @@
 
       <mat-card>
         <mat-card-header>
-          <div mat-card-avatar class="avatar-image"></div>
+          <div mat-card-avatar style="margin-right:10px">
+            <ngx-avatar bgColor="#388E3C" fgColor="#FFFFFF"
+                        [round]="true" initialsSize="2"
+                        size="55" [name]="getNameUser()">
+            </ngx-avatar>
+          </div>
           <mat-card-title>
             <a class="name-user">{{getNameUser()}}</a>
           </mat-card-title>

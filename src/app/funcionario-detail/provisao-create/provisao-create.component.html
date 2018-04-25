@@ -30,7 +30,8 @@
             <td>
               <mat-input-container class="full-width-input">
                 <mat-select placeholder="Ano de referência"
-                            [formControl]="yearReferencia" (change)="verificaProvisao($event)"
+                            [formControl]="yearReferencia"
+                            (change)="verificaProvisao($event)"
                             [errorStateMatcher]="errorMatcher" required>
                   <mat-option *ngFor="let year of listYears" [value]="year">
                     {{year}}

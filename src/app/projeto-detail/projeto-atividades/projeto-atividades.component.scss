@@ -6,7 +6,7 @@
 }
 
 .mat-button {
-  font-family: "Open Sans", "Condensed Bold";
+  font-family: "Open Sans Condensed";
   font-size: 16px !important;
   font-weight: bold;
 }
@@ -14,5 +14,12 @@
 .center {
   display: flex;
   justify-content: center;
+  flex-direction: row;
+  justify-items: center;
+}
 
+.flex-left {
+  display: flex;
+  flex-flow: row wrap;
+  lign-items: flex-start;
 }

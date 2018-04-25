@@ -43,7 +43,7 @@ h1.app-name {
   /*fundo do menu do sistema*/
   background-color: #E8F5E9;
   opacity: 1;
-  min-width: 200px;
+  min-width: 300px;
 }
 
 .mat-card {
@@ -58,32 +58,30 @@ h1.app-name {
 
 }
 
-.avatar-image {
-  height: 50px;
-  width: 50px;
-  background-image: url("../../assets/images/shiba1.jpg");
-  background-size: cover;
-}
-
 .name-user {
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   text-decoration: none;
+  font-weight: 400;
 }
 
 .logout {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   font-family: "Open Sans Condensed";
   color: white;
   text-decoration: none;
+}
+.logout:focus {
+  outline: none;
 }
 
 .mat-card-title {
   margin-bottom: 5px;
 }
 
-.mat-card-header {
+.mat-card-header-text {
+  margin: auto !important;
   padding: 5px;
 }
 

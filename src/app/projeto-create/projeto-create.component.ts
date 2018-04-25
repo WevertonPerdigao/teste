@@ -7,7 +7,7 @@ import {DateAdapter} from '@angular/material/core';
 import {FuncionarioService} from '../services/funcionario.service';
 import {Funcionario} from '../models/funcionario.model';
 import {ViewChild} from '@angular/core';
-import {MatInput} from '@angular/material';
+import {MatDatepickerInputEvent, MatInput} from '@angular/material';
 import {TipoprojetoService} from '../services/tipoprojeto.service';
 import {Tipoprojeto} from '../models/tipoprojeto.model';
 import {ProjetoService} from '../services/projeto.service';
@@ -41,6 +41,8 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
   funcionarios: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
   chips: Tipoprojeto[] = [];
+  minDate: Date;
+
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
   paramsSubscription: Subscription;
 
@@ -57,7 +59,7 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
   ngOnInit() {
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
-      projNome: this.fb.control('', [Validators.required]),
+      projNome: this.fb.control('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
       projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.projFuncId,
@@ -94,11 +96,28 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       (!this.projetoForm.get(field).valid && this.projetoForm.get(field).touched));
   }
 
-  getErrorMessage() {
-    if (this.projetoForm.get('projDataInicial') >= this.projetoForm.get('projDataFinal')) {
-      return 'Data incial não pode ser maior que a data inicial';
-    }
+  /* Verifica se o período é válido
+* */
+  validaPrazo(event: MatDatepickerInputEvent<Date>) {
 
+    if (this.projetoForm.get('projDataInicial').value && !this.projetoForm.get('projDataFinal').value) {
+
+      this.minDate = new Date(this.projetoForm.get('projDataInicial').value);
+
+    } else if (this.projetoForm.get('projDataInicial').value
+      && this.projetoForm.get('projDataFinal').value
+      && this.projetoForm.get('projDataInicial').value > this.projetoForm.get('projDataFinal').value) {
+
+      this.minDate = new Date(this.projetoForm.get('projDataInicial').value);
+      this.projetoForm.get('projDataFinal').reset();
+    }
+  }
+
+  getErrorMessageDate(field: string) {
+
+    return this.projetoForm.get(field).hasError('required') ? 'Informe a data' :
+      this.projetoForm.get(field).hasError('incorrect') ? 'Período inválido: data inicial maior que a data final' : this.projetoForm.get(field) ? 'Data inválida' :
+        '';
   }
 
   displayFuncionario(funcionario?: Funcionario): string | undefined {

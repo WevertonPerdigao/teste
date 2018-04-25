@@ -8,6 +8,6 @@ export interface Projetoatividade {
   descricao: string;
   data_inicial: Date;
   data_final: Date;
-  pratAtividadeMembro?: Funcionario[];
+  membros?: Funcionario[];
   projeto: Projeto;
 }

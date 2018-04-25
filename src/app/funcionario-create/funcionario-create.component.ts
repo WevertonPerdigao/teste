@@ -8,6 +8,7 @@ import {NotificationService} from '../services/notification.service';
 import {Router} from '@angular/router';
 import {Cargo} from '../models/cargo.model';
 import {CargoService} from '../services/cargo.service';
+import {ErrorStateMatcherImp} from '../utils/ErrorStateMatcher';
 
 @Component({
   selector: 'app-funcionario-create',
@@ -19,6 +20,7 @@ export class FuncionarioCreateComponent implements OnInit {
   perfils: Perfil[] = [];
   cargos: Cargo[] = [];
   funcionarioForm: FormGroup;
+  errorMatcher = new ErrorStateMatcherImp();
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -55,17 +57,9 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
 
-  displayPerfil(perfil?: Perfil): string | undefined {
-    return perfil ? perfil.perfNome : undefined;
-  }
-
-  displayCargo(cargo?: Cargo): string | undefined {
-    return cargo ? cargo.cargNome : undefined;
-  }
-
   onSubmit(funcionario: Funcionario) {
 
-   this.funcionarioService.create(funcionario)
+    this.funcionarioService.create(funcionario)
       .subscribe(() => this.notificationService.notify(`Funcionário criado com sucesso`),
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message),

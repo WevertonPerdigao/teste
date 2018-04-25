@@ -35,11 +35,14 @@
   width: 375px !important;
 }
 
-.tipos {
-  color: #00C853;
+.flex-left {
   display: flex;
   align-items: center;
   justify-content: flex-start;
+}
+
+.tipo {
+  color: #00C853;
 }
 
 .contatos {

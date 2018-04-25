@@ -18,9 +18,10 @@ export class ProjetoatividadeService {
   }
 
   create(projetoAtividade: Projetoatividade): Observable<Projetoatividade> {
+
+    console.log('obj=> ' + JSON.stringify(projetoAtividade));
     return this.http.post<Projetoatividade>(`${GPITBAM_API}/projetos/addatividade`, projetoAtividade);
   }
-
 
 }
 

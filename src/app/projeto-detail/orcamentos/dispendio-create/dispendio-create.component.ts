@@ -73,7 +73,7 @@ export class DispendioCreateComponent implements OnInit {
     this.projetoDispendioService.createProjetoDispendio(projetoDispendio)
       .subscribe(() => this.notificationService.notify(`Dispêndio solicitado com sucesso`),
         response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message),
+          this.notificationService.notify(`Erro ao solicitar dispêndio`),
         () => {
           this.goToProjectDetail();
         });

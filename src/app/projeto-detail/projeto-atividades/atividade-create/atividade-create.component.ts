@@ -7,12 +7,13 @@ import {DateAdapter} from '@angular/material/core';
 import {FuncionarioService} from '../../../services/funcionario.service';
 import {Funcionario} from '../../../models/funcionario.model';
 import {ViewChild} from '@angular/core';
-import {MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatInput} from '@angular/material';
+import {MatAutocompleteSelectedEvent, MatDatepickerInputEvent, MatInput} from '@angular/material';
 import {Projetoatividade} from '../../../models/projetoatividade.model';
 import {ProjetoatividadeService} from '../../../services/projetoatividade.service';
 import {Projeto} from '../../../models/projeto.model';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
+import {ProjetoService} from '../../../services/projeto.service';
 
 @Component({
   selector: 'app-atividade-create',
@@ -32,6 +33,8 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   funcionarios: Funcionario[] = [];
   paramsSubscription: Subscription;
   projFuncId: FormControl;
+  minDateInicial: Date;
+  projeto: Projeto;
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -39,13 +42,24 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private adapter: DateAdapter<any>,
               private funcionarioService: FuncionarioService,
-              private atividadeService: ProjetoatividadeService
+              private atividadeService: ProjetoatividadeService,
+              private projetoService: ProjetoService
   ) {
   }
 
   ngOnInit() {
     this.initForm();
+
+
     this.idprojeto = this.activatedRoute.snapshot.params['id'];
+
+    this.projetoService.findByProjId(this.idprojeto)
+      .subscribe(projeto => {
+        this.projeto = projeto;
+        this.minDateInicial = projeto.projDataInicial;
+      });
+
+
     this.paramsSubscription = this.projFuncId.valueChanges
       .startWith('')
       .debounceTime(400)
@@ -60,7 +74,6 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   initForm() {
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.atividadeForm = this.fb.group({
-      projFuncId: this.projFuncId,
       nome: this.fb.control('', [Validators.required]),
       data_inicial: this.fb.control('', [Validators.required]),
       data_final: this.fb.control('', [Validators.required]),
@@ -78,8 +91,7 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   }
 
   salvarAtividade(atividade: Projetoatividade) {
-
-    atividade.pratAtividadeMembro = (this.chips);
+    atividade.membros = (this.chips);
     let projeto = new Projeto();
     projeto.projId = this.idprojeto;
     atividade.projeto = projeto;
@@ -87,9 +99,8 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
     this.atividadeService.create(atividade)
       .subscribe(() => this.notificationService.notify(`Atividade adicionada com sucesso`),
         response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message),
+          this.notificationService.notify('Erro ao cadastrar nova atividade'),
         () => {
-
           this.router.navigate(['/projeto-detail'],
             {queryParams: {id: this.idprojeto}, skipLocationChange: false});
         });
@@ -119,8 +130,26 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
     this.chipInput['nativeElement'].blur();
   }
 
-  /* voltar para projeto detail */
 
+  /* Verifica se o período é válido
+* */
+  validaPrazo(event: MatDatepickerInputEvent<Date>) {
+
+    if (this.atividadeForm.get('data_inicial').value && !this.atividadeForm.get('data_final').value) {
+
+      this.minDateInicial = new Date(this.atividadeForm.get('data_inicial').value);
+
+    } else if (this.atividadeForm.get('data_inicial').value
+      && this.atividadeForm.get('data_final').value
+      && this.atividadeForm.get('data_inicial').value > this.atividadeForm.get('data_final').value) {
+
+      this.minDateInicial = new Date(this.atividadeForm.get('data_inicial').value);
+      this.atividadeForm.get('data_final').reset();
+    }
+  }
+
+
+  /* voltar para projeto detail */
   cancelar() {
     this.router.navigate(['/projeto-detail/'],
       {
