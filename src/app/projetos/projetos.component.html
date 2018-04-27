@@ -6,7 +6,7 @@
 
   <mat-card *ngFor="let projeto of projetos" (click)="goToProjectDetail(projeto)">
 
-    <span class="title-card">{{projeto.projSiprId.siprNome.toUpperCase()}}</span>
+    <span class="title-card">{{projeto.projSiprId.siprNome?.toUpperCase()}}</span>
 
     <mat-card-subtitle>
       <span class="subtitle-card" style="margin-top: 0px;">{{projeto.projNome}}</span>

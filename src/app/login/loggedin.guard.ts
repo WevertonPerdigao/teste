@@ -10,25 +10,20 @@ export class LoggedInGuard implements CanLoad, CanActivate {
   }
 
   checkAuthentication(path: string): boolean {
-    console.log('path =>' + path);
     const loggedIn = this.loginService.isLoggedIn();
     if (!loggedIn) {
       this.loginService.handleLogin(`/${path}`);
     } else if (!path) {
-
-      console.log('aqui ');
+//      console.log('aqui ');
     }
     return loggedIn;
   }
 
   canLoad(route: Route): boolean {
-    console.log('canLoad');
-
     return this.checkAuthentication(route.path);
   }
 
   canActivate(activatedRoute: ActivatedRouteSnapshot, routerState: RouterStateSnapshot): boolean {
-    console.log('canActivate'+activatedRoute.routeConfig.data);
     return this.checkAuthentication(activatedRoute.routeConfig.path);
   }
 

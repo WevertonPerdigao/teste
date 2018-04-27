@@ -54,12 +54,10 @@ export class LoginService {
     return this.http.post<Funcionario>(`${GPITBAM_API}/funcionarios/login`,
       {email: login.email, senha: login.senha})
       .do(funcionario => {
-        console.log('aqui 2');
         if (funcionario) {
           this.mostrarMenuEmitter.emit(true);
           this.funcionario = funcionario;
           this.myStorage.setItem('currentUser', JSON.stringify(this.funcionario));
-          console.log('tetse');
           this.router.navigate(['/projetos']);
         } else {
           this.mostrarMenuEmitter.emit(false);

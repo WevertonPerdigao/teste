@@ -67,7 +67,6 @@ export class FuncionarioCreateComponent implements OnInit {
       .subscribe(funcionario => {
         if (funcionario) {
           this.funcionarioForm.get('funcEmail').setErrors({'incorrect': true});
-          console.log('já existe');
         }
       });
   }

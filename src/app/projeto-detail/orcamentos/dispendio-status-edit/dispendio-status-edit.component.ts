@@ -49,7 +49,6 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
       this.tipo = params['tipo'];
       this.vlincial = params['vlincial'];
       this.vlfinal = params['vlfinal'];
-      console.log('queryParams =>' + params);
       this.dispendioId = params['prdiId'];
     });
 
@@ -66,7 +65,6 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
   reprovar() {
     const statusDispendio = new Projetodispendiostatus(Constants.RECUSADO, this.loginService.getFuncionario(), new Date());
     this.dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(this.dispendio));
     this.projetoDispendioService.alterStatusDispendio(this.dispendio)
       .subscribe(() => {
           this.redirecListDispendios();
@@ -82,7 +80,6 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
   aprovar() {
     const statusDispendio = new Projetodispendiostatus(Constants.APROVADO, this.loginService.getFuncionario(), new Date());
     this.dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(this.dispendio));
     this.projetoDispendioService.alterStatusDispendio(this.dispendio)
       .subscribe(() => {
           this.redirecListDispendios();

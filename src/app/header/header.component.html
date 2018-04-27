@@ -5,13 +5,12 @@
       <mat-icon *ngIf="sidenav.opened">chevron_left</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     </button>
-    <h1 class="app-name">{{(activeMenuItem)?.title}}</h1>
+    <h1 class="app-name" #appname>{{(toolbarItem| async)?.title}}</h1>
+    <h1 class="app-name">  {{ (activeMenuItem$ | async)?.title }}</h1>
     <div class="fill-remaining-space"></div>
     <button mat-button>PESQUISAR</button>
 
-
     <!--<md-icon *ngIf="navItem.icon">{{navItem.icon}}</md-icon>-->
-
 
   </mat-toolbar>
 
@@ -25,20 +24,21 @@
           <div mat-card-avatar style="margin-right:10px">
             <ngx-avatar bgColor="#388E3C" fgColor="#FFFFFF"
                         [round]="true" initialsSize="2"
-                        size="55" [name]="getNameUser()">
+                        size="55" [name]="nomeUser">
             </ngx-avatar>
           </div>
           <mat-card-title>
-            <a class="name-user">{{getNameUser()}}</a>
+            <a class="name-user">{{nomeUser}}</a>
           </mat-card-title>
           <mat-card-subtitle>
-            <a *ngIf="getNameUser()" class="logout" routerLink="/login" (click)="onLogout()">Logout</a>
+            <a *ngIf="nomeUser" class="logout" routerLink="/login" (click)="onLogout()">Logout</a>
           </mat-card-subtitle>
         </mat-card-header>
       </mat-card>
       <app-menus></app-menus>
     </mat-sidenav>
     <mat-sidenav-content>
+
       <router-outlet></router-outlet>
       <app-snackbar></app-snackbar>
     </mat-sidenav-content>

@@ -152,8 +152,6 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
     funcionarioProvisao.fuprId = this.fuprId;
     funcionarioProvisao.fuprHoraHomem = this.provisaoForm.get('fuprHoraHomem').value;
 
-    console.log('opa' + JSON.stringify(funcionarioProvisao));
-
     this.funcionarioProvisaoService.createFuncionarioProvisao(funcionarioProvisao)
       .subscribe(() => this.notificationService.notify(`Provisão atualizada com sucesso`),
         response => // HttpErrorResponse

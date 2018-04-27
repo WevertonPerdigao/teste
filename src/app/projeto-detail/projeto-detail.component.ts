@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Utils} from '../utils/utils';
 import {ProjetoDispendioService} from '../services/projetodispendio.service';
 import 'rxjs/add/observable/forkJoin';
@@ -14,6 +14,8 @@ import {LoginService} from '../services/login.service';
 import {Funcionario} from '../models/funcionario.model';
 import {Constants} from '../utils/constants';
 import {Subscription} from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
+import {ToolbarService} from '../services/toolbar.service';
 
 @Component({
   selector: 'app-projeto-detail',
@@ -35,7 +37,8 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private tipoDispendioService: TipodispendioService,
-              public loginService: LoginService
+              public loginService: LoginService,
+              public toolbarService: ToolbarService
   ) {
   }
 
@@ -47,6 +50,7 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
+        this.toolbarService.setTitle(projeto.projNome);
         this.setPropertyCronograma();
       });
 
@@ -81,7 +85,7 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   onLinkClick(event: MatTabChangeEvent) {
     switch (event.index) {
       case 2:
-        console.log('case 3');
+      //  console.log('case 3');
       // this.router.navigate(['../atividades'], {relativeTo: this.activatedRoute}); não funcionando
     }
   }

@@ -10,7 +10,7 @@ import {NotificationService} from '../../services/notification.service';
 import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
 import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
-import { MatOptionSelectionChange} from '@angular/material';
+import {MatOptionSelectionChange} from '@angular/material';
 
 @Component({
   selector: 'app-provisao-create',
@@ -147,8 +147,6 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   /* verifica se o estado do campo é valido caso seja tocado(alterado)
   * */
   isFieldInvalid(field: string) {
-    console.log('tetse');
-
     return ((!this.provisaoForm.get(field).valid && this.provisaoForm.get(field).touched));
   }
 

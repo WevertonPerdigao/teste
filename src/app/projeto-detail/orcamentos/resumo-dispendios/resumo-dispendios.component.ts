@@ -43,7 +43,6 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
 
   setParamGrafico(dispendios: Tipodispendio[]) {
     for (const i in  dispendios) {
-      console.log('valor retornado ' + dispendios);
       this.listaTipoDispendioNome.push(dispendios[i].tidiNome);
       this.listaTipoDispendioValor.push(dispendios[i].total);
     }

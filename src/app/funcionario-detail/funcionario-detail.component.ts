@@ -7,6 +7,8 @@ import {Observable} from 'rxjs/Observable';
 import {Funcionario} from '../models/funcionario.model';
 import {Utils} from '../utils/utils';
 import {Month} from '../models/mes.model';
+import {FuncionarioService} from '../services/funcionario.service';
+import {ToolbarService} from '../services/toolbar.service';
 
 @Component({
   selector: 'app-funcionario-detail',
@@ -23,7 +25,9 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
 
   constructor(private funcionarioProvisaoService: FuncionarioProvisaoService,
               private activatedRoute: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private funcionarioService: FuncionarioService,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
@@ -32,6 +36,10 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
 
     });
 
+    // this.toolbarService.setTitle(projeto.projNome);
+    this.funcionarioService.findFuncionarioById(this.funcId)
+      .subscribe(funcionario => this.toolbarService.setTitle(funcionario.funcNome)
+    );
     this.listProvisao$ = this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId);
   }
 
@@ -64,7 +72,7 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
 * */
   redirectProvisaoEdit(fuprId: number) {
     this.router.navigate(['/provisao-edit/'],
-      {queryParams: {fuprId: fuprId, funcId: this.funcId }, skipLocationChange: false});
+      {queryParams: {fuprId: fuprId, funcId: this.funcId}, skipLocationChange: false});
   }
 
   ngOnDestroy(): void {

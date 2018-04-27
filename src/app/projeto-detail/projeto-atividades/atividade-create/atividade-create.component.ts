@@ -68,7 +68,7 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
         const funcTemp: Funcionario[] = [];
 
         if (this.chips.length > 0) {
-          this.funcionarios.forEach(element => {
+          funcionarios.forEach(element => {
             let result = false;
             this.chips.forEach(chip => {
               if (chip.funcId === element.funcId) result = true;
@@ -174,5 +174,4 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
-
 }

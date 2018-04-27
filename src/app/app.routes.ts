@@ -35,17 +35,40 @@ export const ROUTES: Routes = [
           title: 'Projetos'
         }
       },
-      {path: 'funcionarios', component: FuncionariosComponent, data: {
+      {
+        path: 'funcionarios', component: FuncionariosComponent, data: {
           title: 'Usuários'
-        }},
-      {path: 'funcionario-create', component: FuncionarioCreateComponent},
-      {path: 'funcionario-detail', component: FuncionarioDetailComponent},
+        }
+      },
+      {
+        path: 'funcionario-create', component: FuncionarioCreateComponent,
+        data: {
+          title: 'Novo Usuário'
+        }
+      },
+      {path: 'funcionario-detail', component: FuncionarioDetailComponent,
+       },
       {path: 'provisao-create', component: ProvisaoCreateComponent},
       {path: 'provisao-edit', component: ProvisaoEditComponent},
-      {path: 'projeto-create', component: ProjetoCreateComponent},
+      {
+        path: 'projeto-create', component: ProjetoCreateComponent,
+        data: {
+          title: 'Novo Projeto'
+        }
+      },
       {path: 'projeto-detail', component: ProjetoDetailComponent},
-      {path: 'atividade-create/:id', component: AtividadeCreateComponent},
-      {path: 'dispendio-create/:id', component: DispendioCreateComponent},
+      {
+        path: 'atividade-create/:id', component: AtividadeCreateComponent,
+        data: {
+          title: 'Nova Atividade'
+        }
+      },
+      {
+        path: 'dispendio-create/:id', component: DispendioCreateComponent,
+        data: {
+          title: 'Novo Dispêndio'
+        }
+      },
       {path: 'list-dispendios', component: ListDispendiosComponent},
       {path: 'dispendio-status-edit', component: DispendioStatusEditComponent},
     ]

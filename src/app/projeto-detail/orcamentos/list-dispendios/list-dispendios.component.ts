@@ -45,7 +45,6 @@ export class ListDispendiosComponent implements OnInit, OnDestroy {
       this.tipo = params['tipo'];
       this.vlincial = params['vlincial'];
       this.vlfinal = params['vlfinal'];
-      console.log('queryParams =>' + params);
     });
 
     this.listDispendiosAprovados = this.projetoDispendioService.listDispendioByParam(this.projId, Constants.APROVADO, null, null, this.tipo);
@@ -62,7 +61,6 @@ export class ListDispendiosComponent implements OnInit, OnDestroy {
 
 
   initTab() {
-    console.log('Status valor' + this.status);
     switch (this.status) {
       case Constants.PENDENTE:
         this.indexTab = 0;
@@ -81,7 +79,6 @@ export class ListDispendiosComponent implements OnInit, OnDestroy {
   reprovar(dispendio: ProjetoDispendio) {
     const statusDispendio = new Projetodispendiostatus(Constants.RECUSADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(dispendio));
     this.projetoDispendioService.alterStatusDispendio(dispendio)
       .subscribe(() => {
           this.notificationService.notify(`Dispêndio reprovado com sucesso`);
@@ -96,7 +93,6 @@ export class ListDispendiosComponent implements OnInit, OnDestroy {
   aprovar(dispendio: ProjetoDispendio) {
     const statusDispendio = new Projetodispendiostatus(Constants.APROVADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(dispendio));
     this.projetoDispendioService.alterStatusDispendio(dispendio)
       .subscribe(() => {
           this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);

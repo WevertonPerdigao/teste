@@ -43,9 +43,6 @@ export class ProjetoDispendioService {
 
     let params = new HttpParams()
       .append('status', status.toString());
-
-    console.log('params listDispendioByProjIdAndStatus : ' + params);
-
     return this.http.get<ProjetoDispendio[]>(`${GPITBAM_API}/projetos/dispendios/${projId}`, {params: params});
   }
 

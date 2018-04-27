@@ -41,7 +41,6 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
   reprovar(dispendio: ProjetoDispendio) {
     const statusDispendio = new Projetodispendiostatus(Constants.RECUSADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(dispendio));
     this.projetoDispendioService.alterStatusDispendio(dispendio)
       .subscribe(() => {
           this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
@@ -57,7 +56,6 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
   aprovar(dispendio: ProjetoDispendio) {
     const statusDispendio = new Projetodispendiostatus(Constants.APROVADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
-    console.log('json objeto => ' + JSON.stringify(dispendio));
     this.projetoDispendioService.alterStatusDispendio(dispendio)
       .subscribe(() => {
           this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
