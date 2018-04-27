@@ -13,6 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {AvatarModule} from 'ngx-avatar';
 
+
 import ptBr from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
 
@@ -32,6 +33,7 @@ import {CargoService} from './services/cargo.service';
 import {PerfilService} from './services/perfil.service';
 import {ProjetoatividadeService} from './services/projetoatividade.service';
 import {TipodispendioService} from './services/tipodispendio.service';
+import {ToolbarService} from './services/toolbar.service';
 
 // compoonents
 import {HeaderComponent} from './header/header.component';
@@ -149,7 +151,8 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
     PerfilService,
     ProjetoatividadeService,
     TipodispendioService,
-    SidenavService
+    SidenavService,
+    ToolbarService
   ],
   bootstrap: [AppComponent]
 })

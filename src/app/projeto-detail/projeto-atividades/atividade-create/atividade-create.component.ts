@@ -27,7 +27,6 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   @ViewChild('chipInput') chipInput: MatInput;
   atividadeForm: FormGroup;
   private formSubmit: boolean;
-  navigateTo: string;
   idprojeto: number;
   chips: Funcionario[] = [];
   funcionarios: Funcionario[] = [];
@@ -49,8 +48,6 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-
-
     this.idprojeto = this.activatedRoute.snapshot.params['id'];
 
     this.projetoService.findByProjId(this.idprojeto)
@@ -59,7 +56,6 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
         this.minDateInicial = projeto.projDataInicial;
       });
 
-
     this.paramsSubscription = this.projFuncId.valueChanges
       .startWith('')
       .debounceTime(400)
@@ -67,9 +63,26 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
       .switchMap(nameSearch =>
         this.funcionarioService.listFuncionariosByName(nameSearch)
           .catch(error => Observable.from([])))
-      .subscribe(funcionarios => this.funcionarios = funcionarios);
-  }
+      .subscribe(funcionarios => {
 
+        const funcTemp: Funcionario[] = [];
+
+        if (this.chips.length > 0) {
+          this.funcionarios.forEach(element => {
+            let result = false;
+            this.chips.forEach(chip => {
+              if (chip.funcId === element.funcId) result = true;
+            });
+            if (!result) {
+              funcTemp.push(element);
+            }
+          });
+          this.funcionarios = funcTemp;
+        } else {
+          this.funcionarios = funcionarios;
+        }
+      });
+  }
 
   initForm() {
     this.projFuncId = this.fb.control('', [Validators.required]);
@@ -121,15 +134,14 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
     const t: Funcionario = event.option.value;
 
     const FuncResult = this.chips.filter((funcionario) => funcionario.funcId === t.funcId);
+
     if (Object.keys(FuncResult).length === 0) {
       const nomes = t.funcNome.split(' ');
       t.funcNome = nomes[0] + ' ' + nomes[nomes.length - 1];
       this.chips.push(t);
     }
-
     this.chipInput['nativeElement'].blur();
   }
-
 
   /* Verifica se o período é válido
 * */
@@ -147,7 +159,6 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
       this.atividadeForm.get('data_final').reset();
     }
   }
-
 
   /* voltar para projeto detail */
   cancelar() {

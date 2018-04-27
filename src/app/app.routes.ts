@@ -30,9 +30,14 @@ export const ROUTES: Routes = [
     children: [
       {
         path: 'projetos',
-        component: ProjetosComponent
+        component: ProjetosComponent,
+        data: {
+          title: 'Projetos'
+        }
       },
-      {path: 'funcionarios', component: FuncionariosComponent},
+      {path: 'funcionarios', component: FuncionariosComponent, data: {
+          title: 'Usuários'
+        }},
       {path: 'funcionario-create', component: FuncionarioCreateComponent},
       {path: 'funcionario-detail', component: FuncionarioDetailComponent},
       {path: 'provisao-create', component: ProvisaoCreateComponent},

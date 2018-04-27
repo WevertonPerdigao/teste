@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit,} from '@angular/core';
 import {FuncionarioService} from '../services/funcionario.service';
 import {Funcionario} from '../models/funcionario.model';
 import {Router} from '@angular/router';
-import {Projeto} from '../models/projeto.model';
 
 
 @Component({

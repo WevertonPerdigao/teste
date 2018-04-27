@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Funcionario} from '../models/funcionario.model';
 import {FuncionarioService} from '../services/funcionario.service';
 import {PerfilService} from '../services/perfil.service';
@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {Cargo} from '../models/cargo.model';
 import {CargoService} from '../services/cargo.service';
 import {ErrorStateMatcherImp} from '../utils/ErrorStateMatcher';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-funcionario-create',
@@ -53,9 +54,23 @@ export class FuncionarioCreateComponent implements OnInit {
 
   getErrorMessage() {
     return this.funcionarioForm.get('funcEmail').hasError('required') ? 'Informe um e-mail' :
-      this.funcionarioForm.get('funcEmail') ? 'Informe um e-mail válido' : '';
+      this.funcionarioForm.get('funcEmail').hasError('incorrect') ? 'E-mail já cadastrado' :
+        this.funcionarioForm.get('funcEmail') ? 'Informe um e-mail válido' : '';
   }
 
+
+  onSearchChange(searchValue: string) {
+
+    this.funcionarioService.findFuncionarioByEmail(searchValue)
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .subscribe(funcionario => {
+        if (funcionario) {
+          this.funcionarioForm.get('funcEmail').setErrors({'incorrect': true});
+          console.log('já existe');
+        }
+      });
+  }
 
   onSubmit(funcionario: Funcionario) {
 

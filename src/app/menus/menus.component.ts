@@ -10,7 +10,6 @@ import {Menu} from './menu/menu.model';
 })
 export class MenusComponent implements OnInit {
 
-  @Output() navToggle = new EventEmitter<boolean>();
   public menus: Menu[];
 
   constructor(private menuService: MenuService, private loginService: LoginService) {
@@ -28,7 +27,7 @@ export class MenusComponent implements OnInit {
         this.menus = data;
       },
       // the second argument is a function which runs on error
-      err => console.error(err),
+      err => console.error('menu log erro' + err),
       // the third argument is a function which runs on completion
     );
   }

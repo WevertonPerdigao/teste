@@ -66,7 +66,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       projValor: this.fb.control('', [Validators.required])
     });
 
-
     this.paramsSubscription = this.projFuncId.valueChanges
       .startWith('')
       .debounceTime(400)
