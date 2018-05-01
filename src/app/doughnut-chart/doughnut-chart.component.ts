@@ -17,12 +17,12 @@ export class DoughnutChartComponent {
     responsive: true
   };
 
-
-  // events
-  public chartClicked(e: any): void {
-  }
-
-  public chartHovered(e: any): void {
-  }
+  //
+  // // events
+  // public chartClicked(e: any): void {
+  // }
+  //
+  // public chartHovered(e: any): void {
+  // }
 }
 

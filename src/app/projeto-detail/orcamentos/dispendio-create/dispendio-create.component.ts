@@ -64,19 +64,23 @@ export class DispendioCreateComponent implements OnInit {
   }
 
   salvarDispendio(projetoDispendio: ProjetoDispendio) {
+    if (this.dispendioForm.valid) {
 
-    let projeto = new Projeto();
-    projeto.projId = this.idprojeto;
-    projetoDispendio.prdiProjId = projeto;
-    projetoDispendio.prdiFuncId = this.loginService.getFuncionario();
+      let projeto = new Projeto();
+      projeto.projId = this.idprojeto;
+      projetoDispendio.prdiProjId = projeto;
+      projetoDispendio.prdiFuncId = this.loginService.getFuncionario();
 
-    this.projetoDispendioService.createProjetoDispendio(projetoDispendio)
-      .subscribe(() => this.notificationService.notify(`Dispêndio solicitado com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify(`Erro ao solicitar dispêndio`),
-        () => {
-          this.goToProjectDetail();
-        });
+      this.projetoDispendioService.createProjetoDispendio(projetoDispendio)
+        .subscribe(() => this.notificationService.notify(`Dispêndio solicitado com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify(`Erro ao solicitar dispêndio`),
+          () => {
+            this.goToProjectDetail();
+          });
+    } else {
+      this.notificationService.notify(`Erro ao solicitar dispêndio`);
+    }
   }
 
   goToProjectDetail() {

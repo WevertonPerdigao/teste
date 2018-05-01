@@ -27,7 +27,14 @@ export const ROUTES: Routes = [
     component: HeaderComponent,
     canActivate: [LoggedInGuard],
     canLoad: [LoggedInGuard],
+    runGuardsAndResolvers: 'always',
     children: [
+      {
+        path: '',
+        redirectTo: '/projetos',
+        pathMatch: 'full',
+      },
+
       {
         path: 'projetos',
         component: ProjetosComponent,
@@ -46,8 +53,9 @@ export const ROUTES: Routes = [
           title: 'Novo Usuário'
         }
       },
-      {path: 'funcionario-detail', component: FuncionarioDetailComponent,
-       },
+      {
+        path: 'funcionario-detail', component: FuncionarioDetailComponent,
+      },
       {path: 'provisao-create', component: ProvisaoCreateComponent},
       {path: 'provisao-edit', component: ProvisaoEditComponent},
       {

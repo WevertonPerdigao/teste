@@ -4,18 +4,15 @@
     <mat-card-title> Solicitações</mat-card-title>
   </mat-card-header>
 
-  <mat-card-content
-                    *ngIf="listDispendiosPendentes?.length>0">
+  <mat-card-content *ngIf="listDispendiosPendentes?.length>0">
     <table class="full-width" cellspacing="0">
       <tr *ngFor="let dispendio of listDispendiosPendentes">
-        <mat-divider></mat-divider>
+
         <td>
-          <p style="font-size: 20px;"> {{dispendio.prdiFuncId?.funcNome}}</p>
-          <p style="font-size: 16px;"> {{dispendio.prdiTituloFatura}}</p>
-          <p style="font-size: 12px;"> {{dispendio.prdiTidiId?.tidiNome}}</p>
-        </td>
-        <td>
-          <p>{{dispendio.prdiValor | currency: 'BRL'}}</p>
+          <span class="title-projeto-detalhe"> {{dispendio.prdiFuncId?.funcNome}}</span><br>
+          <span class="name-dispendio"> {{dispendio.prdiTituloFatura}}</span><br>
+          <span class="tipo-dispendio">{{dispendio.prdiTidiId?.tidiNome}}</span><br>
+          <span class="title-projeto-detalhe">{{dispendio.prdiValor | currency: 'BRL'}}</span>
         </td>
         <td>
           <button mat-icon-button style="color:#4CAF50;" (click)="aprovar(dispendio)">
@@ -27,12 +24,16 @@
             <mat-icon>clear</mat-icon>
           </button>
         </td>
+        <mat-divider></mat-divider>
       </tr>
     </table>
 
   </mat-card-content>
 
-  <a *ngIf="listDispendiosPendentes?.length>0" class="mat-card-link center" (click)="verTodos()">VER TODOS</a>
+  <mat-card-footer *ngIf="listDispendiosPendentes?.length>0">
+    <a class="mat-card-link center" (click)="verTodos()">VER MAIS</a>
+  </mat-card-footer>
+
 
   <p *ngIf="listDispendiosPendentes?.length===0"> Sem dispêndio para aprovação</p>
 

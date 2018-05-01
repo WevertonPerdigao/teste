@@ -16,6 +16,8 @@ export class ProjetoContatosComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
   }
 
 }

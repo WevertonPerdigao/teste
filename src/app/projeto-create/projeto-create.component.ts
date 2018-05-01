@@ -36,11 +36,15 @@ import {Subscription} from 'rxjs/Subscription';
 export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('chipInput') chipInput: MatInput;
+  @ViewChild('chipInputMembro') chipInputMembro: MatInput;
   projetoForm: FormGroup;
   projFuncId = new FormControl();
+  projMembro = new FormControl();
   funcionarios: Funcionario[];
+  membros: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
   chips: Tipoprojeto[] = [];
+  chipsMembros: Funcionario[] = [];
   minDate: Date;
 
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
@@ -74,6 +78,36 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
         this.funcionarioService.listFuncionariosByName(nameSearch)
           .catch(error => Observable.from([])))
       .subscribe(funcionarios => this.funcionarios = funcionarios);
+
+
+    this.paramsSubscription = this.projMembro.valueChanges
+      .startWith('')
+      .debounceTime(400)
+      .distinctUntilChanged()
+      .switchMap(nameSearch =>
+        this.funcionarioService.listFuncionariosByName(nameSearch)
+          .catch(error => Observable.from([])))
+      .subscribe(funcionarios => {
+
+        const funcTemp: Funcionario[] = [];
+
+        if (this.chipsMembros.length > 0) {
+          funcionarios.forEach(element => {
+            let result = false;
+            this.chipsMembros.forEach(chip => {
+              if (chip.funcId === element.funcId) result = true;
+            });
+            if (!result) {
+              funcTemp.push(element);
+            }
+          });
+          this.membros = funcTemp;
+        } else {
+          this.membros = funcionarios;
+        }
+
+      });
+
 
     this.tipoprojetoService.listAllTipos()
       .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
@@ -128,17 +162,23 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   onSubmit(projeto: Projeto) {
-    projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
-    projeto.projTipos = (this.chips);
-    projeto.projEmprId = new Empresa(1);
+    if (this.projetoForm.valid) {
+      projeto.equipe = (this.chipsMembros);
 
-    this.projetoService.createProjeto(projeto)
-      .subscribe(() => this.notificationService.notify(`Projeto criado com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message),
-        () => {
-          this.router.navigate(['projetos']);
-        });
+      projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
+      projeto.projTipos = (this.chips);
+      projeto.projEmprId = new Empresa(1);
+
+      this.projetoService.createProjeto(projeto)
+        .subscribe(() => this.notificationService.notify(`Projeto criado com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify('Erro ao criar projeto'),
+          () => {
+            this.router.navigate(['projetos']);
+          });
+    } else {
+      this.notificationService.notify('Erro ao criar projeto');
+    }
   }
 
 
@@ -162,6 +202,30 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
 
     this.chipInput['nativeElement'].blur();
   }
+
+  /*adiciona funcionário a atividade a ser criada se ainda não foi adicionado */
+  addMembro(event: MatAutocompleteSelectedEvent): void {
+
+    const t: Funcionario = event.option.value;
+
+    const FuncResult = this.chipsMembros.filter((funcionario) => funcionario.funcId === t.funcId);
+
+    if (Object.keys(FuncResult).length === 0) {
+      const nomes = t.funcNome.split(' ');
+      t.funcNome = nomes[0] + ' ' + nomes[nomes.length - 1];
+      this.chipsMembros.push(t);
+    }
+    this.chipInputMembro['nativeElement'].blur();
+  }
+
+  removeMembro(chip: Funcionario): void {
+    const index = this.chipsMembros.indexOf(chip);
+    if (index >= 0) {
+      this.chipsMembros.splice(index, 1);
+    }
+    this.chipInputMembro['nativeElement'].blur();
+  }
+
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

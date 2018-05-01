@@ -49,3 +49,19 @@ html {
   display: flex;
   justify-content: center;
 }
+
+.title-projeto-detalhe {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.title-item {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.space-between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

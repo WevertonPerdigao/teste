@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, OnDestroy} from '@angular/core';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, ParamMap, Router} from '@angular/router';
 import {Utils} from '../utils/utils';
 import {ProjetoDispendioService} from '../services/projetodispendio.service';
 import 'rxjs/add/observable/forkJoin';
@@ -31,6 +31,8 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   tiposDispendiosValor: Observable<Tipodispendio[]>;
   projId;
   paramsSubscription: Subscription;
+  // referente a aba padrão
+  indexTab = 0;
 
   constructor(private projetoService: ProjetoService,
               private projetoDispendioService: ProjetoDispendioService,
@@ -40,16 +42,28 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
               public loginService: LoginService,
               public toolbarService: ToolbarService
   ) {
+    this.paramsSubscription = this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        console.log('teste reinit ProjetoDetailComponent');
+        this.ngOnInit();
+      }
+    });
+
   }
 
   ngOnInit() {
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.projId = params['id'];
+      params['indextab'] != null ? this.indexTab = +params['indextab'] : '';
     });
+
+    console.log('this.indexTab' + this.indexTab);
 
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
+        this.modifyName();
         this.toolbarService.setTitle(projeto.projNome);
         this.setPropertyCronograma();
       });
@@ -58,6 +72,7 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
 
     this.getDispendiosPendentes();
   }
+
 
   /*lista dispêndios pendentes de aoordo com  o perfil do funcionário logado
   /
@@ -109,6 +124,18 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
       this.qtdDiasUtilizados = 0;
     } else {
       this.qtdDiasUtilizados = Utils.getQtdDayByDtinicialAndDtFinal(dtinicio, new Date()) * 24;
+    }
+  }
+
+  /*Reduz nome completo para nome e sobrenome
+  * */
+  modifyName() {
+
+    this.projeto.projFuncId.funcNome = Utils.resumeName(this.projeto.projFuncId.funcNome);
+    if (this.projeto && this.projeto.equipe && this.projeto.equipe.length > 0) {
+      this.projeto.equipe.forEach(element => {
+        element.funcNome = Utils.resumeName(element.funcNome);
+      });
     }
   }
 

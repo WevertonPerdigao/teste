@@ -22,6 +22,15 @@ export class Utils {
   }
 
   /**
+   * Reduz nome completo para nome e sobrenome
+   */
+  public static resumeName(name: String): string {
+    const nomes = name.split(' ');
+    return nomes[0] + ' ' + nomes[nomes.length - 1];
+  }
+
+
+  /**
    * Função que retorna o Lista de anos desde 2015 até 2 anos posteriores a ano atual
    */
   public static getListYear(): string[] {

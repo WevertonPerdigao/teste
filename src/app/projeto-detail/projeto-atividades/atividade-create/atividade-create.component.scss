@@ -22,7 +22,6 @@
 
 .mat-card-atividade {
   width: 667px;
-  height: 293px;
   margin: auto;
   text-align: left;
 }
@@ -57,7 +56,8 @@
 .mat-raised-button {
   box-shadow: none;
 }
-.mat-raised-button:not([class*=mat-elevation-z]){
+
+.mat-raised-button:not([class*=mat-elevation-z]) {
   box-shadow: none;
 
 }

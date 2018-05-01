@@ -23,3 +23,16 @@
   flex-flow: row wrap;
   lign-items: flex-start;
 }
+
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 400;
+  color: black;
+  opacity: unset;
+}
+
+
+.mat-cell {
+  font-size: 12px !important;
+  font-weight: 400;
+}

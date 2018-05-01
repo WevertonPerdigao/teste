@@ -1,14 +1,16 @@
 <mat-card>
   <mat-card-title>Resumo de Dispêndios</mat-card-title>
+  <app-pie-chart [colors]="chartColors"
+                 [chartData]="listaTipoDispendioValor"
+                 [chartLabel]="listaTipoDispendioNome"
+                 *ngIf="listaDispendio.length>0">
+  </app-pie-chart>
+
   <mat-card-content *ngIf="listaDispendio.length>0">
 
-    <app-pie-chart [colors]="chartColors"
-                   [chartData]="listaTipoDispendioValor"
-                   [chartLabel]="listaTipoDispendioNome">
-    </app-pie-chart>
-
     <table class="full-width" cellspacing="0">
-      <tr *ngFor="let dispendio of listaDispendio; let i = index" [ngStyle]="{'font-size.px':14}"
+
+      <tr *ngFor="let dispendio of tiposDispendiosValor | async; let i = index" [ngStyle]="{'font-size.px':14}"
           [style.color]="color[i]">
         <td>
           <span>
@@ -21,13 +23,14 @@
         <td>
           <p>{{dispendio.total | currency: 'BRL'}}</p>
         </td>
+        <mat-divider></mat-divider>
       </tr>
     </table>
 
   </mat-card-content>
 
   <mat-card-footer *ngIf="listaDispendio.length>0">
-    <a style="margin-bottom: -20px" class="mat-card-link center" (click)="verTodos()">VER TODOS</a>
+    <a class="mat-card-link center" (click)="verTodos()">VER TODOS</a>
   </mat-card-footer>
 
   <p *ngIf="listaDispendio.length==0">Nenhum dispêndio foi adicionado ao projeto</p>

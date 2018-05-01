@@ -31,7 +31,8 @@ export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
               public loginService: LoginService,
               private sidenavService: SidenavService,
-              private toolbarService: ToolbarService
+              private toolbarService: ToolbarService,
+              private router: Router,
   ) {
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -50,7 +51,6 @@ export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('init');
 
     // passa por referência a sidenav da view para maniupulação (open ou close)
     this.sidenavService.sideNav = this.sideNav;

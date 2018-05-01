@@ -1,22 +1,24 @@
 <mat-card>
-  <mat-card-title class="subtitle-card">Contatos</mat-card-title>
-
-
+  <mat-card-title>Contatos</mat-card-title>
   <mat-card-content>
+
     <div class="left">
          <span *ngFor="let tipo of tipos" class="tipo">
         {{tipo?.tiprNome}}
       </span>
     </div>
 
-    <p>Responsável</p>
-    <div class="contatos" fxLayoutGap="10px">
-      <p class="subtitle-card">{{responsavel?.funcNome}}</p>
-      <p>
-        <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
-        <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a>
-      </p>
+    <div class="space"></div>
 
+    <span class="title-item">Responsável</span>
+    <div class="space-between">
+
+      <span class="title-projeto-detalhe">{{responsavel?.funcNome}}</span>
+      <span>
+          <a class="mat-card-link" routerLink="['/ativiades']">LIGAR</a>
+          <a class="mat-card-link" routerLink="['/ativiades']">E-MAIL</a>
+        </span>
     </div>
+
   </mat-card-content>
 </mat-card>

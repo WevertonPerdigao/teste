@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, NgZone, OnDestroy, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ProjetoDispendio} from '../../../models/projetodispendio.model';
 import {Projetodispendiostatus} from '../../../models/projetodispendiostatus.model';
@@ -9,6 +9,7 @@ import {Router} from '@angular/router';
 import {LoginService} from '../../../services/login.service';
 import {Funcionario} from '../../../models/funcionario.model';
 import {Subscription} from 'rxjs/Subscription';
+import {Utils} from '../../../utils/utils';
 
 @Component({
   selector: 'app-solicitacoes',
@@ -25,14 +26,18 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
   constructor(private projetoDispendioService: ProjetoDispendioService,
               private notificationService: NotificationService,
               private router: Router,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              private zone: NgZone) {
   }
 
   ngOnInit() {
     this.paramsSubscription = this.dispendiosPendentes.subscribe(
       dispendios => {
         this.listDispendiosPendentes = dispendios;
-      }
+        this.listDispendiosPendentes.forEach(dispendio => {
+          dispendio.prdiFuncId.funcNome = Utils.resumeName(dispendio.prdiFuncId.funcNome);
+        });
+     }
     );
   }
 
@@ -44,12 +49,27 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
     this.projetoDispendioService.alterStatusDispendio(dispendio)
       .subscribe(() => {
           this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
+          this.updateDispendios();
           this.notificationService.notify(`Dispêndio reprovado com sucesso`);
         },
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message || 'Erro ao aprovar dispêndio')
       );
   }
+
+
+  updateDispendios() {
+    console.log('chamou');
+    this.router.navigate(['/projeto-detail/'],
+      {
+        queryParams: {
+          id: this.projId,
+          indextab: Constants.TAB_ORCAMENTOS
+        },
+        skipLocationChange: false
+      });
+  }
+
 
   /*alterar o status do dispendio de pendente para aprovado
    * */
@@ -60,6 +80,8 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
       .subscribe(() => {
           this.listDispendiosPendentes.splice(this.listDispendiosPendentes.indexOf(dispendio), 1);
           this.notificationService.notify(`Dispêndio aprovado com sucesso`);
+          this.updateDispendios();
+
         },
         response => // HttpErrorResponse
           this.notificationService.notify(response.error.message + 'Erro ao aprovar dispêndio')

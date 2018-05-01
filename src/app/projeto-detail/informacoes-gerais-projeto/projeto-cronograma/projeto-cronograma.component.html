@@ -1,36 +1,35 @@
-  <mat-card>
-      <mat-card-title class="subtitle-card">Cronograma</mat-card-title>
+<mat-card>
+  <mat-card-title>Cronograma</mat-card-title>
 
-    <mat-card-content>
-      <p>Período</p>
-      <p style="font-size: 20px;margin-top: -10px;">
-        {{projeto?.projDataInicial | date:'dd/MM/yyyy'}} - {{projeto?.projDataFinal | date:'dd/MM/yyyy'}}</p>
+  <mat-card-content>
+    <span>Período</span><br>
+    <span class="title-projeto-detalhe">
+        {{projeto?.projDataInicial | date:'dd/MM/yyyy'}} - {{projeto?.projDataFinal | date:'dd/MM/yyyy'}}</span>
 
-
-      <div class="cronograma">
-        <p>Cronograma</p>
-        <app-range-slider [minParam]="0" [maxParam]="100"
-                          [valueParam]="percCronograma">
-        </app-range-slider>
-      </div>
-
-      <div class="content">
-        <p>Total Horas</p>
-        <p>{{diasProjeto}}</p>
-      </div>
-
-      <div class="content" style="margin-top: -10px">
-        <p>Horas Concluías</p>
-        <p>{{diasEmUso}}</p>
-      </div>
+    <div class="space"></div>
+    <div class="space"></div>
+    <app-range-slider [minParam]="0" [maxParam]="100"
+                      [valueParam]="percCronograma">
+    </app-range-slider>
 
 
-      <div class="center" style="margin-top: -10px">
-        <a class="mat-card-link">VER ATIVIDADES</a>
+    <div class="content">
+      <p>Total Horas</p>
+      <p>{{diasProjeto}}</p>
+    </div>
 
-      </div>
-    </mat-card-content>
-  </mat-card>
+    <div class="content" style="margin-top: -10px">
+      <p>Horas Concluías</p>
+      <p>{{diasEmUso}}</p>
+    </div>
+
+
+    <div class="center">
+      <a class="mat-card-link">VER ATIVIDADES</a>
+
+    </div>
+  </mat-card-content>
+</mat-card>
 
 
 

@@ -3,7 +3,6 @@
   flex-direction: column;
   margin: 10px;
   max-height: 605px !important;
-  overflow-y: auto;
   width: 378px !important;
 }
 
@@ -15,23 +14,36 @@
   font-size: 16px;
   font-weight: bold;
   color: #388E3C;
-  font-family: 'Open Sans', 'Condensed Bold';
-  padding: 5px;
+  font-family: 'Open Sans Condensed';
+  padding: 10px;
 }
 
 .mat-card-link:hover {
   cursor: pointer;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-}
-
 .mat-card-title {
   font-size: 20px;
-  font-family: 'Open Sans', 'Condensed Bold';
-  font-weight: bold;
+  font-weight: 600;
 }
+
+.name-dispendio {
+  font-size: 16px;
+  font-weight: 600;
+  opacity: 0.87;
+}
+
+.tipo-dispendio {
+  font-size: 12px;
+  font-weight: 400;
+  opacity: 0.54;
+}
+
+.mat-card-content {
+  max-height: 545px !important;
+  overflow-y: auto;
+}
+
+
 
 

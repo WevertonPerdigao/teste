@@ -87,6 +87,32 @@
           </mat-autocomplete>
         </mat-input-container>
 
+
+        <mat-input-container class="full-width-input">
+          <mat-chip-list #chipListMembro>
+            <mat-chip *ngFor="let tagMembro of chipsMembros"
+                      (remove)="removeMembro(tagMembro)"
+                      color="primary">
+              {{tagMembro.funcNome}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipListMembro" placeholder="Membros"
+                   [formControl]="projMembro"
+                   [matChipInputAddOnBlur]="true"
+                   [matAutocomplete]="autocompleteMembros"
+                   #chipInputMembro>
+          </mat-chip-list>
+          <mat-autocomplete #autocompleteMembros="matAutocomplete"
+                            [displayWith]="displayFuncionario"
+                            (optionSelected)="addMembro($event)">
+            <mat-option *ngFor="let membro of membros"
+                        [value]="membro"
+                        class="options">
+              <span>{{ membro?.funcNome }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
         <mat-input-container class="full-width-input">
           <input class="valor-projeto" matInput placeholder="Valor"
                  formControlName="projValor" required

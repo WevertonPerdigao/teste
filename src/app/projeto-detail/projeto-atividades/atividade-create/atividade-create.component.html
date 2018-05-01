@@ -14,29 +14,27 @@
           </mat-error>
         </mat-input-container>
 
-        <mat-input-container class="full-width-input">
-          <mat-chip-list #chipList>
+
+        <mat-input-container class="full-width-input" *ngIf="chips && chips.length>0">
+          <mat-chip-list #chipList placeholder="Membros selecionados">
             <mat-chip *ngFor="let tag of chips"
                       (remove)="remove(tag)"
                       color="primary">
               {{tag.funcNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input [matChipInputFor]="chipList" placeholder="Membros"
-                   [formControl]="projFuncId"
-                   [matChipInputAddOnBlur]="true"
-                   [matAutocomplete]="autocompleteMembros"
-                   #chipInput>
           </mat-chip-list>
-          <mat-autocomplete #autocompleteMembros="matAutocomplete"
-                            [displayWith]="displayFuncionario"
-                            (optionSelected)="addFuncionario($event)">
-            <mat-option *ngFor="let funcionario of funcionarios"
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <mat-select (selectionChange)="addFuncionario($event.value)" placeholder="Membros"
+          >
+            <mat-option *ngFor="let funcionario of listMembros"
                         [value]="funcionario"
                         class="options">
               <span>{{ funcionario?.funcNome }}</span>
             </mat-option>
-          </mat-autocomplete>
+          </mat-select>
         </mat-input-container>
 
         <table class="full-width-input" cellspacing="0">

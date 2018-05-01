@@ -1,4 +1,4 @@
-<mat-tab-group (selectedTabChange)="onLinkClick($event)">
+<mat-tab-group (selectedTabChange)="onLinkClick($event)" [selectedIndex]="indexTab">
 
   <mat-tab label="INFORMAÇÕES GERAIS">
     <div class="flex">
@@ -14,7 +14,7 @@
                             [tipos]="projeto.projTipos">
 
       </app-projeto-contatos>
-      <app-projeto-equipe></app-projeto-equipe>
+      <app-projeto-equipe [equipe]="projeto.equipe"></app-projeto-equipe>
       <app-justificativa></app-justificativa>
       <app-escopo></app-escopo>
 

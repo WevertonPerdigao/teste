@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FuncionarioProvisao} from '../../models/funcionarioprovisao.model';
 import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Constants} from '../../utils/constants';
 import {Funcionario} from '../../models/funcionario.model';
@@ -11,7 +11,6 @@ import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
 import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
 import {MatAutocompleteSelectedEvent, MatOptionSelectionChange} from '@angular/material';
-import {Tipoprojeto} from '../../models/tipoprojeto.model';
 
 @Component({
   selector: 'app-provisao-edit',

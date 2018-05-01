@@ -1,5 +1,5 @@
 <mat-card>
-  <mat-card-title style="margin-bottom: 0;">Orçamento</mat-card-title>
+  <mat-card-title class="title" style="margin-bottom: 0;">Orçamento</mat-card-title>
   <mat-card-content>
     <app-pie-chart [colors]="[{backgroundColor: ['#03A9F4', '#FFC107']}]"
                    [chartData]="[valorTotal,custoTotal]"
@@ -7,16 +7,16 @@
 
     <div class="content valor" style="margin-top: -20px;">
       <p>Verba Total</p>
-      <p>R$ {{valorTotal | currency:'BRL'}}
+      <p>{{valorTotal | currency:'BRL'}}
       </p>
     </div>
     <div class="content custo" style="margin-top: -20px">
       <p>Custo Total</p>
-      <p>R$ {{(custoTotal || 0) | currency:'BRL' }}</p>
+      <p>{{(custoTotal || 0) | currency:'BRL' }}</p>
     </div>
     <div class="content" style="margin-top: -30px">
       <p class="salto-text">Saldo</p>
-      <p class="saldo">R$ {{(valorTotal - (custoTotal || 0))  | currency:'BRL' }}</p>
+      <p class="saldo">{{(valorTotal - (custoTotal || 0)) | currency:'BRL' }}</p>
     </div>
   </mat-card-content>
 </mat-card>

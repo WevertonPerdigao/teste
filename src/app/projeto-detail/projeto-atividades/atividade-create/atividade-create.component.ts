@@ -14,6 +14,7 @@ import {Projeto} from '../../../models/projeto.model';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ProjetoService} from '../../../services/projeto.service';
+import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
 
 @Component({
   selector: 'app-atividade-create',
@@ -22,7 +23,7 @@ import {ProjetoService} from '../../../services/projeto.service';
   encapsulation: ViewEncapsulation.None
 })
 
-export class AtividadeCreateComponent implements OnInit, OnDestroy {
+export class AtividadeCreateComponent implements OnInit {
 
   @ViewChild('chipInput') chipInput: MatInput;
   atividadeForm: FormGroup;
@@ -34,6 +35,8 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   projFuncId: FormControl;
   minDateInicial: Date;
   projeto: Projeto;
+  listMembros: Funcionario[] = [];
+  errorMatcher = new ErrorStateMatcherImp();
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -56,32 +59,9 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
         this.minDateInicial = projeto.projDataInicial;
       });
 
-    this.paramsSubscription = this.projFuncId.valueChanges
-      .startWith('')
-      .debounceTime(400)
-      .distinctUntilChanged()
-      .switchMap(nameSearch =>
-        this.funcionarioService.listFuncionariosByName(nameSearch)
-          .catch(error => Observable.from([])))
-      .subscribe(funcionarios => {
-
-        const funcTemp: Funcionario[] = [];
-
-        if (this.chips.length > 0) {
-          funcionarios.forEach(element => {
-            let result = false;
-            this.chips.forEach(chip => {
-              if (chip.funcId === element.funcId) result = true;
-            });
-            if (!result) {
-              funcTemp.push(element);
-            }
-          });
-          this.funcionarios = funcTemp;
-        } else {
-          this.funcionarios = funcionarios;
-        }
-      });
+    this.projetoService.listFuncionariosByProjeto(this.idprojeto)
+      .subscribe(funcionarios =>
+        this.listMembros = funcionarios);
   }
 
   initForm() {
@@ -104,19 +84,24 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
   }
 
   salvarAtividade(atividade: Projetoatividade) {
-    atividade.membros = (this.chips);
-    let projeto = new Projeto();
-    projeto.projId = this.idprojeto;
-    atividade.projeto = projeto;
+    if (this.atividadeForm.valid) {
 
-    this.atividadeService.create(atividade)
-      .subscribe(() => this.notificationService.notify(`Atividade adicionada com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify('Erro ao cadastrar nova atividade'),
-        () => {
-          this.router.navigate(['/projeto-detail'],
-            {queryParams: {id: this.idprojeto}, skipLocationChange: false});
-        });
+      atividade.membros = (this.chips);
+      let projeto = new Projeto();
+      projeto.projId = this.idprojeto;
+      atividade.projeto = projeto;
+
+      this.atividadeService.create(atividade)
+        .subscribe(() => this.notificationService.notify(`Atividade adicionada com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify('Erro ao cadastrar nova atividade'),
+          () => {
+            this.router.navigate(['/projeto-detail'],
+              {queryParams: {id: this.idprojeto}, skipLocationChange: false});
+          });
+    } else {
+      this.notificationService.notify('Dados inválidos');
+    }
   }
 
 
@@ -124,23 +109,17 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
     const index = this.chips.indexOf(chip);
     if (index >= 0) {
       this.chips.splice(index, 1);
+      this.listMembros.push(chip);
     }
-    this.chipInput['nativeElement'].blur();
   }
 
   /*adiciona funcionário a atividade a ser criada se ainda não foi adicionado */
-  addFuncionario(event: MatAutocompleteSelectedEvent): void {
+  addFuncionario(t: Funcionario): void {
+    const nomes = t.funcNome.split(' ');
+    t.funcNome = nomes[0] + ' ' + nomes[nomes.length - 1];
+    this.chips.push(t);
 
-    const t: Funcionario = event.option.value;
-
-    const FuncResult = this.chips.filter((funcionario) => funcionario.funcId === t.funcId);
-
-    if (Object.keys(FuncResult).length === 0) {
-      const nomes = t.funcNome.split(' ');
-      t.funcNome = nomes[0] + ' ' + nomes[nomes.length - 1];
-      this.chips.push(t);
-    }
-    this.chipInput['nativeElement'].blur();
+    this.listMembros.splice(this.listMembros.indexOf(t), 1);
   }
 
   /* Verifica se o período é válido
@@ -171,7 +150,4 @@ export class AtividadeCreateComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    this.paramsSubscription.unsubscribe();
-  }
 }

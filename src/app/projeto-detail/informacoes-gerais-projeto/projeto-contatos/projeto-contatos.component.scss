@@ -1,3 +1,8 @@
+.mat-card-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .content {
   display: flex;
   justify-content: space-between;
@@ -15,6 +20,7 @@
   font-weight: 700;
   color: #388E3C;
   font-family: 'Open Sans Condensed';
+  text-decoration: none;
 }
 
 .left {

@@ -13,6 +13,7 @@ export class ProjetoEquipeComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
 }

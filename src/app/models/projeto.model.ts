@@ -23,7 +23,7 @@ export class Projeto {
   projTipos?: Tipoprojeto[] = [];
   atividades?: Projetoatividade[];
   dispendios?: ProjetoDispendio[] = [];
-  equipe?: Projetoequipe[] = [];
+  equipe?: Funcionario[] = [];
 
   constructor(projId?: number) {
     this.projId = projId;

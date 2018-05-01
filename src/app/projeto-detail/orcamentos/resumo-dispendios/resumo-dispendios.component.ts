@@ -32,6 +32,8 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    console.log('init ResumoDispendiosComponent');
+
     this.paramsSubscription = this.tiposDispendiosValor.subscribe(
       disppendios => {
         this.listaDispendio = disppendios;

@@ -133,7 +133,7 @@ import {CurrencyMaskModule} from 'ng2-currency-mask';
     CurrencyMaskModule,
     AvatarModule,
     ChartsModule,
-    RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules})
+    RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules, onSameUrlNavigation: 'reload'})
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},
     {provide: ErrorHandler, useClass: ApplicationErrorHandler},
