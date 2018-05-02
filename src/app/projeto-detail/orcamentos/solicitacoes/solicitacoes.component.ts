@@ -59,7 +59,7 @@ export class SolicitacoesComponent implements OnInit, OnDestroy {
 
 
   updateDispendios() {
-    console.log('chamou');
+   // console.log('chamou');
     this.router.navigate(['/projeto-detail/'],
       {
         queryParams: {

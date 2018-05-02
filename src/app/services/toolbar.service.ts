@@ -74,7 +74,7 @@ export class ToolbarService {
 
   getItens(): Observable<ToolbarItem> {
 
-    console.log('itens');
+   // console.log('itens');
     // listen to page variable from router events
     return this.router
       .events
@@ -122,7 +122,7 @@ export class ToolbarService {
   }
 
   setTitle(descricao: string) {
-    console.log('descricao' + descricao);
+  //  console.log('descricao' + descricao);
     this.title = descricao;
   }
 

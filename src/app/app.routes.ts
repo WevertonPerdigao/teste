@@ -16,6 +16,7 @@ import {ProvisaoCreateComponent} from './funcionario-detail/provisao-create/prov
 import {ProvisaoEditComponent} from './funcionario-detail/provisao-edit/provisao-edit.component';
 import {LoginLayoutComponent} from './layouts/login-layout.component';
 import {HeaderComponent} from './header/header.component';
+import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
 
 export const ROUTES: Routes = [
   // {path: '', redirectTo: 'projetos', pathMatch: 'full'},
@@ -65,6 +66,12 @@ export const ROUTES: Routes = [
         }
       },
       {path: 'projeto-detail', component: ProjetoDetailComponent},
+      {
+        path: 'projeto-edit', component: ProjetoEditComponent,
+        data: {
+          title: 'ALTERAR'
+        }
+      },
       {
         path: 'atividade-create/:id', component: AtividadeCreateComponent,
         data: {

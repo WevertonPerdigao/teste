@@ -28,6 +28,12 @@ export class ProjetoService {
     return this.http.post<Projeto>(`${GPITBAM_API}/projetos/salvar`, projeto);
   }
 
+  deleteProjeto(projId: number): Observable<Projeto> {
+    const httpParam = new HttpParams().set('codigo', projId.toString());
+    return this.http.delete<Projeto>(`${GPITBAM_API}/projetos/projeto/delete`, {params: httpParam});
+  }
+
+
 
   listFuncionariosByProjeto(projId?: number): Observable<Funcionario[]> {
     return this.http.get<Funcionario[]>(`${GPITBAM_API}/projetos/getmembros/${projId}`);

@@ -1,6 +1,11 @@
 <mat-tab-group (selectedTabChange)="onLinkClick($event)" [selectedIndex]="indexTab">
 
   <mat-tab label="INFORMAÇÕES GERAIS">
+    <div class="flex-end">
+      <a (click)="redirectAlterProjeto()" mat-button>EDITAR PROJETO</a>
+
+    </div>
+
     <div class="flex">
       <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
                               [diasEmUso]="qtdDiasUtilizados" [percCronograma]="projeto.cronograma">
@@ -22,7 +27,7 @@
   </mat-tab>
   <mat-tab label="ORÇAMENTOS">
     <div class="flex-end">
-      <a (click)="goToDispendioCreate()" mat-button>NOVO DISPENDIO</a>
+      <a (click)="goToDispendioCreate()" mat-button>NOVO DISPÊNDIO</a>
 
     </div>
     <div class="flex">

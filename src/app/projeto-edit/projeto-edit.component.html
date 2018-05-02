@@ -1,0 +1,147 @@
+<div class="flex-end">
+  <button mat-button (click)="excluirProjeto()">
+    <span class="action-buttons" style="color: #F44336">EXCLUIR PROJETO</span>
+  </button>
+</div>
+
+
+<div class="main-div">
+
+  <mat-card class="card-projeto">
+    <mat-card-content>
+      <form [formGroup]="projetoForm">
+
+        <mat-input-container class="full-width-input" hintLabel="Max 80 caracteres">
+          <input matInput placeholder="Título"
+                 type="text" formControlName="projNome" required
+                 maxlength="80">
+          <mat-hint align="end">{{projetoForm.get('projNome').value?.length || 0}}/80</mat-hint>
+          <mat-error *ngIf="projetoForm.get('projNome')?.invalid">
+            Informe um título para o projeto
+          </mat-error>
+        </mat-input-container>
+
+        <table class="full-width-input" cellspacing="0">
+          <tr>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker" placeholder="Prazo"
+                       readonly="true" (focus)="picker.open()" (click)="picker.open()"
+                       formControlName="projDataInicial" required
+                       (dateChange)="validaPrazo($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error *ngIf="isFieldInvalid('projDataInicial')">
+                  {{getErrorMessageDate('projDataInicial')}}
+                </mat-error>
+              </mat-input-container>
+            </td>
+            <td>
+              <div class="space"></div>
+            </td>
+            <td>
+              <mat-input-container class="full-width-input">
+                <input matInput [matDatepicker]="picker2" [min]="minDate"
+                       readonly="true" (focus)="picker2.open()" (click)="picker2.open()"
+                       formControlName="projDataFinal" required
+                       (dateChange)="validaPrazo($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error *ngIf="isFieldInvalid('projDataFinal')">
+                  {{getErrorMessageDate('projDataFinal')}}
+                </mat-error>
+              </mat-input-container>
+            </td>
+          </tr>
+        </table>
+
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Responsável"
+                 [formControl]="projFuncId"
+                 [matAutocomplete]="auto"
+                 required>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFuncionario">
+            <mat-option *ngFor="let funcionario of funcionarios" [value]="funcionario" class="options">
+              {{ funcionario?.funcNome }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error *ngIf="isFieldInvalid('projFuncId')">
+            Informe o responsável
+          </mat-error>
+
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let tag of chipsTipo" (remove)="remove(tag)">
+              {{tag.tiprNome}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" placeholder="Área de Projeto"
+                   [matChipInputAddOnBlur]="false"
+                   [matAutocomplete]="autoTipos"
+                   [formControl]="projTipos"
+                   #chipInput>
+          </mat-chip-list>
+          <mat-autocomplete #autoTipos="matAutocomplete"
+                            [displayWith]="displayTipo" (optionSelected)="addTiposProjeto($event)">
+            <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo" class="options">
+              <span>{{ tipo.tiprNome }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
+
+        <mat-input-container class="full-width-input">
+          <mat-chip-list #chipListMembro>
+            <mat-chip *ngFor="let tagMembro of chipsMembros"
+                      (remove)="removeMembro(tagMembro)"
+                      color="primary">
+              {{tagMembro.funcNome}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipListMembro" placeholder="Membros"
+                   [formControl]="projMembro"
+                   [matChipInputAddOnBlur]="true"
+                   [matAutocomplete]="autocompleteMembros"
+                   #chipInputMembro>
+          </mat-chip-list>
+          <mat-autocomplete #autocompleteMembros="matAutocomplete"
+                            [displayWith]="displayFuncionario"
+                            (optionSelected)="addMembro($event)">
+            <mat-option *ngFor="let membro of membros"
+                        [value]="membro"
+                        class="options">
+              <span>{{ membro?.funcNome }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-input-container>
+
+        <mat-input-container class="full-width-input">
+          <input class="valor-projeto" matInput placeholder="Valor"
+                 formControlName="projValor" required
+                 currencyMask
+                 [options]="{ prefix: '', thousands: '.', decimal: ',' }">
+
+          <mat-error *ngIf="isFieldInvalid('projValor')">
+            Informe o valor do projeto
+          </mat-error>
+        </mat-input-container>
+
+      </form>
+
+      <div class="content">
+        <a mat-button (click)="redirectProjetoDetail()">
+          VOLTAR
+        </a>
+        <button mat-button (click)="onSubmit(projetoForm.value)" type="submit"
+                [disabled]="projetoForm.invalid">
+          <span class="action-buttons">SALVAR</span>
+        </button>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+</div>

@@ -144,7 +144,6 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
   * */
   upadateProvisao(funcionarioProvisao: FuncionarioProvisao) {
 
-
     funcionarioProvisao.fuprReferencia = this.formatMesReferencia();
     funcionarioProvisao.fuprFuncId = new Funcionario();
     funcionarioProvisao.fuprFuncId.funcId = this.funcId;

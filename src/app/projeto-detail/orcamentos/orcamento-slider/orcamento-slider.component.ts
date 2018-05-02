@@ -12,12 +12,12 @@ export class OrcamentoSliderComponent implements OnInit {
   @Input() percOrcamento;
 
   constructor() {
-    console.log('init constructor');
-  
+  //  console.log('init constructor');
+
   }
 
   ngOnInit() {
-    console.log('init OrcamentoSliderComponent');
+   // console.log('init OrcamentoSliderComponent');
   }
 
 }

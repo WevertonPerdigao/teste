@@ -42,13 +42,13 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
               public loginService: LoginService,
               public toolbarService: ToolbarService
   ) {
-    this.paramsSubscription = this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        console.log('teste reinit ProjetoDetailComponent');
-        this.ngOnInit();
-      }
-    });
+    // this.paramsSubscription = this.router.events.subscribe((e: any) => {
+    //   // If it is a NavigationEnd event re-initalise the component
+    //   if (e instanceof NavigationEnd) {
+    //     console.log('teste reinit ProjetoDetailComponent');
+    //     this.ngOnInit();
+    //   }
+    // });
 
   }
 
@@ -58,12 +58,12 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
       params['indextab'] != null ? this.indexTab = +params['indextab'] : '';
     });
 
-    console.log('this.indexTab' + this.indexTab);
+    //console.log('this.indexTab' + this.indexTab);
 
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
-        this.modifyName();
+        this.alterName();
         this.toolbarService.setTitle(projeto.projNome);
         this.setPropertyCronograma();
       });
@@ -110,6 +110,16 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
     this.router.navigate(['/dispendio-create/', this.projeto.projId]);
   }
 
+  redirectAlterProjeto() {
+    this.router.navigate(['/projeto-edit/'],
+      {
+        queryParams: {
+          id: this.projId
+        }, skipLocationChange: true
+      });
+  }
+
+
   setPropertyCronograma() {
     this.calcQtdeDiasProjeto(this.projeto.projDataInicial, this.projeto.projDataFinal);
     this.calcQtdeDiasConcluidos(this.projeto.projDataInicial);
@@ -129,7 +139,7 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
 
   /*Reduz nome completo para nome e sobrenome
   * */
-  modifyName() {
+  alterName() {
 
     this.projeto.projFuncId.funcNome = Utils.resumeName(this.projeto.projFuncId.funcNome);
     if (this.projeto && this.projeto.equipe && this.projeto.equipe.length > 0) {

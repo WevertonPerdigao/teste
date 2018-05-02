@@ -1,0 +1,48 @@
+.main-div {
+  height: 100vh;
+  display: flex;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: bold;
+  font-family: "Open Sans Condensed";
+  opacity: 1;
+}
+
+.mat-form-field-label {
+  color: #4CAF50;
+}
+
+.mat-form-field-underline {
+  background-color: #4CAF50;
+}
+
+.card-projeto {
+  width: 677px;
+  margin: auto;
+  font-size: 16px;
+  font-weight: 400;
+  margin-top: 0;
+
+}
+
+.full-width-input {
+  width: 100%;
+}
+
+.options {
+  font-size: 16px !important;
+}
+
+.valor-projeto {
+  text-align: left !important;
+  color: #000000;
+  opacity: 0.35;
+  font-size: 42px !important;
+  font-weight: 400;
+}
+
+

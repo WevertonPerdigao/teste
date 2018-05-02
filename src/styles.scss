@@ -60,8 +60,20 @@ html {
   font-weight: 400;
 }
 
-.space-between{
+.space-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+//referente a butões de novo recurso do sistema
+.button-add {
+  font-family: "Open Sans Condensed";
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
+.mat-chip {
+  color: white !important;
+  background-color: #4CAF50 !important;;
 }

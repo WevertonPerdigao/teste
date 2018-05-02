@@ -20,22 +20,22 @@ export class ApplicationErrorHandler extends ErrorHandler {
       this.zone.run(() => {
         switch (errorResponse.status) {
           case 400:
-            this.ns.notify('Erro ao processar a sua solicitação.');
+            this.ns.notify('400: Sua requisição resultou em erro');
             break;
           case 401:
             this.injector.get(LoginService).handleLogin();
             break;
           case 403:
-            this.ns.notify('Não autorizado ');
+            this.ns.notify('403: Não autorizado');
             break;
           case 503:
-            this.ns.notify('Serviço indisponível ');
+            this.ns.notify('503: Serviço indisponível ');
             break;
           case 404:
             this.ns.notify('Recurso não encontrado.');
             break;
           default:
-            this.ns.notify('Recurso não encontrado. Verifique o console para mais detalhes');
+            this.ns.notify('Recurso não encontrado');
             break;
         }
       });

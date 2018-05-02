@@ -32,7 +32,7 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('init ResumoDispendiosComponent');
+   // console.log('init ResumoDispendiosComponent');
 
     this.paramsSubscription = this.tiposDispendiosValor.subscribe(
       disppendios => {

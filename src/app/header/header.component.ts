@@ -65,7 +65,6 @@ export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
   }
 
   onLogout() {
-    console.log('logout');
     this.loginService.logout();
   }
 

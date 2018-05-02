@@ -6,53 +6,31 @@
       <form [formGroup]="dispendioForm">
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Título" type="text" formControlName="prdiTituloFatura" required>
+          <input matInput placeholder="Título" type="text" readonly
+                 formControlName="prdiTituloFatura" required>
 
         </mat-input-container>
 
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Descrição" type="text" formControlName="prdiDescricao" required>
+          <input matInput placeholder="Descrição" type="text" readonly
+                 formControlName="prdiDescricao" required>
 
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Justificativa" type="text" formControlName="prdiJustificativa" required>
+          <input matInput placeholder="Justificativa" type="text" readonly
+                 formControlName="prdiJustificativa" required>
 
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Valor" class="right-align"
-                 type="number" formControlName="prdiValor" required>
+          <input class="input-valor" matInput placeholder="Valor" readonly
+                 formControlName="prdiValor" required
+                 currencyMask
+                 [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
 
         </mat-input-container>
-
-        <mat-input-container class="full-width-input">
-          <input matInput placeholder="Nota fiscal nro" type="text" formControlName="prdiNotaFiscal" required>
-
-        </mat-input-container>
-
-
-        <table class="full-width-input" cellspacing="0">
-          <tr>
-            <td>
-              <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker" placeholder="Data da nota" formControlName="prdiDataNotaFiscal"
-                       required>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-input-container>
-            </td>
-            <td>
-              <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker2" placeholder="Data do pagamento"
-                       formControlName="prdiDataPagamento" required>
-                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                <mat-datepicker #picker2></mat-datepicker>
-              </mat-input-container>
-            </td>
-          </tr>
-        </table>
 
       </form>
 
