@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 
 @Component({
   selector: 'app-range-slider',
@@ -9,12 +9,14 @@ export class RangeSliderComponent implements OnInit {
 
   @Input() maxParam = 0.0;
   @Input() minParam: number;
-
   @Input() valueParam: number;
 
   constructor() {
   }
 
   ngOnInit() {
+
   }
+
+
 }

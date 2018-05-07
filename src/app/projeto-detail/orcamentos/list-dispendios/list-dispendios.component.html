@@ -3,18 +3,23 @@
   <mat-tab label="PENDENTES">
     <div class="content">
 
-      <mat-card *ngFor="let dispendio of listDispendiosPendentes" (click)="goToEditStatusDispendio(dispendio.prdiId)">
-        <p class="name">{{dispendio.prdiFuncId?.funcNome}}</p>
-        <mat-card-title>
+      <mat-card *ngFor="let dispendio of listDispendiosPendentes">
 
-          <span class="title">{{dispendio.prdiDescricao}}</span>
-        </mat-card-title>
+        <div (click)="goToEditStatusDispendio(dispendio.prdiId)"
+             class="detail-dispendio">
+          <p class="name">{{dispendio.prdiFuncId?.funcNome}}</p>
+          <mat-card-title>
 
-        <mat-card-content>
+            <span class="title">{{dispendio.prdiDescricao}}</span>
+          </mat-card-title>
 
-          <p class="valor">R$ {{dispendio.prdiValor}}</p>
-          <p class="tipo">{{dispendio.prdiTidiId.tidiNome}}</p>
+          <mat-card-content>
+            <p class="valor">R$ {{dispendio.prdiValor}}</p>
+            <p class="tipo">{{dispendio.prdiTidiId.tidiNome}}</p>
+          </mat-card-content>
+        </div>
 
+        <mat-card-actions>
           <div class="flex-end">
             <button mat-icon-button style="color:#4CAF50;" (click)="aprovar(dispendio)">
               <mat-icon>done</mat-icon>
@@ -24,7 +29,7 @@
               <mat-icon>clear</mat-icon>
             </button>
           </div>
-        </mat-card-content>
+        </mat-card-actions>
       </mat-card>
     </div>
 
@@ -70,7 +75,7 @@
 </mat-tab-group>
 
 <div class="flex-end">
-  <button mat-fab (click)="goToDispendioCreate()">
+  <button mat-fab (click)="goToDispendioCreate()" color="primary">
     <span style="font-size: 24px">+</span>
   </button>
 </div>

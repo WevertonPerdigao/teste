@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LoginService} from '../services/login.service';
 import {Observable} from 'rxjs/Observable';
@@ -8,6 +8,7 @@ import {ToolbarService, ToolbarItem} from '../services/toolbar.service';
 import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {map, mergeMap} from 'rxjs/operators';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -15,15 +16,13 @@ import {map, mergeMap} from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 
-export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
+export class HeaderComponent implements OnDestroy, OnInit {
 
   mobileQuery: MediaQueryList;
   nomeUser;
   @ViewChild('sidenav') public sideNav: MatSidenav;
-  @ViewChild('toolbar') public toolbar: MatToolbar;
-  appName = 'SGP';
-  toolbarItem: Observable<ToolbarItem>;
-  activeMenuItem$: Observable<ToolbarItem>;
+  @ViewChild('mattoolbar', {read: ElementRef}) toolbar: ElementRef;
+  toolbarItem$: Observable<ToolbarItem>;
 
 
   private _mobileQueryListener: () => void;
@@ -33,21 +32,21 @@ export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
               private sidenavService: SidenavService,
               private toolbarService: ToolbarService,
               private router: Router,
+              private _location: Location,
   ) {
+
+    this.toolbarItem$ = this.toolbarService.activeMenuItem$;
 
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-    this.updateMenu();
-
-    this.toolbarService.menuChanged.subscribe((any) => {
-      this.updateMenu();
-    });
 
   }
 
-  private updateMenu() {
-    this.activeMenuItem$ = this.toolbarService.activeMenuItem$;
+
+  backClicked() {
+    this.toolbarService.removeValorToolbar();
+    this._location.back();
   }
 
   ngOnInit() {
@@ -61,21 +60,14 @@ export class HeaderComponent implements OnDestroy, OnInit, AfterViewInit {
       const nomes = this.loginService.getFuncionario().funcNome.split(' ');
       this.nomeUser = nomes[0] + ' ' + nomes[nomes.length - 1];
     }
-
   }
 
   onLogout() {
     this.loginService.logout();
   }
 
-
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  }
-
-  ngAfterViewInit(): void {
-
-
   }
 
 

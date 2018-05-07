@@ -65,13 +65,6 @@
   opacity: 0.38;
 }
 
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  color: #388E3C;
-}
-
 ::ng-deep .mat-tab-labels {
   justify-content: center; /* align items in Main Axis */
 }
@@ -83,6 +76,11 @@
   font-family: "Open Sans Condensed", sans-serif;
 }
 
+.detail-dispendio:hover {
+  //border-radius: 1px;
+  cursor: pointer;
+}
+
 //.mat-tab-group {
-  //min-height: calc(100vh - 212px);
+//min-height: calc(100vh - 212px);
 //}

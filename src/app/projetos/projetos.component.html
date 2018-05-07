@@ -26,10 +26,10 @@
         </app-range-slider>
       </div>
 
-      <div class="custo" style="margin-top: -30px"><!-- lentidao aqui !-->
+      <div class="cronograma" style="margin-top: -30px"><!-- lentidao aqui !-->
         <p style="margin-bottom: 17px">Custo</p>
         <app-range-slider [minParam]="0" [maxParam]="100"
-                          [valueParam]="((projeto.custo * 100)/projeto.projValor).toFixed(2)">
+                          [valueParam]="((projeto.custo * 100)/projeto.projValor)>100?100:((projeto.custo * 100)/projeto.projValor).toFixed(0)">
         </app-range-slider>
       </div>
 

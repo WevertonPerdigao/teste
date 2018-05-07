@@ -1,3 +1,5 @@
-<mat-slider [min]="minParam" [max]="maxParam" thumbLabel [ngModel]="valueParam"
-            tickInterval="10" class="cdk-focused" color="accent">
+<mat-slider [min]="minParam" [max]="maxParam" [ngModel]="valueParam" step="10"
+            showThumbLabelAlways="true" [thumbLabel]="true" label="t" aria-label="h"
+            tickInterval="5" class="cdk-focused"
+            [color]="valueParam<50?'primary':valueParam>=50 && valueParam<75?'accent': valueParam>=75?'warn':''">
 </mat-slider>

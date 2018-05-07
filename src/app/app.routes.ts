@@ -57,8 +57,18 @@ export const ROUTES: Routes = [
       {
         path: 'funcionario-detail', component: FuncionarioDetailComponent,
       },
-      {path: 'provisao-create', component: ProvisaoCreateComponent},
-      {path: 'provisao-edit', component: ProvisaoEditComponent},
+      {
+        path: 'provisao-create', component: ProvisaoCreateComponent,
+        data: {
+          title: 'Nova Folha'
+        }
+      },
+      {
+        path: 'provisao-edit', component: ProvisaoEditComponent,
+        data: {
+          title: 'Alterar Folha'
+        }
+      },
       {
         path: 'projeto-create', component: ProjetoCreateComponent,
         data: {
@@ -69,7 +79,7 @@ export const ROUTES: Routes = [
       {
         path: 'projeto-edit', component: ProjetoEditComponent,
         data: {
-          title: 'ALTERAR'
+          title: 'Alterar Projeto'
         }
       },
       {
@@ -81,10 +91,15 @@ export const ROUTES: Routes = [
       {
         path: 'dispendio-create/:id', component: DispendioCreateComponent,
         data: {
-          title: 'Novo Dispêndio'
+          title: 'Solicitar Dispêndio'
         }
       },
-      {path: 'list-dispendios', component: ListDispendiosComponent},
+      {
+        path: 'list-dispendios', component: ListDispendiosComponent,
+        data: {
+          title: 'Lista de Dispêndios'
+        }
+      },
       {path: 'dispendio-status-edit', component: DispendioStatusEditComponent},
     ]
   },

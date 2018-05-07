@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
 import {ActivatedRoute, NavigationEnd, ParamMap, Router} from '@angular/router';
@@ -16,13 +16,15 @@ import {Constants} from '../utils/constants';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 import {ToolbarService} from '../services/toolbar.service';
+import {Title} from '@angular/platform-browser';
+import {ResumoDispendiosComponent} from './orcamentos/resumo-dispendios/resumo-dispendios.component';
 
 @Component({
   selector: 'app-projeto-detail',
   templateUrl: './projeto-detail.component.html',
   styleUrls: ['./projeto-detail.component.scss']
 })
-export class ProjetoDetailComponent implements OnInit, OnDestroy {
+export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public projeto: Projeto = new Projeto();
   qtdDiasProjeto = 0;
@@ -34,42 +36,38 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   // referente a aba padrão
   indexTab = 0;
 
+  @ViewChild(ResumoDispendiosComponent) child: ResumoDispendiosComponent;
+
+  ngAfterViewInit() {
+    console.log('Teste:' + this.child.whoAmI()); // 👶 I am a child!
+  }
+
   constructor(private projetoService: ProjetoService,
               private projetoDispendioService: ProjetoDispendioService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private tipoDispendioService: TipodispendioService,
               public loginService: LoginService,
-              public toolbarService: ToolbarService
+              public toolbarService: ToolbarService,
+              private titleService: Title
   ) {
-    // this.paramsSubscription = this.router.events.subscribe((e: any) => {
-    //   // If it is a NavigationEnd event re-initalise the component
-    //   if (e instanceof NavigationEnd) {
-    //     console.log('teste reinit ProjetoDetailComponent');
-    //     this.ngOnInit();
-    //   }
-    // });
-
-  }
-
-  ngOnInit() {
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.projId = params['id'];
       params['indextab'] != null ? this.indexTab = +params['indextab'] : '';
     });
 
-    //console.log('this.indexTab' + this.indexTab);
-
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
         this.alterName();
-        this.toolbarService.setTitle(projeto.projNome);
+        console.log('valor pro detail => ' + projeto.projNome);
+        this.toolbarService.setValorToolbar(projeto.projNome);
         this.setPropertyCronograma();
       });
+  }
 
+  ngOnInit() {
     this.tiposDispendiosValor = this.tipoDispendioService.listTipoDispendioByProjetoAndStatus(this.projId, Constants.APROVADO);
-
     this.getDispendiosPendentes();
   }
 
@@ -98,13 +96,13 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   }
 
   onLinkClick(event: MatTabChangeEvent) {
+    console.log('Teste:' + this.child.whoAmI());
     switch (event.index) {
       case 2:
       //  console.log('case 3');
       // this.router.navigate(['../atividades'], {relativeTo: this.activatedRoute}); não funcionando
     }
   }
-
 
   goToDispendioCreate() {
     this.router.navigate(['/dispendio-create/', this.projeto.projId]);
@@ -118,7 +116,6 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
         }, skipLocationChange: true
       });
   }
-
 
   setPropertyCronograma() {
     this.calcQtdeDiasProjeto(this.projeto.projDataInicial, this.projeto.projDataFinal);
@@ -140,7 +137,6 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   /*Reduz nome completo para nome e sobrenome
   * */
   alterName() {
-
     this.projeto.projFuncId.funcNome = Utils.resumeName(this.projeto.projFuncId.funcNome);
     if (this.projeto && this.projeto.equipe && this.projeto.equipe.length > 0) {
       this.projeto.equipe.forEach(element => {

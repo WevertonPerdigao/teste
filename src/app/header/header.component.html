@@ -1,16 +1,18 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
 
-  <mat-toolbar color="primary" class="toolbar" #toolbar>
-    <button mat-icon-button (click)="sidenav.toggle()">
+  <mat-toolbar color="primary" class="toolbar" #mattoolbar>
+
+    <button mat-icon-button (click)="backClicked()" *ngIf="!(toolbarItem$ | async)?.title">
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+
+    <button #buttonmenu mat-icon-button (click)="sidenav.toggle()" *ngIf="(toolbarItem$ | async)?.title">
       <mat-icon *ngIf="sidenav.opened">chevron_left</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     </button>
-    <h1 class="app-name" #appname>{{(toolbarItem| async)?.title}}</h1>
-    <h1 class="app-name">  {{ (activeMenuItem$ | async)?.title }}</h1>
-    <div class="fill-remaining-space"></div>
-    <button mat-button>PESQUISAR</button>
 
-    <!--<md-icon *ngIf="navItem.icon">{{navItem.icon}}</md-icon>-->
+    <span class="toolbar-title">{{(toolbarItem$ | async)?.title}}</span>
 
   </mat-toolbar>
 

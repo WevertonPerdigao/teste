@@ -28,6 +28,9 @@ export class ApplicationErrorHandler extends ErrorHandler {
           case 403:
             this.ns.notify('403: Não autorizado');
             break;
+          case 500:
+            this.ns.notify('500: Sua requisição resultou em erro');
+            break;
           case 503:
             this.ns.notify('503: Serviço indisponível ');
             break;

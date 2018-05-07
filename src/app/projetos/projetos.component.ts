@@ -33,31 +33,7 @@ export class ProjetosComponent implements OnInit {
       .subscribe(projetos => {
         this.projetos = projetos;
       });
-
-
   }
-
-
-  // getCronogramaByProjeto(dtinicio: Date, dtfim: Date): number {
-  //   console.log('contador 2 -> ' + this.cout2++);
-  //   if (dtinicio && dtfim) {
-  //     return this.calcPercentCronograma(dtinicio, dtfim);
-  //   }
-  // }
-
-  // calcPercentCronograma(dtinicio: Date, dtfim: Date): number {
-  //
-  //   const qtdeDiasTotalProj = Utils.getQtdDayByDtinicialAndDtFinal(dtinicio, dtfim);
-  //
-  //   const qtdeDayAtualProj = Utils.getQtdDayByDtinicialAndDtFinal(dtinicio, new Date());
-  //
-  //   if (qtdeDayAtualProj > qtdeDiasTotalProj) {
-  //     return 100;
-  //   } else {
-  //     return Utils.getPercent(qtdeDayAtualProj, qtdeDiasTotalProj);
-  //   }
-  // }
-
 
   goToProjectDetail(projeto: Projeto) {
     this.router.navigate(['/projeto-detail'],

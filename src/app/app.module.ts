@@ -78,7 +78,7 @@ import {YearPickerComponent} from './shared/custom-datepicker/year-picker/year-p
 import {CustomDatepickerComponent} from './shared/custom-datepicker/custom-datepicker.component';
 import {LoginLayoutComponent} from './layouts/login-layout.component';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
-import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
+import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
 
 @NgModule({
   declarations: [
@@ -154,7 +154,7 @@ import { ProjetoEditComponent } from './projeto-edit/projeto-edit.component';
     ProjetoatividadeService,
     TipodispendioService,
     SidenavService,
-    ToolbarService
+    ToolbarService,
   ],
   bootstrap: [AppComponent]
 })

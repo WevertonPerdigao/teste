@@ -31,6 +31,7 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
   vlincial;
   vlfinal;
   paramsSubscription: Subscription;
+  tipoDispendio: Tipodispendio;
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -56,6 +57,7 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
       .subscribe(dispendio => {
         this.dispendio = dispendio;
         this.dispendioForm.patchValue(dispendio, {onlySelf: false});
+        this.tipo = dispendio.prdiTidiId;
       });
   }
 
@@ -108,8 +110,7 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
       prdiDataPagamento: this.fb.control('', [Validators.required]),
       prdiValor: this.fb.control('', []),
       prdiProjId: this.fb.control('', [Validators.required]),
-      prdiTidiId: this.fb.control('', [Validators.required]),
-    });
+        });
   }
 
   redirecListDispendios() {

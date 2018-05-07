@@ -32,7 +32,7 @@
 .title {
   font-size: 20px;
   margin-bottom: 0.5em;
-  font-family: "Open Sans", "Condensed Bold";
+  font-family: "Open Sans Condensed";
   font-weight: bold;
 }
 
@@ -48,18 +48,6 @@
   }
 }
 
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-  color: #388E3C;
-  opacity: 1;
-}
-
-.mat-button {
-  font-family: "Open Sans", "Condensed Bold";
-  font-size: 16px !important;
-  font-weight: bold;
-}
 .mat-form-field-label {
   color: #F44336 !important;
 }

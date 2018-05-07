@@ -31,6 +31,7 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {
   }
 
+
   ngOnInit() {
    // console.log('init ResumoDispendiosComponent');
 
@@ -40,6 +41,10 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
         this.setParamGrafico(disppendios);
       }
     );
+  }
+
+  whoAmI() {
+    return '👶 I am a child!!';
   }
 
 

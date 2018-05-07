@@ -33,13 +33,11 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.funcId = params['funcId'];
-
     });
 
-    // this.toolbarService.setTitle(projeto.projNome);
     this.funcionarioService.findFuncionarioById(this.funcId)
-      .subscribe(funcionario => this.toolbarService.setTitle(funcionario.funcNome)
-    );
+      .subscribe(funcionario => this.toolbarService.setValorToolbar(funcionario.funcNome));
+
     this.listProvisao$ = this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId);
   }
 

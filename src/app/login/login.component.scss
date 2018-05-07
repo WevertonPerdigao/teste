@@ -1,6 +1,5 @@
-
 .main-div {
-  height: 100vh;
+ height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,16 +18,12 @@
 }
 
 .mat-card {
-  width: 322px;
-  height: 600px;
+  width: 400px;
+ // height: 600px;
   margin: auto;
   text-align: center;
   vertical-align: middle;
   box-shadow: none !important;
-}
-
-.signin-content {
-  padding: 60px 1rem;
 }
 
 .full-width-input {
@@ -42,6 +37,12 @@
   color: #4CAF50;
 }
 
-.logo {
-  fill: #4CAF50;
+.logo-sgp {
+  width: 70%;
+  padding: 40px;
+}
+
+.logo-transire {
+  width: 30%;
+  padding: 20%;
 }

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService} from './services/login.service';
-import {Observable} from 'rxjs/Observable';
-
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/mergeMap';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +9,12 @@ import {Observable} from 'rxjs/Observable';
 })
 export class AppComponent implements OnInit {
 
-  mostrarMenu: false;
-
-  constructor(private loginService: LoginService) {
-
-
+  constructor() {
   }
 
   ngOnInit() {
-    this.loginService.mostrarMenuEmitter.subscribe(
-      mostrar => this.mostrarMenu = mostrar
-    );
+
+
   }
 
 }

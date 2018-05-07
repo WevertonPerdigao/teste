@@ -27,13 +27,13 @@
   </mat-tab>
   <mat-tab label="ORÇAMENTOS">
     <div class="flex-end">
-      <a (click)="goToDispendioCreate()" mat-button>NOVO DISPÊNDIO</a>
+      <a (click)="goToDispendioCreate()" mat-button>SOLICITAR DISPÊNDIO</a>
 
     </div>
     <div class="flex">
       <app-orcamento-slider [custoTotal]="projeto.custo"
                             [valorTotal]="projeto.projValor"
-                            [percOrcamento]="(((projeto.custo *100)/projeto.projValor).toFixed(2))">
+                            [percOrcamento]="((projeto.custo *100)/projeto.projValor)>100?100:((projeto.custo *100)/projeto.projValor).toFixed(0)">
       </app-orcamento-slider>
 
       <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor" [projId]="projeto.projId">

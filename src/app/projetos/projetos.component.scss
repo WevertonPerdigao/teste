@@ -37,13 +37,6 @@
   }
 }
 
-.flex-end {
-  display: flex;
-  justify-content: flex-end;
-  color: #388E3C;
-  opacity: 1;
-}
-
 .mat-button {
   font-family: "Open Sans Condensed";
   font-size: 16px !important;
@@ -58,12 +51,10 @@
   color: #03A9F4;
 }
 
-.custo {
-  color: #00C853;
-}
-
 .cronograma {
-  color: #00C853;
+  font-weight: 400;
+  font-size: 12px !important;
+  color: black;
 }
 
 .cadastrar {
