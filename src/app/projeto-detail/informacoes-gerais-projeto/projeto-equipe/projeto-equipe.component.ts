@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ProjetoEquipeComponent implements OnInit {
 
   @Input() equipe: any;
+  order = 'funcNome';
 
   constructor() {
   }

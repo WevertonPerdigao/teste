@@ -32,9 +32,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  isFieldInvalid(field: string) { // {6}
+  isFieldInvalid(field: string) {
     return (
       (!this.loginForm.get(field).valid && this.loginForm.get(field).touched) ||
+      (this.loginForm.get(field).toString().replace(/\s/g, '') === '') ||
       (this.loginForm.get(field).untouched && this.formSubmit)
     );
   }
@@ -46,10 +47,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.loginService.login(new Login(this.loginForm.value.email, this.loginForm.value.senha))
-      .subscribe(funcionario => this.notificationService.notify(`Olá, ${funcionario.funcNome}`),
-        (error) => this.notificationService.notify(`O e-mail ou senha está incorreto`)
-      );
+    if (this.loginForm.valid) {
+      this.loginService.login(new Login(this.loginForm.value.email, this.loginForm.value.senha))
+        .subscribe(funcionario => this.notificationService.notify(`Olá, ${funcionario.funcNome}`),
+          (error) => this.notificationService.notify(`O e-mail ou senha está incorreto`)
+        );
+    } else {
+      this.notificationService.notify(`O e-mail ou senha está incorreto`);
+    }
   }
 
 }

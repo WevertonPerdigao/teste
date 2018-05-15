@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../../services/notification.service';
 import {ViewEncapsulation} from '@angular/core';
@@ -15,6 +15,8 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ProjetoService} from '../../../services/projeto.service';
 import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
+import {ToolbarService} from '../../../services/toolbar.service';
+import {Constants} from '../../../utils/constants';
 
 @Component({
   selector: 'app-atividade-create',
@@ -45,14 +47,19 @@ export class AtividadeCreateComponent implements OnInit {
               private adapter: DateAdapter<any>,
               private funcionarioService: FuncionarioService,
               private atividadeService: ProjetoatividadeService,
-              private projetoService: ProjetoService
+              private projetoService: ProjetoService,
+              private toolbarService: ToolbarService
   ) {
   }
 
   ngOnInit() {
-    this.initForm();
-    this.idprojeto = this.activatedRoute.snapshot.params['id'];
 
+    this.initForm();
+    this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
+      this.idprojeto = params['id'];
+    });
+
+    this.configRouteBack();
     this.projetoService.findByProjId(this.idprojeto)
       .subscribe(projeto => {
         this.projeto = projeto;
@@ -97,7 +104,7 @@ export class AtividadeCreateComponent implements OnInit {
             this.notificationService.notify('Erro ao cadastrar nova atividade'),
           () => {
             this.router.navigate(['/projeto-detail'],
-              {queryParams: {id: this.idprojeto}, skipLocationChange: false});
+              {queryParams: {id: this.idprojeto}, skipLocationChange: true});
           });
     } else {
       this.notificationService.notify('Dados inválidos');
@@ -145,9 +152,15 @@ export class AtividadeCreateComponent implements OnInit {
       {
         queryParams: {
           id: this.idprojeto,
+          indextab: Constants.TAB_ATIVIDADES
         },
-        skipLocationChange: false,
+        skipLocationChange: true,
       });
+  }
+
+  configRouteBack() {
+    const params: NavigationExtras = {queryParams: {id: this.idprojeto, indextab: Constants.TAB_ATIVIDADES}, skipLocationChange: true};
+    this.toolbarService.setRotaBack('/projeto-detail', params);
   }
 
 }

@@ -1,11 +1,10 @@
 // src/app/app-toolbar/app-toolbar.service.ts
 import {ElementRef, Injectable, Renderer2, RendererFactory2} from '@angular/core';
-import {Router, NavigationEnd, ActivatedRoute, RoutesRecognized} from '@angular/router';
+import {Router, NavigationEnd, ActivatedRoute, RoutesRecognized, Params, NavigationExtras} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
-import {MatToolbar} from '@angular/material';
 import {Subject} from 'rxjs/Subject';
 
 export class ToolbarItem {
@@ -13,35 +12,43 @@ export class ToolbarItem {
   title: string;
   icon?: string;
   action?: string;
+  main?: boolean;
 }
-
 
 @Injectable()
 export class ToolbarService {
-
-  activeMenuItem$: Observable<ToolbarItem>;
-  title: string;
   toolbar: ElementRef;
   renderer: Renderer2;
+  navExtras: NavigationExtras;
+  routeBack;
 
+
+  dataSearch$: Observable<any>;
+  private dataSearchSubject = new Subject<any>();
 
   constructor(private router: Router, private titleService: Title,
               private rendererFactory: RendererFactory2) {
+
     this.renderer = this.rendererFactory.createRenderer('', null);
-    this.init();
+    this.dataSearch$ = this.dataSearchSubject.asObservable();
   }
 
-  init() {
-    console.log('init');
-    this.activeMenuItem$ = this.router.events
+  /*
+  atualiza dados sobrescritos do construtor
+   */
+  updateDataSearch(data) {
+    this.dataSearchSubject.next(data);
+  }
+
+  setValuesToolbar(): Observable<ToolbarItem> {
+    return this.router.events
       .filter(e => e instanceof NavigationEnd)
       .map(_ => this.router.routerState.root)
       .map(route => {
         let active = this.lastRouteWithMenuItem(route.root);
-
         if (active && active.title) {
-          this.removeValorToolbar();
-          this.titleService.setTitle(this.title);
+          this.setValorToolbar(active.title);
+          this.titleService.setTitle(active.title);
         }
         return active;
       });
@@ -60,37 +67,22 @@ export class ToolbarService {
     const cfg = route.routeConfig;
 
     return cfg && cfg.data && cfg.data.title
-      ? {path: cfg.path, title: cfg.data.title, icon: cfg.data.icon}
+      ? {path: cfg.path, title: cfg.data.title, icon: cfg.data.icon, main: cfg.data.main}
       : undefined;
   }
 
-  removeValorToolbar() {
-    // if (this.toolbar.nativeElement.getElementsByTagName('buttonmenu')) {
-    //   console.log('tem menu');
-    //   this.renderer.removeChild(this.toolbar, this.toolbar.nativeElement.getElementsByTagName('buttonmenu'));
-    //
-    // } else {
-    //   console.log('não  tem menu');
-    // }
-
-    if (this.toolbar.nativeElement.querySelector('h1')) {
-      console.log('tem');
-      this.renderer.removeChild(this.toolbar, this.toolbar.nativeElement.querySelector('h1'));
+  setValorToolbar(descricao: string) {
+    if (this.toolbar.nativeElement.querySelector('#sp-toolbar-title')) {
+      this.toolbar.nativeElement.querySelector('#sp-toolbar-title').textContent = descricao;
     }
+
+    this.titleService.setTitle(descricao);
   }
 
-  setValorToolbar(descricao: string) {
-
-    console.log('descricao =>' + descricao);
-    // using remove child
-    const li = this.renderer.createElement('h1');
-    const text = this.renderer.createText(descricao);
-    //this.renderer.setStyle(li, 'font-size', '24px');
-
-    this.removeValorToolbar();
-
-    this.renderer.appendChild(li, text);
-    this.renderer.appendChild(this.toolbar.nativeElement, li);
+  setRotaBack(route: String, navExtras?: NavigationExtras) {
+    console.log('extras' + navExtras);
+    this.routeBack = route;
+    this.navExtras = navExtras;
   }
 
 }

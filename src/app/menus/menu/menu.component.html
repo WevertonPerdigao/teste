@@ -1,9 +1,11 @@
-<div fxLayout="column" class="menu-layout">
+ <div class="menu-layout space-between" mat-button
+     routerLinkActive="active"
+     routerLink="{{menu.menuUrl}}" (click)="navClose()">
 
-  <a routerLinkActive="active"
-     routerLink="{{menu.menuUrl}}" (click)="navClose()"
-     mat-button>{{menu.menuNome}}
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </a>
+  <span class="mat-button">{{menu.menuNome.toUpperCase()}}</span>
+
+  <mat-icon>keyboard_arrow_right</mat-icon>
+
 </div>
+<mat-divider></mat-divider>
 

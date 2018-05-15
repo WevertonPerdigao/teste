@@ -22,6 +22,7 @@ import {
   MatAutocompleteModule,
   MatChipsModule,
   MatTableModule,
+  MatProgressSpinnerModule,
   MatSelectModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher
 
 } from '@angular/material';
@@ -48,6 +49,7 @@ import {
     MatChipsModule,
     MatTableModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     // The locale would typically be provided on the root module of your application. We do it at

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FuncionarioProvisao} from '../../models/funcionarioprovisao.model';
 import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Constants} from '../../utils/constants';
 import {Funcionario} from '../../models/funcionario.model';
@@ -11,6 +11,7 @@ import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
 import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
 import {MatOptionSelectionChange} from '@angular/material';
+import {ToolbarService} from '../../services/toolbar.service';
 
 @Component({
   selector: 'app-provisao-create',
@@ -34,7 +35,8 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private funcionarioProvisaoService: FuncionarioProvisaoService,
               private notificationService: NotificationService,
-              private router: Router) {
+              private router: Router,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
@@ -42,6 +44,8 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.funcId = params['funcId'];
     });
+
+    this.configRouteBack();
 
     this.listYears = Utils.getListYear();
 
@@ -154,11 +158,17 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   * */
   redirectFuncionarioDetail() {
     this.router.navigate(['/funcionario-detail'],
-      {queryParams: {funcId: this.funcId}, skipLocationChange: false});
+      {queryParams: {funcId: this.funcId}, skipLocationChange: true});
   }
 
   ngOnDestroy(): void {
     this.paramsSubscription.unsubscribe();
   }
 
+  /* Redireciona para tela de funcionario-detail
+  * */
+  configRouteBack() {
+    const params: Params = {queryParams: {funcId: this.funcId}, skipLocationChange: true};
+    this.toolbarService.setRotaBack('/funcionario-detail', params);
+  }
 }

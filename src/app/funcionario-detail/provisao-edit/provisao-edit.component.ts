@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FuncionarioProvisao} from '../../models/funcionarioprovisao.model';
 import {Subscription} from 'rxjs/Subscription';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Params, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Constants} from '../../utils/constants';
 import {Funcionario} from '../../models/funcionario.model';
@@ -11,6 +11,7 @@ import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
 import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
 import {MatAutocompleteSelectedEvent, MatOptionSelectionChange} from '@angular/material';
+import {ToolbarService} from '../../services/toolbar.service';
 
 @Component({
   selector: 'app-provisao-edit',
@@ -36,7 +37,8 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
               private fb: FormBuilder,
               private funcionarioProvisaoService: FuncionarioProvisaoService,
               private notificationService: NotificationService,
-              private router: Router) {
+              private router: Router,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
@@ -44,6 +46,8 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
       this.fuprId = params['fuprId'];
       this.funcId = params['funcId'];
     });
+
+    this.configRouteBack();
 
     this.listYears = Utils.getListYear();
 
@@ -181,7 +185,15 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
   * */
   redirectFuncionarioDetail() {
     this.router.navigate(['/funcionario-detail'],
-      {queryParams: {funcId: this.funcId}, skipLocationChange: false});
+      {queryParams: {funcId: this.funcId}, skipLocationChange: true});
+  }
+
+  /* configura 'retorno da seta de navegação'
+ * */
+  configRouteBack() {
+    const params: Params = {queryParams: {funcId: this.funcId}, skipLocationChange: true};
+
+    this.toolbarService.setRotaBack('/funcionario-detail', params);
   }
 
   ngOnDestroy(): void {

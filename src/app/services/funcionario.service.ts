@@ -3,7 +3,7 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {GPITBAM_API} from '../app.api';
 import {Funcionario} from '../models/funcionario.model';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
+
 
 @Injectable()
 export class FuncionarioService {

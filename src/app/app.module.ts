@@ -12,10 +12,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {ChartsModule} from 'ng2-charts/ng2-charts';
 import {AvatarModule} from 'ngx-avatar';
-
+import {OrderModule} from 'ngx-order-pipe';
 
 import ptBr from '@angular/common/locales/pt';
 import {registerLocaleData} from '@angular/common';
+
 
 registerLocaleData(ptBr);
 import {ROUTES} from './app.routes';
@@ -135,6 +136,7 @@ import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
     CurrencyMaskModule,
     AvatarModule,
     ChartsModule,
+    OrderModule,
     RouterModule.forRoot(ROUTES, {preloadingStrategy: PreloadAllModules, onSameUrlNavigation: 'reload'})
   ],
   providers: [{provide: LOCALE_ID, useValue: 'pt-BR'},

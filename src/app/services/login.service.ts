@@ -1,16 +1,14 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 
 import {GPITBAM_API} from '../app.api';
 import {Funcionario} from '../models/funcionario.model';
 import {Login} from '../models/login.model';
-
 import {Observable} from 'rxjs/Observable';
 import {Router, NavigationEnd} from '@angular/router';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/filter';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-import {JSONSchema, LocalStorage} from '@ngx-pwa/local-storage';
 
 @Injectable()
 export class LoginService {
@@ -19,7 +17,6 @@ export class LoginService {
   funcionario: Funcionario;
   lastUrl: string;
 
-  mostrarMenuEmitter = new EventEmitter<boolean>();
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient,
@@ -30,10 +27,9 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    this.mostrarMenuEmitter.emit(true);
+    //  this.mostrarMenuEmitter.emit(true);
     return this.myStorage.getItem('currentUser') != null;
   }
-
 
   getFuncionario(): Funcionario {
     this.funcionario = JSON.parse(localStorage.getItem('currentUser'));
@@ -55,19 +51,14 @@ export class LoginService {
       {email: login.email, senha: login.senha})
       .do(funcionario => {
         if (funcionario) {
-          this.mostrarMenuEmitter.emit(true);
           this.funcionario = funcionario;
           this.myStorage.setItem('currentUser', JSON.stringify(this.funcionario));
           this.router.navigate(['/projetos']);
-        } else {
-          this.mostrarMenuEmitter.emit(false);
         }
-
       });
   }
 
   handleLogin(path: string = this.lastUrl) {
-    this.mostrarMenuEmitter.emit(false);
     this.router.navigate(['/login', btoa(path)]);
   }
 

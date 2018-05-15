@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatTableDataSource, MatSort} from '@angular/material';
 import {Projetoatividade} from '../../models/projetoatividade.model';
 import {ProjetoatividadeService} from '../../services/projetoatividade.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -23,7 +23,9 @@ export class ProjetoAtividadesComponent {
   }
 
   goToAtividadeCreate() {
-    this.router.navigate(['/atividade-create/', this.projId]);
+    this.router.navigate(['/atividade-create'],
+      {queryParams: {id: this.projId}, skipLocationChange: true});
+
   }
 
 }

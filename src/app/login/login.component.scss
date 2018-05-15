@@ -1,8 +1,8 @@
 .main-div {
- height: 100vh;
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  background: #78909C;
+  flex-flow: row wrap;
 }
 
 .content {
@@ -18,11 +18,10 @@
 }
 
 .mat-card {
-  width: 400px;
- // height: 600px;
+  width: 32.9em;
+  height: 95%;
   margin: auto;
   text-align: center;
-  vertical-align: middle;
   box-shadow: none !important;
 }
 
@@ -38,8 +37,9 @@
 }
 
 .logo-sgp {
-  width: 70%;
-  padding: 40px;
+  width: 65%;
+  padding: 10%;
+
 }
 
 .logo-transire {

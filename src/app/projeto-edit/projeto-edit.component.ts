@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../services/notification.service';
 import {ViewEncapsulation} from '@angular/core';
@@ -26,6 +26,7 @@ import {
 import {Constants} from '../utils/constants';
 import 'rxjs/add/operator/startWith';
 import {Subscription} from 'rxjs/Subscription';
+import {ToolbarService} from '../services/toolbar.service';
 
 @Component({
   selector: 'app-projeto-edit',
@@ -61,7 +62,8 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
               private activatedRoute: ActivatedRoute,
               private funcionarioService: FuncionarioService,
               private tipoprojetoService: TipoprojetoService,
-              private projetoService: ProjetoService) {
+              private projetoService: ProjetoService,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
@@ -71,6 +73,8 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.projId = params['id'];
     });
+
+    this.configRouteBack();
 
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
@@ -301,9 +305,13 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
 
   redirectProjetoDetail() {
     this.router.navigate(['/projeto-detail'],
-      {queryParams: {id: this.projId}, skipLocationChange: false});
+      {queryParams: {id: this.projId, indextab: Constants.TAB_GERAL}, skipLocationChange: true});
   }
 
+  configRouteBack() {
+    const params: NavigationExtras = {queryParams: {id: this.projId, indextab: Constants.TAB_GERAL}, skipLocationChange: true};
+    this.toolbarService.setRotaBack('/projeto-detail', params);
+  }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

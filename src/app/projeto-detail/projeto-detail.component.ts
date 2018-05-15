@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, OnInit, Input, OnDestroy, ViewChild, AfterViewInit, AfterContentChecked} from '@angular/core';
 import {ProjetoService} from '../services/projeto.service';
 import {Projeto} from '../models/projeto.model';
 import {ActivatedRoute, NavigationEnd, ParamMap, Router} from '@angular/router';
@@ -24,7 +24,7 @@ import {ResumoDispendiosComponent} from './orcamentos/resumo-dispendios/resumo-d
   templateUrl: './projeto-detail.component.html',
   styleUrls: ['./projeto-detail.component.scss']
 })
-export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ProjetoDetailComponent implements OnInit, OnDestroy {
 
   public projeto: Projeto = new Projeto();
   qtdDiasProjeto = 0;
@@ -35,12 +35,6 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   paramsSubscription: Subscription;
   // referente a aba padrão
   indexTab = 0;
-
-  @ViewChild(ResumoDispendiosComponent) child: ResumoDispendiosComponent;
-
-  ngAfterViewInit() {
-    console.log('Teste:' + this.child.whoAmI()); // 👶 I am a child!
-  }
 
   constructor(private projetoService: ProjetoService,
               private projetoDispendioService: ProjetoDispendioService,
@@ -54,19 +48,23 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.projId = params['id'];
       params['indextab'] != null ? this.indexTab = +params['indextab'] : '';
+
     });
+
 
     this.projetoService.findByProjId(this.projId)
       .subscribe(projeto => {
         this.projeto = projeto;
         this.alterName();
-        console.log('valor pro detail => ' + projeto.projNome);
         this.toolbarService.setValorToolbar(projeto.projNome);
         this.setPropertyCronograma();
       });
   }
 
   ngOnInit() {
+
+    this.configRouteBack();
+
     this.tiposDispendiosValor = this.tipoDispendioService.listTipoDispendioByProjetoAndStatus(this.projId, Constants.APROVADO);
     this.getDispendiosPendentes();
   }
@@ -96,7 +94,6 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onLinkClick(event: MatTabChangeEvent) {
-    console.log('Teste:' + this.child.whoAmI());
     switch (event.index) {
       case 2:
       //  console.log('case 3');
@@ -105,7 +102,13 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   goToDispendioCreate() {
-    this.router.navigate(['/dispendio-create/', this.projeto.projId]);
+
+    this.router.navigate(['/dispendio-create/'],
+      {
+        queryParams: {
+          id: this.projeto.projId
+        }, skipLocationChange: true
+      });
   }
 
   redirectAlterProjeto() {
@@ -145,10 +148,13 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy, AfterViewInit 
     }
   }
 
+  configRouteBack() {
+    this.toolbarService.setRotaBack('/projetos');
+  }
+
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
-
 
 }
 

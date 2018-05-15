@@ -17,7 +17,7 @@ import {ProjetoDetailComponent} from '../../projeto-detail.component';
   templateUrl: './solicitacoes.component.html',
   styleUrls: ['./solicitacoes.component.scss']
 })
-export class SolicitacoesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class SolicitacoesComponent implements OnInit, OnDestroy {
 
   @ViewChild(ProjetoDetailComponent) projDetailComponent: ProjetoDetailComponent;
 
@@ -34,7 +34,6 @@ export class SolicitacoesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    console.log('on ngOnInit', this.projDetailComponent);
     this.paramsSubscription = this.dispendiosPendentes.subscribe(
       dispendios => {
         this.listDispendiosPendentes = dispendios;
@@ -45,13 +44,8 @@ export class SolicitacoesComponent implements OnInit, OnDestroy, AfterViewInit {
     );
   }
 
-  ngAfterViewInit() {
-    console.log('on after view init', this.projDetailComponent);
-    // this returns null
-  }
-
   /*alterar o status do dispendio de pendente para reprovado
-  * */
+ * */
   reprovar(dispendio: ProjetoDispendio) {
     const statusDispendio = new Projetodispendiostatus(Constants.RECUSADO, this.loginService.getFuncionario(), new Date());
     dispendio.prdsPrdiId = statusDispendio;
@@ -69,7 +63,7 @@ export class SolicitacoesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   updateDispendios() {
     console.log('updateDispendios');
-   // this.projDetailComponent.teste();
+    // this.projDetailComponent.teste();
     // console.log('chamou');
     //  this.router.navigate(['/projeto-detail/'],
     //    {
@@ -111,7 +105,7 @@ export class SolicitacoesComponent implements OnInit, OnDestroy, AfterViewInit {
           queryParams: {
             id: this.projId,
             status: Constants.PENDENTE
-          }, skipLocationChange: false
+          }, skipLocationChange: true
         });
 
     } else {

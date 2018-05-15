@@ -4,7 +4,7 @@
 
   <mat-card-content>
 
-     <div *ngFor="let funcionario of equipe">
+    <div *ngFor="let funcionario of equipe | orderBy: order">
 
       <span class="title-item">{{funcionario.funcCargId.cargNome}}</span>
       <div class="space-between">

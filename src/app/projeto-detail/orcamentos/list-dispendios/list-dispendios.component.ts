@@ -118,7 +118,7 @@ export class ListDispendiosComponent implements OnInit, OnDestroy {
           vlfinal: this.vlfinal,
           prdiId: prdiId,
         },
-        skipLocationChange: false,
+        skipLocationChange: true,
       });
   }
 

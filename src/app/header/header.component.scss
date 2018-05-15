@@ -1,15 +1,3 @@
-.toolbar-spacer {
-  flex: 1 1 auto;
-}
-
-.toolbar-icon {
-  padding: 0px 30px;
-}
-
-.app-title {
-
-}
-
 .container {
   display: flex;
   flex-direction: column;
@@ -18,17 +6,19 @@
   bottom: 0;
   left: 0;
   right: 0;
+  flex-wrap: wrap;
 }
 
-.mat-toolbar-single-row {
+.mat-toolbar-row {
   height: 75px;
+  flex-wrap: wrap;
 }
 
 .is-mobile .toolbar {
 
   position: fixed;
   /* Make sure the toolbar will stay on top of the content as it scrolls past. */
-  z-index: 2;
+  z-index: 0;
 }
 
 .sidenav-container {
@@ -41,6 +31,7 @@
   /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
+
 }
 
 .mat-drawer {
@@ -52,18 +43,18 @@
 
 .mat-card {
   max-width: 300px;
-  // height: 10px !important;
+  height: 65px !important;
   background: #4CAF50;
   background-color: #4CAF50;
   color: white;
   display: flex;
   flex-direction: column;
   padding: 5px;
-
+  box-shadow: none !important;
 }
 
 .toolbar-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 400;
 }
 
@@ -74,10 +65,14 @@
   font-weight: 400;
 }
 
+.mat-card-title {
+  margin-bottom: 8px !important;
+  margin-top: 10px;
+}
+
 .logout {
-  font-size: 14px;
-  font-weight: bold;
-  font-family: "Open Sans Condensed";
+  font-size: 13px;
+  font-weight: 600;
   color: white;
   text-decoration: none;
 }
@@ -86,12 +81,29 @@
   outline: none;
 }
 
-.mat-card-title {
-  margin-bottom: 5px;
-}
-
 .mat-card-header-text {
   margin: auto !important;
   padding: 5px;
 }
 
+.example-fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.search-hearder {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.in-search {
+  background-color: white;
+  color: #000000;
+  height: 45px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+}

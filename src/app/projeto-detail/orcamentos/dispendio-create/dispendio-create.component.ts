@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../../../services/notification.service';
 import {DateAdapter} from '@angular/material/core';
@@ -11,6 +11,8 @@ import {ProjetoDispendioService} from '../../../services/projetodispendio.servic
 import {LoginService} from '../../../services/login.service';
 import {Constants} from '../../../utils/constants';
 import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
+import {ToolbarService} from '../../../services/toolbar.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-dispendio-create',
@@ -18,12 +20,13 @@ import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
   styleUrls: ['./dispendio-create.component.scss']
 })
 
-export class DispendioCreateComponent implements OnInit {
+export class DispendioCreateComponent implements OnInit, OnDestroy {
 
 
   dispendioForm: FormGroup;
   idprojeto: number;
   errorMatcher = new ErrorStateMatcherImp();
+  paramsSubscription: Subscription;
 
   tiposdispendios: Tipodispendio[] = [];
 
@@ -34,12 +37,18 @@ export class DispendioCreateComponent implements OnInit {
               private adapter: DateAdapter<any>,
               private tipodispendioService: TipodispendioService,
               private projetoDispendioService: ProjetoDispendioService,
-              private loginService: LoginService
+              private loginService: LoginService,
+              private toolbarService: ToolbarService
   ) {
   }
 
   ngOnInit() {
-    this.idprojeto = this.activatedRoute.snapshot.params['id'];
+    this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
+      this.idprojeto = params['id'];
+    });
+
+    this.configRouteBack();
+
     this.dispendioForm = this.fb.group({
       prdiTidiId: this.fb.control('', [Validators.required]),
       prdiJustificativa: this.fb.control('', [Validators.required]),
@@ -54,7 +63,8 @@ export class DispendioCreateComponent implements OnInit {
 
   isFieldInvalid(field: string) {
     return (
-      (!this.dispendioForm.get(field).valid && this.dispendioForm.get(field).touched));
+      (!this.dispendioForm.get(field).valid && this.dispendioForm.get(field).touched)
+      || (this.dispendioForm.get(field).value.toString().replace(/\s+/g, ' ') === ''));
   }
 
   getErrorMessage() {
@@ -85,7 +95,15 @@ export class DispendioCreateComponent implements OnInit {
 
   goToProjectDetail() {
     this.router.navigate(['/projeto-detail'],
-      {queryParams: {id: this.idprojeto}, skipLocationChange: false});
+      {queryParams: {id: this.idprojeto, indextab: Constants.TAB_ORCAMENTOS}, skipLocationChange: true});
   }
 
+  configRouteBack() {
+    const params: NavigationExtras = {queryParams: {id: this.idprojeto, indextab: Constants.TAB_ORCAMENTOS}, skipLocationChange: true};
+    this.toolbarService.setRotaBack('/projeto-detail', params);
+  }
+
+  ngOnDestroy() {
+    this.paramsSubscription.unsubscribe();
+  }
 }

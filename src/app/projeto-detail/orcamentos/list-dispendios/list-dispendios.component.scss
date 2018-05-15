@@ -8,26 +8,17 @@
 .mat-card {
   display: flex;
   flex-direction: column;
-  margin: 10px;
+ // margin: 10px;
   height: 182px !important;
   width: 323px !important;
 
 }
 
-.mat-card .mat-card-content {
-  flex: 1;
-  //  padding: 0.25em 0.3em 0;
-}
-
-.mat-card .mat-card-content p {
-  line-height: 1.055em;
-  margin-bottom: 0.5em;
-}
 
 .title {
   font-size: 20px;
   margin-bottom: 0.5em;
-  font-family: "Open Sans", "Condensed Bold";
+  font-family: "Open Sans Condensed";
   font-weight: bold;
 }
 
@@ -44,7 +35,7 @@
 }
 
 .mat-button {
-  font-family: "Open Sans", "Condensed Bold";
+  font-family: "Open Sans Condensed";
   font-size: 16px !important;
   font-weight: bold;
 }
@@ -71,9 +62,9 @@
 
 ::ng-deep .mat-tab-label {
   color: #388E3C;
-  font-weight: bold;
-  font-size: 16px;
-  font-family: "Open Sans Condensed", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  font-family: "Open Sans Condensed";
 }
 
 .detail-dispendio:hover {
@@ -81,6 +72,6 @@
   cursor: pointer;
 }
 
-//.mat-tab-group {
-//min-height: calc(100vh - 212px);
-//}
+::ng-deep .mat-ink-bar {
+  height: 5px !important;
+}

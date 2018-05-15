@@ -40,12 +40,15 @@ export const ROUTES: Routes = [
         path: 'projetos',
         component: ProjetosComponent,
         data: {
-          title: 'Projetos'
+          title: 'Projetos',
+          main: true
         }
       },
       {
-        path: 'funcionarios', component: FuncionariosComponent, data: {
-          title: 'Usuários'
+        path: 'funcionarios', component: FuncionariosComponent,
+        data: {
+          title: 'Usuários',
+          main: true
         }
       },
       {
@@ -83,13 +86,13 @@ export const ROUTES: Routes = [
         }
       },
       {
-        path: 'atividade-create/:id', component: AtividadeCreateComponent,
+        path: 'atividade-create', component: AtividadeCreateComponent,
         data: {
           title: 'Nova Atividade'
         }
       },
       {
-        path: 'dispendio-create/:id', component: DispendioCreateComponent,
+        path: 'dispendio-create', component: DispendioCreateComponent,
         data: {
           title: 'Solicitar Dispêndio'
         }

@@ -1,5 +1,4 @@
 import {Month} from '../models/mes.model';
-import {Funcionario} from '../models/funcionario.model';
 
 export class Utils {
 
@@ -95,5 +94,11 @@ export class Utils {
       (new Month('12', 'Dezembro'))];
 
     return mes;
+  }
+
+  public static routersStandards(): string[] {
+    return [
+      'projetos',
+      'usuarios'];
   }
 }

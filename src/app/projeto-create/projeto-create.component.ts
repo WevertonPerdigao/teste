@@ -26,6 +26,8 @@ import {
 import {Constants} from '../utils/constants';
 import 'rxjs/add/operator/startWith';
 import {Subscription} from 'rxjs/Subscription';
+import {noWhiteSpaceValidator} from '../utils/noWhiteSpaceValidator';
+import {ToolbarService} from '../services/toolbar.service';
 
 @Component({
   selector: 'app-projeto-create',
@@ -46,6 +48,7 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
   chips: Tipoprojeto[] = [];
   chipsMembros: Funcionario[] = [];
   minDate: Date;
+  validWhiteSpace = new noWhiteSpaceValidator();
 
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
   paramsSubscription: Subscription;
@@ -57,13 +60,18 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
               private adapter: DateAdapter<any>,
               private funcionarioService: FuncionarioService,
               private tipoprojetoService: TipoprojetoService,
-              private projetoService: ProjetoService) {
+              private projetoService: ProjetoService,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
+
+    this.configRouteBack();
+
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
-      projNome: this.fb.control('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
+      projNome: this.fb.control('', [Validators.required, Validators.minLength(1),
+        Validators.maxLength(80), this.validWhiteSpace.validWhiteSpace]),
       projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.projFuncId,
@@ -226,6 +234,9 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     this.chipInputMembro['nativeElement'].blur();
   }
 
+  configRouteBack() {
+    this.toolbarService.setRotaBack('/projetos');
+  }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

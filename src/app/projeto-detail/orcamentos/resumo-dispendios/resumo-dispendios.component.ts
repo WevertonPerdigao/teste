@@ -33,7 +33,7 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-   // console.log('init ResumoDispendiosComponent');
+    // console.log('init ResumoDispendiosComponent');
 
     this.paramsSubscription = this.tiposDispendiosValor.subscribe(
       disppendios => {
@@ -42,11 +42,6 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
       }
     );
   }
-
-  whoAmI() {
-    return '👶 I am a child!!';
-  }
-
 
   setParamGrafico(dispendios: Tipodispendio[]) {
     for (const i in  dispendios) {
@@ -68,7 +63,7 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
           id: this.projId,
           tipo: tipo,
           status: Constants.APROVADO,
-        }, skipLocationChange: false
+        }, skipLocationChange: true
       });
   }
 
@@ -81,7 +76,7 @@ export class ResumoDispendiosComponent implements OnInit, OnDestroy {
         queryParams: {
           id: this.projId,
           status: Constants.APROVADO,
-        }, skipLocationChange: false
+        }, skipLocationChange: true
       });
   }
 

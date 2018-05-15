@@ -123,7 +123,7 @@ export class DispendioStatusEditComponent implements OnInit, OnDestroy {
           vlinicial: this.vlincial,
           vlfinal: this.vlfinal,
         },
-        skipLocationChange: false,
+        skipLocationChange: true,
       });
   }
 

@@ -31,6 +31,7 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.configRouteBack();
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.funcId = params['funcId'];
     });
@@ -56,25 +57,29 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
   * */
   backToFuncionarios(funcionario: Funcionario) {
     this.router.navigate(['/funcionarios'],
-      {queryParams: {funcId: funcionario.funcId}, skipLocationChange: false});
+      {queryParams: {funcId: funcionario.funcId}, skipLocationChange: true});
   }
 
   /* Redireciona para tela de provisao-create
 * */
   redirectProvisaoCreate() {
     this.router.navigate(['/provisao-create/'],
-      {queryParams: {funcId: this.funcId}, skipLocationChange: false});
+      {queryParams: {funcId: this.funcId}, skipLocationChange: true});
   }
 
   /* Redireciona para tela de provisao-create
 * */
   redirectProvisaoEdit(fuprId: number) {
     this.router.navigate(['/provisao-edit/'],
-      {queryParams: {fuprId: fuprId, funcId: this.funcId}, skipLocationChange: false});
+      {queryParams: {fuprId: fuprId, funcId: this.funcId}, skipLocationChange: true});
   }
 
   ngOnDestroy(): void {
     this.paramsSubscription.unsubscribe();
+  }
+
+  configRouteBack() {
+    this.toolbarService.setRotaBack('/funcionarios');
   }
 
 

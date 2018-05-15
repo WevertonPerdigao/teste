@@ -11,8 +11,13 @@ export class ProjetoService {
   constructor(private http: HttpClient) {
   }
 
-  listProjetosByUserId(userId: number): Observable<Projeto[]> {
-    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos`);
+  listProjetosByUserIdAndNome(nome?: string): Observable<Projeto[]> {
+    let params: HttpParams = undefined;
+    if (nome && nome.length > 0) {
+      params = new HttpParams().append('likenome', nome);
+    }
+
+    return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos/findby`, {params: params});
     // return this.http.get<Projeto[]>(`${GPITBAM_API}/projetos/funcionario/${userId}`);
   }
 
@@ -32,7 +37,6 @@ export class ProjetoService {
     const httpParam = new HttpParams().set('codigo', projId.toString());
     return this.http.delete<Projeto>(`${GPITBAM_API}/projetos/projeto/delete`, {params: httpParam});
   }
-
 
 
   listFuncionariosByProjeto(projId?: number): Observable<Funcionario[]> {

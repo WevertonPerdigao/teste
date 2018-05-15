@@ -1,39 +1,62 @@
 <div class="container" [class.is-mobile]="mobileQuery.matches">
 
-  <mat-toolbar color="primary" class="toolbar" #mattoolbar>
+  <mat-toolbar color="primary" class="toolbar">
 
-    <button mat-icon-button (click)="backClicked()" *ngIf="!(toolbarItem$ | async)?.title">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
+    <mat-toolbar-row #mattoolbar>
+
+      <ng-template #back>
+
+        <button id="btn-back" mat-icon-button (click)="backClicked()">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </ng-template>
 
 
-    <button #buttonmenu mat-icon-button (click)="sidenav.toggle()" *ngIf="(toolbarItem$ | async)?.title">
-      <mat-icon *ngIf="sidenav.opened">chevron_left</mat-icon>
-      <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
-    </button>
+      <button id="btn-menu" #buttonmenu mat-icon-button (click)="sidenav.toggle()" *ngIf="isSearch;else back">
+        <mat-icon>menu</mat-icon>
+      </button>
 
-    <span class="toolbar-title">{{(toolbarItem$ | async)?.title}}</span>
+      <span id="sp-toolbar-title" #spantitle class="toolbar-title"></span>
+
+      <!-- This fills the remaining space of the current row -->
+      <span class="example-fill-remaining-space"></span>
+
+
+      <form id="form-search-header" class="search-hearder" *ngIf="isSearch">
+        <mat-form-field>
+          <input id="in-search-header" #inSearch class="in-search"
+                 placeholder="" matInput>
+
+        </mat-form-field>
+        <button id="btn-search-header" mat-button class="btn-search"
+                (keyup.enter)="search(inSearch.value)"
+                (click)="search(inSearch.value)">PESQUISAR
+        </button>
+      </form>
+
+    </mat-toolbar-row>
+
 
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 70 : 0">
+                         [style.marginTop.px]="mobileQuery.matches ? 75 : 0">
     <mat-sidenav #sidenav mode="'side'"
-                 fixedInViewport="mobileQuery.matches" fixedTopGap="75">
+                 fixedInViewport="mobileQuery.matches" fixedTopGap="0">
 
-      <mat-card>
+      <mat-card (click)="sidenav.toggle()">
         <mat-card-header>
-          <div mat-card-avatar style="margin-right:10px">
+          <div mat-card-avatar style="margin-right:20px">
             <ngx-avatar bgColor="#388E3C" fgColor="#FFFFFF"
                         [round]="true" initialsSize="2"
-                        size="55" [name]="nomeUser">
+                        size="60" [name]="nomeUser">
             </ngx-avatar>
           </div>
           <mat-card-title>
             <a class="name-user">{{nomeUser}}</a>
           </mat-card-title>
           <mat-card-subtitle>
-            <a *ngIf="nomeUser" class="logout" routerLink="/login" (click)="onLogout()">Logout</a>
+            <a *ngIf="nomeUser" class="logout" routerLink="/login" (click)="onLogout()">LOGOUT</a>
           </mat-card-subtitle>
         </mat-card-header>
       </mat-card>

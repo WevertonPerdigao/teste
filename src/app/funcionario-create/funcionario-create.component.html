@@ -38,7 +38,7 @@
 
         <mat-input-container class="full-width-input">
           <input matInput placeholder="E-mail" type="email" maxlength="50"
-                 (change)="onSearchChange($event.target.value)"
+                 (blur)="onSearchChange($event.target.value)"
                  formControlName="funcEmail" required>
           <mat-error *ngIf="isFieldInvalid('funcEmail')">
             {{getErrorMessage()}}
@@ -68,7 +68,6 @@
         </button>
       </div>
     </mat-card-actions>
-    <mat-card-footer>
-    </mat-card-footer>
+
   </mat-card>
 </div>
