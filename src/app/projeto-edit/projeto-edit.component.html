@@ -71,6 +71,10 @@
 
         </mat-input-container>
 
+        <mat-form-field class="full-width-input">
+          <input matInput id="in-area" placeholder="Área do Projeto" readonly>
+        </mat-form-field>
+
 
         <mat-input-container class="full-width-input">
           <mat-chip-list #chipList>
@@ -78,7 +82,7 @@
               {{tag.tiprNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input [matChipInputFor]="chipList" placeholder="Área de Projeto"
+            <input [matChipInputFor]="chipList" placeholder="Tipo de Projeto"
                    [matChipInputAddOnBlur]="false"
                    [matAutocomplete]="autoTipos"
                    [formControl]="projTipos"
@@ -122,7 +126,7 @@
           <input class="valor-projeto" matInput placeholder="Valor"
                  formControlName="projValor" required
                  currencyMask
-                 [options]="{ prefix: '', thousands: '.', decimal: ',' }">
+                 [options]="{ prefix: '', thousands: '.', decimal: ',',allowNegative:false}">
 
           <mat-error *ngIf="isFieldInvalid('projValor')">
             Informe o valor do projeto
@@ -130,16 +134,6 @@
         </mat-input-container>
 
       </form>
-
-      <div class="content">
-        <a mat-button (click)="redirectProjetoDetail()">
-          VOLTAR
-        </a>
-        <button mat-button (click)="onSubmit(projetoForm.value)" type="submit"
-                [disabled]="projetoForm.invalid">
-          <span class="action-buttons">SALVAR</span>
-        </button>
-      </div>
 
     </mat-card-content>
 

@@ -8,39 +8,36 @@
           <input matInput placeholder="Nome" type="text"
                  maxlength="80"
                  formControlName="funcNome" required>
-          <mat-error *ngIf="isFieldInvalid('funcNome')">
+          <mat-error>
             Informe o nome do usuário
           </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
           <mat-select placeholder="Cargo/função"
-                      formControlName="funcCargId"
-                      [errorStateMatcher]="errorMatcher" required>
+                      formControlName="funcCargId" required>
             <mat-option *ngFor="let cargo of cargos" [value]="cargo" class="options">
               {{ cargo.cargNome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="funcionarioForm.get('funcCargId').hasError('required')">Informe o cargo</mat-error>
+          <mat-error>Informe o cargo</mat-error>
         </mat-input-container>
 
 
         <mat-input-container class="full-width-input">
-          <mat-select placeholder="Perfil"
-                      formControlName="funcPerfId"
-                      [errorStateMatcher]="errorMatcher" required>
+          <mat-select placeholder="Perfil" formControlName="funcPerfId" required>
             <mat-option *ngFor="let perfil of perfils" [value]="perfil" class="options">
               {{ perfil.perfNome }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="funcionarioForm.get('funcPerfId').hasError('required')">Informe o cargo</mat-error>
+          <mat-error>Informe o perfil</mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
           <input matInput placeholder="E-mail" type="email" maxlength="50"
                  (blur)="onSearchChange($event.target.value)"
                  formControlName="funcEmail" required>
-          <mat-error *ngIf="isFieldInvalid('funcEmail')">
+          <mat-error>
             {{getErrorMessage()}}
           </mat-error>
         </mat-input-container>
@@ -48,26 +45,11 @@
         <mat-input-container class="full-width-input">
           <input matInput type="password" placeholder="Senha"
                  formControlName="funcSenha" required>
-          <mat-error *ngIf="isFieldInvalid('funcSenha')">
+          <mat-error>
             Informa uma senha
           </mat-error>
         </mat-input-container>
       </form>
     </mat-card-content>
-
-
-    <mat-card-actions>
-
-      <div class="content">
-        <a mat-button routerLink="/funcionarios">
-          Cancelar
-        </a>
-        <button mat-raised-button color="primary" (click)="onSubmit(funcionarioForm.value)" type="submit"
-                [disabled]="funcionarioForm.invalid">
-          CRIAR
-        </button>
-      </div>
-    </mat-card-actions>
-
   </mat-card>
 </div>

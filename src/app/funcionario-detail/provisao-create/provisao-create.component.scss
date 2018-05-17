@@ -1,10 +1,7 @@
 .main-div {
   height: 100vh;
   display: flex;
-}
 
-.full-width-input {
-  width: 100%;
 }
 
 .mat-card-provisao {
@@ -21,5 +18,9 @@
   opacity: 0.54;
   font-size: 24px;
   font-weight: 400;
+}
+
+.left {
+  text-align: left !important;
 }
 

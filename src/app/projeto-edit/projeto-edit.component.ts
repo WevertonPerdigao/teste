@@ -27,6 +27,8 @@ import {Constants} from '../utils/constants';
 import 'rxjs/add/operator/startWith';
 import {Subscription} from 'rxjs/Subscription';
 import {ToolbarService} from '../services/toolbar.service';
+import {Utils} from '../utils/utils';
+import {noWhiteSpaceValidator} from '../utils/noWhiteSpaceValidator';
 
 @Component({
   selector: 'app-projeto-edit',
@@ -50,7 +52,7 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
   chipsMembros: Funcionario[] = [];
   minDate: Date;
   projeto: Projeto;
-
+  validatorWhiteSpace = new noWhiteSpaceValidator();
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
   paramsSubscription: Subscription;
 
@@ -67,6 +69,8 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // manipula evento do botão criar
+    this.toolbarService.action$.subscribe(() => this.onSubmit());
 
     this.initForm();
 
@@ -177,7 +181,8 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
       projId: this.fb.control('', []),
-      projNome: this.fb.control('', [Validators.required, Validators.minLength(1), Validators.maxLength(80)]),
+      projNome: this.fb.control('', [Validators.required, Validators.minLength(1),
+        Validators.maxLength(80), this.validatorWhiteSpace.validWhiteSpace]),
       projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.projFuncId,
@@ -224,8 +229,10 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
     return tipoProjeto ? tipoProjeto.tiprNome : undefined;
   }
 
-  onSubmit(projeto: Projeto) {
+  onSubmit() {
     if (this.projetoForm.valid) {
+
+      const projeto = this.projetoForm.value;
       projeto.equipe = (this.chipsMembros);
 
       projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
@@ -233,7 +240,7 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
       projeto.projEmprId = new Empresa(1);
 
       this.projetoService.createProjeto(projeto)
-        .subscribe(() => this.notificationService.notify(`Projeto alterado com sucesso`),
+        .subscribe(() => this.notificationService.notify(`Projeto alterado com sucesso!`),
           response => // HttpErrorResponse
             this.notificationService.notify('Erro ao alterar projeto'),
           () => {
@@ -241,6 +248,7 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
           });
     } else {
       this.notificationService.notify('Preencha os campos corretamente');
+      Utils.validateAllFormFields(this.projetoForm);
     }
   }
 
@@ -310,7 +318,7 @@ export class ProjetoEditComponent implements OnInit, OnDestroy {
 
   configRouteBack() {
     const params: NavigationExtras = {queryParams: {id: this.projId, indextab: Constants.TAB_GERAL}, skipLocationChange: true};
-    this.toolbarService.setRotaBack('/projeto-detail', params);
+    this.toolbarService.setRouteBack('/projeto-detail', params);
   }
 
   ngOnDestroy() {

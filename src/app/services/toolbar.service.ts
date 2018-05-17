@@ -25,12 +25,19 @@ export class ToolbarService {
 
   dataSearch$: Observable<any>;
   private dataSearchSubject = new Subject<any>();
+  private actionSubject = new Subject<any>();
+  action$: Observable<any>;
 
   constructor(private router: Router, private titleService: Title,
               private rendererFactory: RendererFactory2) {
 
     this.renderer = this.rendererFactory.createRenderer('', null);
+
+// referencia observable a ser utilizado pelo subject
+
     this.dataSearch$ = this.dataSearchSubject.asObservable();
+
+    this.action$ = this.actionSubject.asObservable();
   }
 
   /*
@@ -39,6 +46,14 @@ export class ToolbarService {
   updateDataSearch(data) {
     this.dataSearchSubject.next(data);
   }
+
+  /*
+ /* executa método sobrescrito
+  */
+  actionUpdate() {
+    this.actionSubject.next();
+  }
+
 
   setValuesToolbar(): Observable<ToolbarItem> {
     return this.router.events
@@ -79,8 +94,7 @@ export class ToolbarService {
     this.titleService.setTitle(descricao);
   }
 
-  setRotaBack(route: String, navExtras?: NavigationExtras) {
-    console.log('extras' + navExtras);
+  setRouteBack(route: String, navExtras?: NavigationExtras) {
     this.routeBack = route;
     this.navExtras = navExtras;
   }

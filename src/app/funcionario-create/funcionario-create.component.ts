@@ -8,9 +8,11 @@ import {NotificationService} from '../services/notification.service';
 import {Router} from '@angular/router';
 import {Cargo} from '../models/cargo.model';
 import {CargoService} from '../services/cargo.service';
-import {ErrorStateMatcherImp} from '../utils/ErrorStateMatcher';
+// import {ErrorStateMatcherImp} from '../utils/ErrorStateMatcher';
 import {Observable} from 'rxjs/Observable';
 import {ToolbarService} from '../services/toolbar.service';
+import {noWhiteSpaceValidator} from '../utils/noWhiteSpaceValidator';
+import {Utils} from '../utils/utils';
 
 @Component({
   selector: 'app-funcionario-create',
@@ -22,7 +24,7 @@ export class FuncionarioCreateComponent implements OnInit {
   perfils: Perfil[] = [];
   cargos: Cargo[] = [];
   funcionarioForm: FormGroup;
-  errorMatcher = new ErrorStateMatcherImp();
+  validatorWhiteSpace = new noWhiteSpaceValidator();
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -34,12 +36,15 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    // manipula evento do botão criar da barra de ferramentas
+    this.toolbarService.action$.subscribe(() => this.onSubmit());
+
     this.configRouteBack();
 
     this.funcionarioForm = this.fb.group({
-      funcPerfId: this.fb.control('', []),
-      funcCargId: this.fb.control('', []),
-      funcNome: this.fb.control('', [Validators.required]),
+      funcPerfId: this.fb.control('', [Validators.required]),
+      funcCargId: this.fb.control('', [Validators.required]),
+      funcNome: this.fb.control('', [Validators.required, this.validatorWhiteSpace.validWhiteSpace]),
       funcEmail: this.fb.control('', [Validators.required, Validators.email]),
       funcSenha: this.fb.control('', [Validators.required])
     });
@@ -63,16 +68,20 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
 
-  onSubmit(funcionario: Funcionario) {
-
-
-    this.funcionarioService.create(funcionario)
-      .subscribe(() => this.notificationService.notify(`Funcionário criado com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify(response.error.message),
-        () => {
-          this.router.navigate(['funcionarios']);
-        });
+  onSubmit() {
+    if (this.funcionarioForm.valid) {
+      const funcionario = this.funcionarioForm.value;
+      this.funcionarioService.create(funcionario)
+        .subscribe(() => this.notificationService.notify(`Funcionário criado com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify(response.error.message),
+          () => {
+            this.router.navigate(['usuarios']);
+          });
+    } else {
+      this.notificationService.notify('Preencha o(s) campo(s) corretamente');
+      Utils.validateAllFormFields(this.funcionarioForm);
+    }
   }
 
   onSearchChange(searchValue: string) {
@@ -88,7 +97,7 @@ export class FuncionarioCreateComponent implements OnInit {
   }
 
   configRouteBack() {
-    this.toolbarService.setRotaBack('/funcionarios');
+    this.toolbarService.setRouteBack('/usuarios');
   }
 
 }

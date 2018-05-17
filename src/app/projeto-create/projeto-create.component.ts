@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationService} from '../services/notification.service';
-import {ViewEncapsulation} from '@angular/core';
 import {DateAdapter} from '@angular/material/core';
 import {FuncionarioService} from '../services/funcionario.service';
 import {Funcionario} from '../models/funcionario.model';
@@ -11,7 +10,6 @@ import {MatDatepickerInputEvent, MatInput} from '@angular/material';
 import {TipoprojetoService} from '../services/tipoprojeto.service';
 import {Tipoprojeto} from '../models/tipoprojeto.model';
 import {ProjetoService} from '../services/projeto.service';
-import {Projeto} from '../models/projeto.model';
 import {SituacaoProjeto} from '../models/situacaoprojeto.model';
 import {Empresa} from '../models/empresa.model';
 import {Observable} from 'rxjs/Observable';
@@ -28,31 +26,38 @@ import 'rxjs/add/operator/startWith';
 import {Subscription} from 'rxjs/Subscription';
 import {noWhiteSpaceValidator} from '../utils/noWhiteSpaceValidator';
 import {ToolbarService} from '../services/toolbar.service';
+import {Utils} from '../utils/utils';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
+import {UploadService} from '../services/upload.service';
+import {Projeto} from '../models/projeto.model';
+import {AreapesquisaService} from '../services/areapesquisa.service';
+import {Areapesquisa} from '../models/areapesquisa.model';
 
 @Component({
   selector: 'app-projeto-create',
   templateUrl: './projeto-create.component.html',
-  styleUrls: ['./projeto-create.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./projeto-create.component.scss']
 })
 export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('chipInput') chipInput: MatInput;
   @ViewChild('chipInputMembro') chipInputMembro: MatInput;
+  @ViewChild('chipInputArea') chipInputArea: MatInput;
   projetoForm: FormGroup;
   projFuncId = new FormControl();
   projMembro = new FormControl();
+  areasPesquisa: Areapesquisa[] = [];
   funcionarios: Funcionario[];
   membros: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
   chips: Tipoprojeto[] = [];
   chipsMembros: Funcionario[] = [];
+  chipsAreas: Areapesquisa[] = [];
   minDate: Date;
   validWhiteSpace = new noWhiteSpaceValidator();
-
   @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
   paramsSubscription: Subscription;
-
+  progressValue = 0;
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -61,13 +66,25 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
               private funcionarioService: FuncionarioService,
               private tipoprojetoService: TipoprojetoService,
               private projetoService: ProjetoService,
-              private toolbarService: ToolbarService) {
+              private toolbarService: ToolbarService,
+              private upService: UploadService,
+              private areapesquisaService: AreapesquisaService) {
   }
 
   ngOnInit() {
-
+    // manipula evento do botão salvar da barra de ferramentas
+    this.toolbarService.action$.subscribe(() => this.send());
     this.configRouteBack();
+    this.initForm();
+    this.configureFormControlFuncionario();
+    this.configureFormControlMembro();
+    this.listAreapesquisa();
 
+    this.tipoprojetoService.listAllTipos()
+      .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
+  }
+
+  initForm() {
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
       projNome: this.fb.control('', [Validators.required, Validators.minLength(1),
@@ -75,9 +92,13 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       projDataInicial: this.fb.control('', [Validators.required]),
       projDataFinal: this.fb.control('', [Validators.required]),
       projFuncId: this.projFuncId,
+      projTermoReferencia: this.fb.control('', [Validators.required]),
+      anexo: this.fb.control('', [Validators.required]),
       projValor: this.fb.control('', [Validators.required])
     });
+  }
 
+  configureFormControlFuncionario() {
     this.paramsSubscription = this.projFuncId.valueChanges
       .startWith('')
       .debounceTime(400)
@@ -86,8 +107,9 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
         this.funcionarioService.listFuncionariosByName(nameSearch)
           .catch(error => Observable.from([])))
       .subscribe(funcionarios => this.funcionarios = funcionarios);
+  }
 
-
+  configureFormControlMembro() {
     this.paramsSubscription = this.projMembro.valueChanges
       .startWith('')
       .debounceTime(400)
@@ -96,9 +118,7 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
         this.funcionarioService.listFuncionariosByName(nameSearch)
           .catch(error => Observable.from([])))
       .subscribe(funcionarios => {
-
         const funcTemp: Funcionario[] = [];
-
         if (this.chipsMembros.length > 0) {
           funcionarios.forEach(element => {
             let result = false;
@@ -113,12 +133,12 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
         } else {
           this.membros = funcionarios;
         }
-
       });
+  }
 
-
-    this.tipoprojetoService.listAllTipos()
-      .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
+  listAreapesquisa() {
+    this.paramsSubscription = this.areapesquisaService.listAllAreapesquisa()
+      .subscribe(areas => this.areasPesquisa = areas);
   }
 
 
@@ -130,11 +150,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
         }
       }
     );
-  }
-
-  isFieldInvalid(field: string) {
-    return (
-      (!this.projetoForm.get(field).valid && this.projetoForm.get(field).touched));
   }
 
   /* Verifica se o período é válido
@@ -169,8 +184,13 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     return tipoProjeto ? tipoProjeto.tiprNome : undefined;
   }
 
-  onSubmit(projeto: Projeto) {
+  displayArea(areaPesquisa?: Areapesquisa): string | undefined {
+    return areaPesquisa ? areaPesquisa.nome : undefined;
+  }
+
+  onSubmit() {
     if (this.projetoForm.valid) {
+      const projeto: Projeto = this.projetoForm.value;
       projeto.equipe = (this.chipsMembros);
 
       projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
@@ -185,7 +205,8 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
             this.router.navigate(['projetos']);
           });
     } else {
-      this.notificationService.notify('Erro ao criar projeto');
+      this.notificationService.notify('Preencha o formulário corretamente');
+      Utils.validateAllFormFields(this.projetoForm);
     }
   }
 
@@ -207,7 +228,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     if (Object.keys(valor).length === 0) {
       this.chips.push(t);
     }
-
     this.chipInput['nativeElement'].blur();
   }
 
@@ -234,9 +254,54 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     this.chipInputMembro['nativeElement'].blur();
   }
 
-  configRouteBack() {
-    this.toolbarService.setRotaBack('/projetos');
+  /*adiciona area selecionada */
+  addArea(event: MatAutocompleteSelectedEvent): void {
+    const t: Areapesquisa = event.option.value;
+    const areaResult = this.chipsAreas.filter((area) => area.codigo === t.codigo);
+    if (Object.keys(areaResult).length === 0) {
+      this.chipsAreas.push(t);
+    }
+    this.chipInputArea['nativeElement'].blur();
   }
+
+  removeArea(chipArea: Areapesquisa): void {
+    const index = this.chipsAreas.indexOf(chipArea);
+    if (index >= 0) {
+      this.chipsAreas.splice(index, 1);
+    }
+    this.chipInputArea['nativeElement'].blur();
+  }
+
+
+  configRouteBack() {
+    this.toolbarService.setRouteBack('/projetos');
+  }
+
+  send() {
+    console.log('olá');
+
+    const files = this.projetoForm.get('anexo').value;
+    console.log('valor' + files[0]);
+    if (files && files[0]) {
+
+      const formData = new FormData();
+      formData.append('file', files[0]);
+
+      this.upService.upload(formData, 2056).subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          // This is an upload progress event. Compute and show the % done:
+          this.progressValue = Math.round(100 * event.loaded / event.total);
+          console.log(`File is ${this.progressValue}% uploaded.`);
+
+        } else if (event instanceof HttpResponse) {
+          console.log('File is completely uploaded!');
+        }
+      });
+    } else {
+      console.log('vazio');
+    }
+  }
+
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

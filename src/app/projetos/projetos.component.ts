@@ -54,20 +54,6 @@ export class ProjetosComponent implements OnInit {
     this.searchForm = this.fb.group({
       searchControl: this.searchControl
     });
-
-    // this.paramsSubscription = this.searchControl.valueChanges
-    // // .pipe()
-    //   .startWith('')
-    //   .debounceTime(400)
-    //   .distinctUntilChanged()
-    //   .switchMap(search =>
-    //     this.projetoService
-    //       .listProjetosByUserIdAndNome(search)
-    //       .catch(error => Observable.from([])))
-    //   .subscribe(projetos => {
-    //
-    //     this.projetos = projetos;
-    //   });
   }
 
   searchProjetos() {
@@ -75,10 +61,13 @@ export class ProjetosComponent implements OnInit {
       .subscribe(projetos => this.projetos = projetos);
   }
 
+  redirectCreateProjeto() {
+    this.router.navigate(['/projeto-create'], {skipLocationChange: true});
+  }
+
   goToProjectDetail(projeto: Projeto) {
     this.router.navigate(['/projeto-detail'],
       {queryParams: {id: projeto.projId}, skipLocationChange: true});
-
 
 
   }

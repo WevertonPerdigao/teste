@@ -2,7 +2,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LoginService} from '../services/login.service';
-import {MatSidenav} from '@angular/material';
+import {MatButton, MatInput, MatSidenav} from '@angular/material';
 import {SidenavService} from '../services/sidenav.service';
 import {ToolbarService} from '../services/toolbar.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -19,9 +19,12 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   mobileQuery: MediaQueryList;
   nomeUser;
-  isSearch;
+  boSearch;
+  boUpdate;
+  boCreate;
   @ViewChild('sidenav') public sideNav: MatSidenav;
   @ViewChild('mattoolbar', {read: ElementRef}) toolbar: ElementRef;
+  @ViewChild('chipInput') chipInput: MatButton;
 
   private _mobileQueryListener: () => void;
 
@@ -31,7 +34,6 @@ export class HeaderComponent implements OnDestroy, OnInit {
               private toolbarService: ToolbarService,
               private router: Router,
               private route: ActivatedRoute,
-              private _location: Location,
               private titleService: Title,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -46,7 +48,7 @@ export class HeaderComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    this._location.subscribe(x => console.log(x));
+
     // passa por referência a sidenav da view para maniupulação (open ou close)
     this.sidenavService.sideNav = this.sideNav;
     this.toolbarService.toolbar = this.toolbar;
@@ -60,6 +62,10 @@ export class HeaderComponent implements OnDestroy, OnInit {
 
   search(valor: string) {
     this.toolbarService.updateDataSearch(valor);
+  }
+
+  actionUpdate() {
+    this.toolbarService.actionUpdate();
   }
 
   onLogout() {
@@ -94,7 +100,9 @@ export class HeaderComponent implements OnDestroy, OnInit {
             this.toolbar.nativeElement.querySelector('#sp-toolbar-title').textContent = rota.title;
           }
         }
-        rota.main ? this.isSearch = rota.main : this.isSearch = false;
+        rota.update ? this.boUpdate = rota.update : this.boUpdate = false;
+        rota.create ? this.boCreate = rota.create : this.boCreate = false;
+        rota.main ? this.boSearch = rota.main : this.boSearch = false;
       });
   }
 

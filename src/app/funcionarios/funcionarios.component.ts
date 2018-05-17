@@ -42,7 +42,7 @@ export class FuncionariosComponent implements OnInit {
   }
 
   redirectFuncionarioCreate() {
-    this.router.navigate(['/funcionario-create']);
+    this.router.navigate(['/funcionario-create'], {skipLocationChange: true});
   }
 
 }

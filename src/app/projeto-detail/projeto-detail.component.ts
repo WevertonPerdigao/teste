@@ -149,7 +149,7 @@ export class ProjetoDetailComponent implements OnInit, OnDestroy {
   }
 
   configRouteBack() {
-    this.toolbarService.setRotaBack('/projetos');
+    this.toolbarService.setRouteBack('/projetos');
   }
 
   ngOnDestroy() {

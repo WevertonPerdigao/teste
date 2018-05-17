@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
         }
       },
       {
-        path: 'funcionarios', component: FuncionariosComponent,
+        path: 'usuarios', component: FuncionariosComponent,
         data: {
           title: 'Usuários',
           main: true
@@ -54,7 +54,8 @@ export const ROUTES: Routes = [
       {
         path: 'funcionario-create', component: FuncionarioCreateComponent,
         data: {
-          title: 'Novo Usuário'
+          title: 'Novo Usuário',
+          create: true,
         }
       },
       {
@@ -63,38 +64,44 @@ export const ROUTES: Routes = [
       {
         path: 'provisao-create', component: ProvisaoCreateComponent,
         data: {
-          title: 'Nova Folha'
+          title: 'Nova Folha',
+          create: true,
         }
       },
       {
         path: 'provisao-edit', component: ProvisaoEditComponent,
         data: {
-          title: 'Alterar Folha'
+          title: 'Alterar Folha',
+          update: true,
         }
       },
       {
         path: 'projeto-create', component: ProjetoCreateComponent,
         data: {
-          title: 'Novo Projeto'
+          title: 'Novo Projeto',
+          create: true,
         }
       },
       {path: 'projeto-detail', component: ProjetoDetailComponent},
       {
         path: 'projeto-edit', component: ProjetoEditComponent,
         data: {
-          title: 'Alterar Projeto'
+          title: 'Alterar Projeto',
+          update: true,
         }
       },
       {
         path: 'atividade-create', component: AtividadeCreateComponent,
         data: {
-          title: 'Nova Atividade'
+          title: 'Nova Atividade',
+          create: true,
         }
       },
       {
         path: 'dispendio-create', component: DispendioCreateComponent,
         data: {
-          title: 'Solicitar Dispêndio'
+          title: 'Solicitar Dispêndio',
+          create: true,
         }
       },
       {

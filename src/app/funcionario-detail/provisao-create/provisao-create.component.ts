@@ -9,7 +9,7 @@ import {FuncionarioProvisaoService} from '../../services/funcionarioprovisao.ser
 import {NotificationService} from '../../services/notification.service';
 import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
-import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
+// import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
 import {MatOptionSelectionChange} from '@angular/material';
 import {ToolbarService} from '../../services/toolbar.service';
 
@@ -28,7 +28,7 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   listYears;
   yearReferencia: FormControl;
   mesReferencia: FormControl;
-  errorMatcher = new ErrorStateMatcherImp();
+  // errorMatcher = new ErrorStateMatcherImp();
   listProvisaoFuncionario: FuncionarioProvisao[];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -40,6 +40,8 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // manipula evento do botão criar da barra de ferramentas
+    this.toolbarService.action$.subscribe(() => this.salvarProvisao());
 
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
       this.funcId = params['funcId'];
@@ -70,9 +72,9 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
     this.provisaoForm = this.fb.group({
       mesReferencia: this.mesReferencia,
       yearReferencia: this.yearReferencia,
-      fuprTotalGeral: this.fb.control('', [Validators.required, Validators.pattern(Constants.NUMBER_PATTER)]),
-      fuprHoraTotal: this.fb.control('', [Validators.required, Validators.pattern(Constants.NUMBER_PATTER)]),
-      fuprHoraHomem: this.fb.control({value: 0, disabled: true}, Validators.pattern(Constants.NUMBER_PATTER))
+      fuprTotalGeral: this.fb.control('', [Validators.required]),
+      fuprHoraTotal: this.fb.control('', [Validators.required]),
+      fuprHoraHomem: this.fb.control({value: 0, disabled: true})
     });
 
     this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId).subscribe(
@@ -128,24 +130,26 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   /*
   * */
   salvarProvisao() {
+    if (this.provisaoForm.valid) {
 
-    const funcionarioProvisao = new FuncionarioProvisao();
+      const funcionarioProvisao = this.provisaoForm.value;
 
-    funcionarioProvisao.fuprFuncId = new Funcionario();
-    funcionarioProvisao.fuprFuncId.funcId = this.funcId;
-    funcionarioProvisao.fuprHoraHomem = this.provisaoForm.get('fuprHoraHomem').value;
-    funcionarioProvisao.fuprTotalGeral = this.provisaoForm.get('fuprTotalGeral').value;
+      funcionarioProvisao.fuprFuncId = new Funcionario();
+      funcionarioProvisao.fuprFuncId.funcId = this.funcId;
 
+      funcionarioProvisao.fuprReferencia = this.formatMesReferencia();
 
-    funcionarioProvisao.fuprReferencia = this.formatMesReferencia();
-
-    this.funcionarioProvisaoService.createFuncionarioProvisao(funcionarioProvisao)
-      .subscribe(() => this.notificationService.notify(`Provisão inserida com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify('Erro ao inserir provisão'),
-        () => {
-          this.redirectFuncionarioDetail();
-        });
+      this.funcionarioProvisaoService.createFuncionarioProvisao(funcionarioProvisao)
+        .subscribe(() => this.notificationService.notify(`Provisão inserida com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify('Erro ao inserir provisão'),
+          () => {
+            this.redirectFuncionarioDetail();
+          });
+    } else {
+      this.notificationService.notify('Preencha o(s) campo(s) corretamente');
+      Utils.validateAllFormFields(this.provisaoForm);
+    }
   }
 
   /* verifica se o estado do campo é valido caso seja tocado(alterado)
@@ -169,6 +173,6 @@ export class ProvisaoCreateComponent implements OnInit, OnDestroy {
   * */
   configRouteBack() {
     const params: Params = {queryParams: {funcId: this.funcId}, skipLocationChange: true};
-    this.toolbarService.setRotaBack('/funcionario-detail', params);
+    this.toolbarService.setRouteBack('/funcionario-detail', params);
   }
 }

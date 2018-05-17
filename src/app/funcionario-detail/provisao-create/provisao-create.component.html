@@ -32,7 +32,7 @@
                 <mat-select placeholder="Ano de referência"
                             [formControl]="yearReferencia"
                             (change)="verificaProvisao($event)"
-                            [errorStateMatcher]="errorMatcher" required>
+                            required>
                   <mat-option *ngFor="let year of listYears" [value]="year">
                     {{year}}
                   </mat-option>
@@ -46,19 +46,22 @@
         </table>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Provisões"
+          <input matInput placeholder="Provisões" class="left"
                  formControlName="fuprTotalGeral" required
+                 currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
                  (change)="upadateHomeHora()">
-          <mat-error *ngIf="isFieldInvalid('fuprTotalGeral')">
+          <mat-error>
             Informe o valor da provisão
           </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Horas trabalhadas" required (change)="upadateHomeHora()"
+          <input matInput placeholder="Horas trabalhadas" class="left"
+                 required (change)="upadateHomeHora()"
+                 currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
                  formControlName="fuprHoraTotal">
-          <mat-error *ngIf="isFieldInvalid('fuprHoraTotal')">
-            Informe as quantidade de horas trabalhadas
+          <mat-error>
+            Informe a quantidade de horas trabalhadas
           </mat-error>
         </mat-input-container>
 
@@ -73,21 +76,6 @@
 
       </form>
 
-      <div class="flex-end">
-
-        <button mat-raised-button color="primary" (click)="salvarProvisao()"
-                type="submit" [disabled]="provisaoForm.invalid">
-          CRIAR
-        </button>
-      </div>
-
     </mat-card-content>
-
-    <mat-card-actions>
-
-
-    </mat-card-actions>
-    <mat-card-footer>
-    </mat-card-footer>
   </mat-card>
 </div>

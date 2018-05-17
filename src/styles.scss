@@ -75,7 +75,7 @@ html {
 
 .mat-chip {
   color: white !important;
-  background-color: #4CAF50 !important;;
+  background-color: rgba(76, 175, 80, 1) !important;
 }
 
 .btn-search {
@@ -83,3 +83,32 @@ html {
   font-weight: 600 !important;
 }
 
+.mat-option {
+  height: 38px !important;
+}
+
+.mat-option:hover {
+  background-color: rgba(56, 142, 60, 0.35) !important;
+}
+
+.mat-datepicker-toggle-default-icon {
+  color: rgba(56, 142, 60, 0.87);
+}
+
+.mat-option-text {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.full-width-input {
+  width: 100%;
+  text-align: left !important;
+}
+
+//.ng-valid[required], .ng-valid.required  {
+//  border-left: 5px solid #42A948; /* green */
+//}
+//
+//.ng-invalid:not(form)  {
+//  border-left: 5px solid #a94442; /* red */
+//}

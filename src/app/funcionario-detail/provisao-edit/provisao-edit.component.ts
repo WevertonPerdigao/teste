@@ -9,7 +9,7 @@ import {FuncionarioProvisaoService} from '../../services/funcionarioprovisao.ser
 import {NotificationService} from '../../services/notification.service';
 import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
-import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
+// import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
 import {MatAutocompleteSelectedEvent, MatOptionSelectionChange} from '@angular/material';
 import {ToolbarService} from '../../services/toolbar.service';
 
@@ -30,7 +30,7 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
   listYears;
   yearReferencia: FormControl;
   public mesReferencia: FormControl;
-  errorMatcher = new ErrorStateMatcherImp();
+  // errorMatcher = new ErrorStateMatcherImp();
   listProvisaoFuncionario: FuncionarioProvisao[];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -193,7 +193,7 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
   configRouteBack() {
     const params: Params = {queryParams: {funcId: this.funcId}, skipLocationChange: true};
 
-    this.toolbarService.setRotaBack('/funcionario-detail', params);
+    this.toolbarService.setRouteBack('/funcionario-detail', params);
   }
 
   ngOnDestroy(): void {

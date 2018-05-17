@@ -35,6 +35,7 @@ import {PerfilService} from './services/perfil.service';
 import {ProjetoatividadeService} from './services/projetoatividade.service';
 import {TipodispendioService} from './services/tipodispendio.service';
 import {ToolbarService} from './services/toolbar.service';
+import {UploadService} from './services/upload.service';
 
 // compoonents
 import {HeaderComponent} from './header/header.component';
@@ -80,6 +81,9 @@ import {CustomDatepickerComponent} from './shared/custom-datepicker/custom-datep
 import {LoginLayoutComponent} from './layouts/login-layout.component';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
+import {InputFileDirective} from './directive/input-file.directive';
+import {InputFileComponent} from './shared/file/input-file/input-file.component';
+import {AreapesquisaService} from './services/areapesquisa.service';
 
 @NgModule({
   declarations: [
@@ -122,6 +126,8 @@ import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
     YearPickerComponent,
     CustomDatepickerComponent,
     ProjetoEditComponent,
+    InputFileDirective,
+    InputFileComponent,
   ],
   imports: [
     CommonModule,
@@ -157,6 +163,8 @@ import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
     TipodispendioService,
     SidenavService,
     ToolbarService,
+    UploadService,
+    AreapesquisaService,
   ],
   bootstrap: [AppComponent]
 })

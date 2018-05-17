@@ -1,4 +1,5 @@
 import {Month} from '../models/mes.model';
+import {FormGroup} from '@angular/forms';
 
 export class Utils {
 
@@ -76,6 +77,14 @@ export class Utils {
       case 12:
         return 'Dezembro';
     }
+  }
+
+
+  public static validateAllFormFields(form: FormGroup) {
+    Object.keys(form.controls).forEach(field => {
+      const control = form.get(field);
+      control.markAsTouched({onlySelf: true});
+    });
   }
 
   public static getMeses(): Month[] {

@@ -56,7 +56,7 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
   /*Redireciona para tela de lista de funcionários
   * */
   backToFuncionarios(funcionario: Funcionario) {
-    this.router.navigate(['/funcionarios'],
+    this.router.navigate(['/usuarios'],
       {queryParams: {funcId: funcionario.funcId}, skipLocationChange: true});
   }
 
@@ -79,7 +79,7 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
   }
 
   configRouteBack() {
-    this.toolbarService.setRotaBack('/funcionarios');
+    this.toolbarService.setRouteBack('/usuarios');
   }
 
 

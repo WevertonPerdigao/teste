@@ -12,7 +12,7 @@
       </ng-template>
 
 
-      <button id="btn-menu" #buttonmenu mat-icon-button (click)="sidenav.toggle()" *ngIf="isSearch;else back">
+      <button id="btn-menu" #buttonmenu mat-icon-button (click)="sidenav.toggle()" *ngIf="boSearch;else back">
         <mat-icon>menu</mat-icon>
       </button>
 
@@ -22,7 +22,7 @@
       <span class="example-fill-remaining-space"></span>
 
 
-      <form id="form-search-header" class="search-hearder" *ngIf="isSearch">
+      <form id="form-search-header" class="search-hearder" *ngIf="boSearch">
         <mat-form-field>
           <input id="in-search-header" #inSearch class="in-search"
                  placeholder="" matInput>
@@ -33,6 +33,12 @@
                 (click)="search(inSearch.value)">PESQUISAR
         </button>
       </form>
+
+      <button id="btn-update" #btnupdate mat-button class="btn-search" (keyup.enter)="actionUpdate()"
+              (click)="actionUpdate()"
+              *ngIf="boUpdate || boCreate">{{boCreate?'CRIAR':'SALVAR'}}
+
+      </button>
 
     </mat-toolbar-row>
 

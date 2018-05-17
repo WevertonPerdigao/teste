@@ -14,9 +14,11 @@ import {Projeto} from '../../../models/projeto.model';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {ProjetoService} from '../../../services/projeto.service';
-import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
+// import {ErrorStateMatcherImp} from '../../../utils/ErrorStateMatcher';
 import {ToolbarService} from '../../../services/toolbar.service';
 import {Constants} from '../../../utils/constants';
+import {Utils} from '../../../utils/utils';
+import {noWhiteSpaceValidator} from '../../../utils/noWhiteSpaceValidator';
 
 @Component({
   selector: 'app-atividade-create',
@@ -38,7 +40,9 @@ export class AtividadeCreateComponent implements OnInit {
   minDateInicial: Date;
   projeto: Projeto;
   listMembros: Funcionario[] = [];
-  errorMatcher = new ErrorStateMatcherImp();
+  validatorWhiteSpace = new noWhiteSpaceValidator();
+
+  // errorMatcher = new ErrorStateMatcherImp();
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -53,6 +57,8 @@ export class AtividadeCreateComponent implements OnInit {
   }
 
   ngOnInit() {
+    // manipula evento do botão salvar da barra de ferramentas
+    this.toolbarService.action$.subscribe(() => this.salvarAtividade());
 
     this.initForm();
     this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
@@ -74,7 +80,7 @@ export class AtividadeCreateComponent implements OnInit {
   initForm() {
     this.projFuncId = this.fb.control('', [Validators.required]);
     this.atividadeForm = this.fb.group({
-      nome: this.fb.control('', [Validators.required]),
+      nome: this.fb.control('', [Validators.required, this.validatorWhiteSpace.validWhiteSpace]),
       data_inicial: this.fb.control('', [Validators.required]),
       data_final: this.fb.control('', [Validators.required]),
     });
@@ -90,11 +96,12 @@ export class AtividadeCreateComponent implements OnInit {
     return funcionario ? funcionario.funcNome : undefined;
   }
 
-  salvarAtividade(atividade: Projetoatividade) {
+  salvarAtividade() {
     if (this.atividadeForm.valid) {
+      const atividade = this.atividadeForm.value;
 
       atividade.membros = (this.chips);
-      let projeto = new Projeto();
+      const projeto = new Projeto();
       projeto.projId = this.idprojeto;
       atividade.projeto = projeto;
 
@@ -107,7 +114,8 @@ export class AtividadeCreateComponent implements OnInit {
               {queryParams: {id: this.idprojeto}, skipLocationChange: true});
           });
     } else {
-      this.notificationService.notify('Dados inválidos');
+      this.notificationService.notify('Preencha o formulário corretamente');
+      Utils.validateAllFormFields(this.atividadeForm);
     }
   }
 
@@ -160,7 +168,7 @@ export class AtividadeCreateComponent implements OnInit {
 
   configRouteBack() {
     const params: NavigationExtras = {queryParams: {id: this.idprojeto, indextab: Constants.TAB_ATIVIDADES}, skipLocationChange: true};
-    this.toolbarService.setRotaBack('/projeto-detail', params);
+    this.toolbarService.setRouteBack('/projeto-detail', params);
   }
 
 }

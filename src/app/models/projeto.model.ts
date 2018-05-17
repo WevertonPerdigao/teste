@@ -6,6 +6,7 @@ import {Tipoprojeto} from './tipoprojeto.model';
 import {Projetoatividade} from './projetoatividade.model';
 import {ProjetoDispendio} from './projetodispendio.model';
 import {Projetoequipe} from './projetoequipe.model';
+import {Areapesquisa} from './areapesquisa.model';
 
 export class Projeto {
   projId: number;
@@ -24,7 +25,7 @@ export class Projeto {
   atividades?: Projetoatividade[];
   dispendios?: ProjetoDispendio[] = [];
   equipe?: Funcionario[] = [];
-
+  areas: Areapesquisa[] = [];
   constructor(projId?: number) {
     this.projId = projId;
   }

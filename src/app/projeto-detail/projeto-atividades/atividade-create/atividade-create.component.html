@@ -23,9 +23,8 @@
           </mat-chip-list>
         </mat-input-container>
 
-        <mat-input-container class="full-width-input">
-          <mat-select (selectionChange)="addFuncionario($event.value)" placeholder="Membros"
-          >
+        <mat-input-container class="full-width-input" *ngIf="listMembros && listMembros.length>0">
+          <mat-select (selectionChange)="addFuncionario($event.value)" placeholder="Membros">
             <mat-option *ngFor="let funcionario of listMembros"
                         [value]="funcionario"
                         class="options">
@@ -69,17 +68,6 @@
 
       </form>
 
-      <div class="flex-end">
-        <button class="action-buttons" mat-raised-button (click)="salvarAtividade(atividadeForm.value)" type="submit"
-                [disabled]="atividadeForm.invalid">
-          <span class="action-buttons">ADICIONAR</span>
-        </button>
-        <div class="fill-remaining-space"></div>
-        <button mat-raised-button button (click)="cancelar()">
-          <span class="action-buttons">CANCELAR</span>
-        </button>
-
-      </div>
     </mat-card-content>
 
   </mat-card>

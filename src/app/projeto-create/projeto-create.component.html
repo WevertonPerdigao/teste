@@ -2,32 +2,60 @@
 
   <mat-card class="card-projeto">
     <mat-card-content>
-      <mat-card-title> Novo Projeto</mat-card-title>
-      <mat-divider></mat-divider>
+      <form id="form-create-projeto" [formGroup]="projetoForm">
+        <mat-form-field class="full-width-input">
+          <input id="in-nro-termo" matInput placeholder="Termo Aditivo nº"
+                 type="text" formControlName="projTermoReferencia" required>
 
-      <form [formGroup]="projetoForm">
+          <mat-error>
+            Informe número do termo aditivo
+          </mat-error>
+        </mat-form-field>
 
-        <mat-input-container class="full-width-input" hintLabel="Max 80 caracteres">
-          <input matInput placeholder="Título"
+        <mat-form-field class="full-width-input">
+          <app-input-file formControlName="anexo" placeholder="Anexo"></app-input-file>
+          <mat-icon matSuffix>attach_file</mat-icon>
+          <mat-hint>{{progressValue}}</mat-hint>
+
+          <mat-error>
+            Informe o anexo
+          </mat-error>
+        </mat-form-field>
+        <!--
+
+                <button mat-icon-button
+                        (click)="imgFileInput.click()">
+                  <mat-icon matSuffix>attach_file</mat-icon>
+                  <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
+                </button>
+
+                <div>
+                  <input id="in-anexo" placeholder="Anexo" type="file"
+                         formControlName="anexo" required hidden>
+                  <mat-icon matSuffix>attach_file</mat-icon>
+                </div>  !-->
+
+        <mat-form-field class="full-width-input" hintLabel="Max 80 caracteres">
+          <input id="in-nome" matInput placeholder="Título"
                  type="text" formControlName="projNome" required
                  maxlength="80">
           <mat-hint align="end">{{projetoForm.get('projNome').value?.length || 0}}/80</mat-hint>
-          <mat-error *ngIf="projetoForm.get('projNome')?.invalid">
+          <mat-error>
             Informe um título para o projeto
           </mat-error>
-        </mat-input-container>
+        </mat-form-field>
 
         <table class="full-width-input" cellspacing="0">
           <tr>
             <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker" placeholder="Prazo"
+                <input id="in-datainicial" matInput [matDatepicker]="picker" placeholder="Prazo"
                        readonly="true" (focus)="picker.open()" (click)="picker.open()"
                        formControlName="projDataInicial" required
                        (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error *ngIf="isFieldInvalid('projDataInicial')">
+                <mat-error>
                   {{getErrorMessageDate('projDataInicial')}}
                 </mat-error>
               </mat-input-container>
@@ -37,13 +65,13 @@
             </td>
             <td>
               <mat-input-container class="full-width-input">
-                <input matInput [matDatepicker]="picker2" [min]="minDate"
+                <input id="in-datafinal" matInput [matDatepicker]="picker2" [min]="minDate"
                        readonly="true" (focus)="picker2.open()" (click)="picker2.open()"
                        formControlName="projDataFinal" required
                        (dateChange)="validaPrazo($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-                <mat-error *ngIf="isFieldInvalid('projDataFinal')">
+                <mat-error>
                   {{getErrorMessageDate('projDataFinal')}}
                 </mat-error>
               </mat-input-container>
@@ -52,7 +80,7 @@
         </table>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Responsável"
+          <input id="in-responsavel" matInput placeholder="Responsável"
                  [formControl]="projFuncId"
                  [matAutocomplete]="auto"
                  required>
@@ -61,11 +89,30 @@
               {{ funcionario?.funcNome }}
             </mat-option>
           </mat-autocomplete>
-          <mat-error *ngIf="isFieldInvalid('projFuncId')">
+          <mat-error>
             Informe o responsável
           </mat-error>
-
         </mat-input-container>
+
+        <mat-form-field id="mff-area" class="full-width-input">
+          <mat-chip-list id="mcl-area" #chipListArea>
+            <mat-chip *ngFor="let chipArea of chipsAreas" (remove)="removeArea(chipArea)">
+              {{chipArea.nome}}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input id="in-area" [matChipInputFor]="chipListArea" placeholder="Área do projeto"
+                   [matChipInputAddOnBlur]="false"
+                   [matAutocomplete]="autoArea"
+                   #chipInputArea>
+          </mat-chip-list>
+
+          <mat-autocomplete #autoArea="matAutocomplete"
+                            [displayWith]="displayArea" (optionSelected)="addArea($event)">
+            <mat-option *ngFor="let area of areasPesquisa" [value]="area" class="options">
+              <span>{{ area.nome }}</span>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
 
 
         <mat-input-container class="full-width-input">
@@ -74,11 +121,12 @@
               {{tag.tiprNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input [matChipInputFor]="chipList" placeholder="Área de Projeto"
+            <input id="in-tipo" [matChipInputFor]="chipList" placeholder="Tipo de Projeto"
                    [matChipInputAddOnBlur]="false"
                    [matAutocomplete]="autoTipos"
                    #chipInput>
           </mat-chip-list>
+
           <mat-autocomplete #autoTipos="matAutocomplete"
                             [displayWith]="displayTipo" (optionSelected)="addTiposProjeto($event)">
             <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo" class="options">
@@ -96,7 +144,7 @@
               {{tagMembro.funcNome}}
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
-            <input [matChipInputFor]="chipListMembro" placeholder="Membros"
+            <input id="in-membro" [matChipInputFor]="chipListMembro" placeholder="Membros"
                    [formControl]="projMembro"
                    [matChipInputAddOnBlur]="true"
                    [matAutocomplete]="autocompleteMembros"
@@ -114,37 +162,15 @@
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input class="valor-projeto" matInput placeholder="Valor"
+          <input id="in-valor" class="valor-projeto" matInput placeholder="Valor"
                  formControlName="projValor" required
-                 currencyMask
-                 [options]="{ prefix: '', thousands: '.', decimal: ',' }">
-
-          <mat-error *ngIf="isFieldInvalid('projValor')">
+                 currencyMask min="0.01"
+                 [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, align:'left'}">
+          <mat-error>
             Informe o valor do projeto
           </mat-error>
         </mat-input-container>
-
-
       </form>
-
-      <div class="content">
-        <a mat-button routerLink="/projetos">
-          Cancelar
-        </a>
-        <button mat-button (click)="onSubmit(projetoForm.value)" type="submit"
-                [disabled]="projetoForm.invalid">
-          <span class="action-buttons">CRIAR</span>
-        </button>
-      </div>
-
-
     </mat-card-content>
-
-    <mat-card-actions>
-
-
-    </mat-card-actions>
-    <mat-card-footer>
-    </mat-card-footer>
   </mat-card>
 </div>
