@@ -9,9 +9,10 @@ import {FuncionarioProvisaoService} from '../../services/funcionarioprovisao.ser
 import {NotificationService} from '../../services/notification.service';
 import {Month} from '../../models/mes.model';
 import {Utils} from '../../utils/utils';
-// import {ErrorStateMatcherImp} from '../../utils/ErrorStateMatcher';
-import {MatAutocompleteSelectedEvent, MatOptionSelectionChange} from '@angular/material';
+import {MatOptionSelectionChange} from '@angular/material';
 import {ToolbarService} from '../../services/toolbar.service';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-provisao-edit',
@@ -21,16 +22,15 @@ import {ToolbarService} from '../../services/toolbar.service';
 export class ProvisaoEditComponent implements OnInit, OnDestroy {
 
 
-  paramsSubscription: Subscription;
+  private unsubscribe$ = new Subject();
   provisao: FuncionarioProvisao;
   fuprId: number;
   funcId: number;
   provisaoForm: FormGroup;
   listMeses: Month[];
   listYears;
-  yearReferencia: FormControl;
-  public mesReferencia: FormControl;
-  // errorMatcher = new ErrorStateMatcherImp();
+  yearReferencia = new FormControl();
+  mesReferencia = new FormControl();
   listProvisaoFuncionario: FuncionarioProvisao[];
 
   constructor(private activatedRoute: ActivatedRoute,
@@ -42,25 +42,30 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
-      this.fuprId = params['fuprId'];
-      this.funcId = params['funcId'];
-    });
-
-    this.configRouteBack();
-
-    this.listYears = Utils.getListYear();
-
-    this.listMeses = Utils.getMeses();
-
-    this.initForm();
-
-    this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId).subscribe(
-      provisoes => {
-        this.listProvisaoFuncionario = provisoes;
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(params => {
+        this.fuprId = params['fuprId'];
+        this.funcId = params['funcId'];
       });
 
+    // manipula evento do botão criar da barra de ferramentas
+    this.toolbarService.action$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => this.upadateProvisao());
+    this.configRouteBack();
+    this.listYears = Utils.getListYear();
+    this.listMeses = Utils.getMeses();
+    this.initForm();
+    this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        provisoes => {
+          this.listProvisaoFuncionario = provisoes;
+        });
+
     this.funcionarioProvisaoService.findProvisaoByFuprId(this.fuprId)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         provisao => {
           this.provisao = provisao;
@@ -72,43 +77,50 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
 
 
   initMonthAndYearReferencia(fuprReferencia: number) {
+    console.log('ref' + fuprReferencia);
     // inicializa com ano atual
     this.yearReferencia = new FormControl(fuprReferencia.toString().slice(0, 4), []);
     this.mesReferencia = new FormControl(fuprReferencia.toString().slice(4, 6), []);
-
   }
-
 
   /* inicializa valores do form
   * */
   initForm() {
-
     this.provisaoForm = this.fb.group({
       mesReferencia: this.mesReferencia,
       yearReferencia: this.yearReferencia,
       fuprReferencia: this.fb.control('', []),
-      fuprTotalGeral: this.fb.control('', [Validators.pattern(Constants.DECIMAL_PATTERN)]),
-      fuprHoraTotal: this.fb.control('', [Validators.pattern(Constants.NUMBER_PATTER)]),
-      fuprHoraHomem: this.fb.control({value: 0, disabled: true}, Validators.pattern(Constants.NUMBER_PATTER))
+      fuprBeneficios: this.fb.control('', [Validators.required]),
+      fuprEncargos: this.fb.control('', [Validators.required]),
+      fuprSalario: this.fb.control('', [Validators.required]),
+      fuprTotalGeral: this.fb.control('', [Validators.required]),
+      fuprHoraTotal: this.fb.control('', [Validators.required, Validators.max(Constants.HORAS_TRABALHADAS_PADRAO)]),
+      fuprHoraHomem: this.fb.control('', [Validators.required]),
     });
-
-
   }
 
 
-  upadateHomeHora() {
+  upadateFields() {
+    this.updateValorProvisao();
+    this.updateHomehora();
 
-    if (this.provisaoForm.get('fuprTotalGeral').valid && this.provisaoForm.get('fuprHoraTotal').valid) {
+  }
 
-      this.provisaoForm.get('fuprHoraHomem').setValue(+(this.provisaoForm.get('fuprTotalGeral').value / this.provisaoForm.get('fuprHoraTotal').value).toFixed(2));
+  updateHomehora() {
+    this.provisaoForm.get('fuprHoraHomem').setValue(+(
+      this.provisaoForm.get('fuprTotalGeral').value /
+      this.provisaoForm.get('fuprHoraTotal').value));
+  }
 
-    } else {
-      this.provisaoForm.get('fuprHoraHomem').setValue(0);
-    }
+  updateValorProvisao() {
+    this.provisaoForm.get('fuprTotalGeral').setValue(+(
+      this.provisaoForm.get('fuprSalario').value +
+      this.provisaoForm.get('fuprBeneficios').value +
+      this.provisaoForm.get('fuprEncargos').value));
   }
 
   /* retorna yyyymm
-  * */
+* */
   formatMesReferencia(): number {
 
     if (this.mesReferencia.value.toString().length === 0) {
@@ -146,33 +158,39 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
 
   /*
   * */
-  upadateProvisao(funcionarioProvisao: FuncionarioProvisao) {
+  upadateProvisao() {
 
-    funcionarioProvisao.fuprReferencia = this.formatMesReferencia();
-    funcionarioProvisao.fuprFuncId = new Funcionario();
-    funcionarioProvisao.fuprFuncId.funcId = this.funcId;
-    funcionarioProvisao.fuprId = this.fuprId;
-    funcionarioProvisao.fuprHoraHomem = this.provisaoForm.get('fuprHoraHomem').value;
+    if (this.provisaoForm.valid) {
+      const funcionarioProvisao = this.provisaoForm.value;
+      funcionarioProvisao.fuprReferencia = this.formatMesReferencia();
+      funcionarioProvisao.fuprFuncId = new Funcionario();
+      funcionarioProvisao.fuprFuncId.funcId = this.funcId;
+      funcionarioProvisao.fuprId = this.fuprId;
 
-    this.funcionarioProvisaoService.createFuncionarioProvisao(funcionarioProvisao)
-      .subscribe(() => this.notificationService.notify(`Provisão atualizada com sucesso`),
-        response => // HttpErrorResponse
-          this.notificationService.notify('Erro ao atualizar provisão'),
-        () => {
-          this.redirectFuncionarioDetail();
-        });
+      this.funcionarioProvisaoService.createFuncionarioProvisao(funcionarioProvisao)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => this.notificationService.notify(`Provisão atualizada com sucesso`),
+          response => // HttpErrorResponse
+            this.notificationService.notify('Erro ao atualizar provisão'),
+          () => {
+            this.redirectFuncionarioDetail();
+          });
+    } else {
+      this.notificationService.notify('Preencha o(s) campo(s) corretamente');
+      Utils.validateAllFormFields(this.provisaoForm);
+    }
   }
 
 
   deleteProvisao() {
     this.funcionarioProvisaoService.deleteProvisao(this.provisao)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.notificationService.notify(`Provisão removida com sucesso`),
         response => // HttpErrorResponse
           this.notificationService.notify('Erro ao remover provisão'),
         () => {
           this.redirectFuncionarioDetail();
         });
-
   }
 
   /* verifica se o estado do campo é valido caso seja tocado(alterado)
@@ -192,11 +210,11 @@ export class ProvisaoEditComponent implements OnInit, OnDestroy {
  * */
   configRouteBack() {
     const params: Params = {queryParams: {funcId: this.funcId}, skipLocationChange: true};
-
     this.toolbarService.setRouteBack('/funcionario-detail', params);
   }
 
   ngOnDestroy(): void {
-    this.paramsSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

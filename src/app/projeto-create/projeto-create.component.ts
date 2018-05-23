@@ -32,6 +32,8 @@ import {UploadService} from '../services/upload.service';
 import {Projeto} from '../models/projeto.model';
 import {AreapesquisaService} from '../services/areapesquisa.service';
 import {Areapesquisa} from '../models/areapesquisa.model';
+import {Enquadrabilidade} from '../models/enquadrabilidade.model';
+import {EnquadrabilidadeService} from '../services/enquadrabilidade.service';
 
 @Component({
   selector: 'app-projeto-create',
@@ -40,24 +42,27 @@ import {Areapesquisa} from '../models/areapesquisa.model';
 })
 export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('chipInput') chipInput: MatInput;
   @ViewChild('chipInputMembro') chipInputMembro: MatInput;
-  @ViewChild('chipInputArea') chipInputArea: MatInput;
+  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
+
   projetoForm: FormGroup;
-  projFuncId = new FormControl();
+
   projMembro = new FormControl();
   areasPesquisa: Areapesquisa[] = [];
+  enquadrabilidades: Enquadrabilidade[] = [];
   funcionarios: Funcionario[];
   membros: Funcionario[];
   tipoProjetos: Tipoprojeto[] = [];
-  chips: Tipoprojeto[] = [];
   chipsMembros: Funcionario[] = [];
-  chipsAreas: Areapesquisa[] = [];
   minDate: Date;
   validWhiteSpace = new noWhiteSpaceValidator();
-  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
+
   paramsSubscription: Subscription;
-  progressValue = 0;
+
+  enquadrabilidadeSelected = new FormControl('', [Validators.required]);
+  tiposSelected = new FormControl('', [Validators.required]);
+  areasSelected = new FormControl('', [Validators.required]);
+  projFuncId = new FormControl('', [Validators.required]);
 
   constructor(private fb: FormBuilder,
               private notificationService: NotificationService,
@@ -68,24 +73,44 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
               private projetoService: ProjetoService,
               private toolbarService: ToolbarService,
               private upService: UploadService,
-              private areapesquisaService: AreapesquisaService) {
+              private areapesquisaService: AreapesquisaService,
+              private enquadrabilidadeService: EnquadrabilidadeService) {
   }
 
   ngOnInit() {
     // manipula evento do botão salvar da barra de ferramentas
-    this.toolbarService.action$.subscribe(() => this.send());
+    this.toolbarService.action$.subscribe(() => this.onSubmit());
     this.configRouteBack();
     this.initForm();
     this.configureFormControlFuncionario();
     this.configureFormControlMembro();
     this.listAreapesquisa();
+    this.listTipos();
+    this.listEnquadrabilidade();
+  }
 
+  ngAfterViewInit() {
+    this.trigger.panelClosingActions.subscribe(
+      nameSearch => {
+        if (!nameSearch || !nameSearch.source) {
+          this.projetoForm.get('projFuncId').setValue(null);
+        }
+      }
+    );
+  }
+
+  listEnquadrabilidade() {
+    this.enquadrabilidadeService.listAllEnquadrabilidade().subscribe(
+      enquadrabilidades => this.enquadrabilidades = enquadrabilidades
+    );
+  }
+
+  listTipos() {
     this.tipoprojetoService.listAllTipos()
       .subscribe(tipoProjetos => this.tipoProjetos = tipoProjetos);
   }
 
   initForm() {
-    this.projFuncId = this.fb.control('', [Validators.required]);
     this.projetoForm = this.fb.group({
       projNome: this.fb.control('', [Validators.required, Validators.minLength(1),
         Validators.maxLength(80), this.validWhiteSpace.validWhiteSpace]),
@@ -94,6 +119,9 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       projFuncId: this.projFuncId,
       projTermoReferencia: this.fb.control('', [Validators.required]),
       anexo: this.fb.control('', [Validators.required]),
+      areas: this.areasSelected,
+      projTipo: this.tiposSelected,
+      projEnquadrabilidade: this.enquadrabilidadeSelected,
       projValor: this.fb.control('', [Validators.required])
     });
   }
@@ -141,17 +169,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       .subscribe(areas => this.areasPesquisa = areas);
   }
 
-
-  ngAfterViewInit() {
-    this.trigger.panelClosingActions.subscribe(
-      nameSearch => {
-        if (!nameSearch || !nameSearch.source) {
-          this.projetoForm.get('projFuncId').setValue(null);
-        }
-      }
-    );
-  }
-
   /* Verifica se o período é válido
 * */
   validaPrazo(event: MatDatepickerInputEvent<Date>) {
@@ -170,7 +187,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
   }
 
   getErrorMessageDate(field: string) {
-
     return this.projetoForm.get(field).hasError('required') ? 'Informe a data' :
       this.projetoForm.get(field).hasError('incorrect') ? 'Período inválido: data inicial maior que a data final' : this.projetoForm.get(field) ? 'Data inválida' :
         '';
@@ -180,56 +196,6 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     return funcionario ? funcionario.funcNome : undefined;
   }
 
-  displayTipo(tipoProjeto?: Tipoprojeto): string | undefined {
-    return tipoProjeto ? tipoProjeto.tiprNome : undefined;
-  }
-
-  displayArea(areaPesquisa?: Areapesquisa): string | undefined {
-    return areaPesquisa ? areaPesquisa.nome : undefined;
-  }
-
-  onSubmit() {
-    if (this.projetoForm.valid) {
-      const projeto: Projeto = this.projetoForm.value;
-      projeto.equipe = (this.chipsMembros);
-
-      projeto.projSiprId = new SituacaoProjeto(Constants.ATIVO);
-      projeto.projTipos = (this.chips);
-      projeto.projEmprId = new Empresa(1);
-
-      this.projetoService.createProjeto(projeto)
-        .subscribe(() => this.notificationService.notify(`Projeto criado com sucesso`),
-          response => // HttpErrorResponse
-            this.notificationService.notify('Erro ao criar projeto'),
-          () => {
-            this.router.navigate(['projetos']);
-          });
-    } else {
-      this.notificationService.notify('Preencha o formulário corretamente');
-      Utils.validateAllFormFields(this.projetoForm);
-    }
-  }
-
-
-  remove(chip: Tipoprojeto): void {
-    const index = this.chips.indexOf(chip);
-    if (index >= 0) {
-      this.chips.splice(index, 1);
-    }
-    this.chipInput['nativeElement'].blur();
-  }
-
-  /* Adiciona tipo do projeto selecionado */
-  addTiposProjeto(event: MatAutocompleteSelectedEvent): void {
-
-    const t: Tipoprojeto = event.option.value;
-
-    const valor = this.chips.filter((task) => task.tiprId === t.tiprId);
-    if (Object.keys(valor).length === 0) {
-      this.chips.push(t);
-    }
-    this.chipInput['nativeElement'].blur();
-  }
 
   /*adiciona funcionário a atividade a ser criada se ainda não foi adicionado */
   addMembro(event: MatAutocompleteSelectedEvent): void {
@@ -243,7 +209,10 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
       t.funcNome = nomes[0] + ' ' + nomes[nomes.length - 1];
       this.chipsMembros.push(t);
     }
+    this.chipInputMembro['nativeElement'].value = '';
     this.chipInputMembro['nativeElement'].blur();
+    this.chipInputMembro['nativeElement'].focus();
+
   }
 
   removeMembro(chip: Funcionario): void {
@@ -254,52 +223,54 @@ export class ProjetoCreateComponent implements OnInit, AfterViewInit, OnDestroy 
     this.chipInputMembro['nativeElement'].blur();
   }
 
-  /*adiciona area selecionada */
-  addArea(event: MatAutocompleteSelectedEvent): void {
-    const t: Areapesquisa = event.option.value;
-    const areaResult = this.chipsAreas.filter((area) => area.codigo === t.codigo);
-    if (Object.keys(areaResult).length === 0) {
-      this.chipsAreas.push(t);
-    }
-    this.chipInputArea['nativeElement'].blur();
-  }
-
-  removeArea(chipArea: Areapesquisa): void {
-    const index = this.chipsAreas.indexOf(chipArea);
-    if (index >= 0) {
-      this.chipsAreas.splice(index, 1);
-    }
-    this.chipInputArea['nativeElement'].blur();
-  }
-
 
   configRouteBack() {
     this.toolbarService.setRouteBack('/projetos');
   }
 
-  send() {
-    console.log('olá');
+  onSubmit() {
+    if (this.projetoForm.valid) {
+      const projeto: Projeto = this.projetoForm.value;
+      projeto.equipe = (this.chipsMembros);
+      projeto.anexo = null;
 
-    const files = this.projetoForm.get('anexo').value;
-    console.log('valor' + files[0]);
-    if (files && files[0]) {
+      projeto.projSiprId = new SituacaoProjeto(Constants.COD_ATIVO);
+      projeto.projEmprId = new Empresa(1);
 
-      const formData = new FormData();
-      formData.append('file', files[0]);
+      console.log('JSON Projeto' + JSON.stringify(projeto));
 
-      this.upService.upload(formData, 2056).subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          // This is an upload progress event. Compute and show the % done:
-          this.progressValue = Math.round(100 * event.loaded / event.total);
-          console.log(`File is ${this.progressValue}% uploaded.`);
-
-        } else if (event instanceof HttpResponse) {
-          console.log('File is completely uploaded!');
-        }
-      });
+      this.projetoService.createProjeto(projeto)
+        .subscribe((projetoCreate) => {
+            if (this.uploadArquivo(projetoCreate.projId)) {
+              this.notificationService.notify(`Projeto criado com sucesso`);
+            } else {
+              this.notificationService.notify(`Erro ao anexar arquivo`);
+            }
+          },
+          response => // HttpErrorResponse
+            this.notificationService.notify('Erro ao criar projeto'),
+          () => {
+            this.router.navigate(['projetos']);
+          });
     } else {
-      console.log('vazio');
+      this.notificationService.notify('Preencha o formulário corretamente');
+      Utils.validateAllFormFields(this.projetoForm);
     }
+  }
+
+  uploadArquivo(projId: number): boolean {
+
+    let result = false;
+    const files = this.projetoForm.get('anexo').value;
+    const formData = new FormData();
+    formData.append('file', files[0]);
+
+    this.upService.uploadTermo(formData, projId).subscribe(event =>
+        result = true,
+      response => // HttpErrorResponse
+        console.log(response)
+    );
+    return result;
   }
 
 

@@ -82,8 +82,8 @@ import {LoginLayoutComponent} from './layouts/login-layout.component';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
 import {ProjetoEditComponent} from './projeto-edit/projeto-edit.component';
 import {InputFileDirective} from './directive/input-file.directive';
-import {InputFileComponent} from './shared/file/input-file/input-file.component';
 import {AreapesquisaService} from './services/areapesquisa.service';
+import {EnquadrabilidadeService} from './services/enquadrabilidade.service';
 
 @NgModule({
   declarations: [
@@ -127,7 +127,6 @@ import {AreapesquisaService} from './services/areapesquisa.service';
     CustomDatepickerComponent,
     ProjetoEditComponent,
     InputFileDirective,
-    InputFileComponent,
   ],
   imports: [
     CommonModule,
@@ -165,6 +164,7 @@ import {AreapesquisaService} from './services/areapesquisa.service';
     ToolbarService,
     UploadService,
     AreapesquisaService,
+    EnquadrabilidadeService,
   ],
   bootstrap: [AppComponent]
 })

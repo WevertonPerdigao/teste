@@ -9,7 +9,7 @@ export class UploadService {
   constructor(private http: HttpClient) {
   }
 
-  upload(data: FormData, codigo: number): Observable<any> {
+  uploadTermo(data: FormData, codigo: number): Observable<any> {
 
     const params = new HttpParams().set('codigo', codigo.toString());
 

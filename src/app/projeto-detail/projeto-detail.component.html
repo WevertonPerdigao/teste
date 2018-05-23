@@ -1,62 +1,63 @@
-<mat-tab-group (selectedTabChange)="onLinkClick($event)" [selectedIndex]="indexTab">
+<div style="scroll:auto;">
+  <mat-tab-group (selectedTabChange)="onLinkClick($event)" [selectedIndex]="indexTab">
 
-  <mat-tab label="INFORMAÇÕES GERAIS">
-    <div class="flex-end">
-      <a (click)="redirectAlterProjeto()" mat-button>EDITAR PROJETO</a>
+    <mat-tab label="INFORMAÇÕES GERAIS">
+      <div class="flex-end">
+        <a (click)="redirectAlterProjeto()" mat-button>EDITAR PROJETO</a>
 
-    </div>
+      </div>
 
-    <div class="flex">
-      <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
-                              [diasEmUso]="qtdDiasUtilizados" [percCronograma]="projeto.cronograma">
-      </app-projeto-cronograma>
+      <div class="flex">
+        <app-projeto-cronograma [projeto]="projeto" [diasProjeto]="qtdDiasProjeto"
+                                [diasEmUso]="qtdDiasUtilizados" [percCronograma]="projeto.cronograma">
+        </app-projeto-cronograma>
 
-      <app-projeto-orcamento [custoTotal]="projeto.custo"
-                             [valorTotal]="projeto.projValor">
+        <app-projeto-orcamento [custoTotal]="projeto.custo"
+                               [valorTotal]="projeto.projValor">
 
-      </app-projeto-orcamento>
-      <app-projeto-contatos [responsavel]="projeto.projFuncId"
-                            [tipos]="projeto.projTipos">
+        </app-projeto-orcamento>
+        <app-projeto-contatos [responsavel]="projeto.projFuncId"
+                              [areas]="projeto.areas">
 
-      </app-projeto-contatos>
-      <app-projeto-equipe [equipe]="projeto.equipe"></app-projeto-equipe>
-      <app-justificativa></app-justificativa>
-      <app-escopo></app-escopo>
+        </app-projeto-contatos>
+        <app-projeto-equipe [equipe]="projeto.equipe"></app-projeto-equipe>
+        <app-justificativa></app-justificativa>
+        <app-escopo></app-escopo>
 
-    </div>
-  </mat-tab>
-  <mat-tab label="ORÇAMENTOS">
-    <div class="flex-end">
-      <a (click)="goToDispendioCreate()" mat-button>SOLICITAR DISPÊNDIO</a>
+      </div>
+    </mat-tab>
+    <mat-tab label="ORÇAMENTOS">
+      <div class="flex-end">
+        <a (click)="goToDispendioCreate()" mat-button>SOLICITAR DISPÊNDIO</a>
 
-    </div>
-    <div class="flex">
-      <app-orcamento-slider [custoTotal]="projeto.custo"
-                            [valorTotal]="projeto.projValor"
-                            [percOrcamento]="((projeto.custo *100)/projeto.projValor)>100?100:((projeto.custo *100)/projeto.projValor).toFixed(0)">
-      </app-orcamento-slider>
+      </div>
+      <div class="flex">
+        <app-orcamento-slider [custoTotal]="projeto.custo"
+                              [valorTotal]="projeto.projValor"
+                              [percOrcamento]="((projeto.custo *100)/projeto.projValor)>100?100:((projeto.custo *100)/projeto.projValor).toFixed(0)">
+        </app-orcamento-slider>
 
-      <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor" [projId]="projeto.projId">
-      </app-resumo-dispendios>
+        <app-resumo-dispendios [tiposDispendiosValor]="tiposDispendiosValor" [projId]="projeto.projId">
+        </app-resumo-dispendios>
 
-      <app-solicitacoes *ngIf="this.loginService.getFuncionario().funcAprovador"
-                        [dispendiosPendentes]="dispendiosPendentes" [projId]="projeto.projId"></app-solicitacoes>
-    </div>
-  </mat-tab>
+        <app-solicitacoes *ngIf="this.loginService.getFuncionario().funcAprovador"
+                          [dispendiosPendentes]="dispendiosPendentes" [projId]="projeto.projId"></app-solicitacoes>
+      </div>
+    </mat-tab>
 
-  <mat-tab label="ATIVIDADES">
-    <app-projeto-atividades [atividades]="projeto.atividades"
-                            [projId]="projeto.projId"></app-projeto-atividades>
+    <mat-tab label="ATIVIDADES">
+      <app-projeto-atividades [atividades]="projeto.atividades"
+                              [projId]="projeto.projId"></app-projeto-atividades>
 
-  </mat-tab>
+    </mat-tab>
 
-  <mat-tab label="RELATÓRIOS" [disabled]="true">
-    <div class="demo-tab-content">
-    </div>
-  </mat-tab>
+    <mat-tab label="RELATÓRIOS" [disabled]="true">
+      <div class="demo-tab-content">
+      </div>
+    </mat-tab>
 
 
-</mat-tab-group>
-
+  </mat-tab-group>
+</div>
 
 

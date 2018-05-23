@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FuncionarioProvisao} from '../models/funcionarioprovisao.model';
-import {Subscription} from 'rxjs/Subscription';
 import {FuncionarioProvisaoService} from '../services/funcionarioprovisao.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Observable} from 'rxjs/Observable';
@@ -9,6 +8,9 @@ import {Utils} from '../utils/utils';
 import {Month} from '../models/mes.model';
 import {FuncionarioService} from '../services/funcionario.service';
 import {ToolbarService} from '../services/toolbar.service';
+import {takeUntil} from 'rxjs/operators';
+import {NotificationService} from '../services/notification.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-funcionario-detail',
@@ -18,40 +20,45 @@ import {ToolbarService} from '../services/toolbar.service';
 export class FuncionarioDetailComponent implements OnInit, OnDestroy {
 
 
-  listProvisao$: Observable<FuncionarioProvisao[]>;
-  paramsSubscription: Subscription;
+  listProvisao: FuncionarioProvisao[] = [];
   funcId;
+  private unsubscribe$ = new Subject();
 
 
   constructor(private funcionarioProvisaoService: FuncionarioProvisaoService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private funcionarioService: FuncionarioService,
-              private toolbarService: ToolbarService) {
+              private toolbarService: ToolbarService,
+              private notificationService: NotificationService) {
   }
 
   ngOnInit() {
     this.configRouteBack();
-    this.paramsSubscription = this.activatedRoute.queryParams.subscribe(params => {
-      this.funcId = params['funcId'];
-    });
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(params => {
+        this.funcId = params['funcId'];
+      });
 
     this.funcionarioService.findFuncionarioById(this.funcId)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(funcionario => this.toolbarService.setValorToolbar(funcionario.funcNome));
 
-    this.listProvisao$ = this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId);
+
+    this.funcionarioProvisaoService.listProvisaoByFuncId(this.funcId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(provisoes => this.listProvisao = provisoes);
   }
 
   /*
   * @param yyyyMM
    */
   getMesByReferencia(mesRef: number): String {
-
     const mes = mesRef.toString().slice(4, 6).replace('0', '');
     return Utils.getMesByReferencia(+mes);
 
   }
-
 
   /*Redireciona para tela de lista de funcionários
   * */
@@ -74,8 +81,21 @@ export class FuncionarioDetailComponent implements OnInit, OnDestroy {
       {queryParams: {fuprId: fuprId, funcId: this.funcId}, skipLocationChange: true});
   }
 
+  deleteProvisao(funcionarioProvisao: FuncionarioProvisao) {
+    this.funcionarioProvisaoService.deleteProvisao(funcionarioProvisao)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+          this.listProvisao.splice(this.listProvisao.indexOf(funcionarioProvisao), 1);
+          this.notificationService.notify(`Provisão removida com sucesso`);
+        },
+        response => // HttpErrorResponse
+          this.notificationService.notify('Erro ao remover provisão'));
+  }
+
+
   ngOnDestroy(): void {
-    this.paramsSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   configRouteBack() {

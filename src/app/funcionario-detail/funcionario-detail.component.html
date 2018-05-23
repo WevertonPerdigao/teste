@@ -4,15 +4,15 @@
 
 <div class="content-funcionario-detail">
 
-  <mat-card *ngFor="let funcProvisao of listProvisao$ | async">
+  <mat-card *ngFor="let funcProvisao of listProvisao ">
     <mat-card-title>
-      <span class="title-mes">{{getMesByReferencia(funcProvisao.fuprReferencia)}}</span>
+      <span class="title-mes">{{getMesByReferencia(funcProvisao.fuprReferencia)}} de {{funcProvisao.fuprReferencia.toString().slice(0,4)}}</span>
     </mat-card-title>
 
     <mat-card-content>
 
       <p class="label-subtitle">Provisão total</p>
-      <span class="subtitle-card">R$ {{funcProvisao.fuprTotalGeral}}</span>
+      <span class="subtitle-card">{{funcProvisao.fuprTotalGeral | currency: 'BRL'}}</span>
 
       <mat-divider></mat-divider>
 
@@ -20,7 +20,7 @@
 
         <a mat-button (click)="redirectProvisaoEdit(funcProvisao.fuprId)">EDITAR</a>
 
-        <a mat-button routerLink=".">EXCLUIR</a>
+        <a mat-button (click)="deleteProvisao(funcProvisao)">EXCLUIR</a>
 
       </div>
 

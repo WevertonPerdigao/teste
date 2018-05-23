@@ -12,8 +12,7 @@
               <mat-input-container class="full-width-input">
                 <mat-select placeholder="Mês de referência"
                             [formControl]="mesReferencia"
-                            (change)="verificaProvisao($event)"
-                            required>
+                            (change)="verificaProvisao($event)">
                   <mat-option *ngFor="let mes of listMeses" [value]="mes?.ref">
                     {{mes.name}}
                   </mat-option>
@@ -29,8 +28,8 @@
             <td>
               <mat-input-container class="full-width-input">
                 <mat-select placeholder="Ano de referência"
-                            [formControl]="yearReferencia" (change)="verificaProvisao($event)"
-                            [errorStateMatcher]="errorMatcher" required>
+                            [formControl]="yearReferencia"
+                            (change)="verificaProvisao($event)">
                   <mat-option *ngFor="let year of listYears" [value]="year">
                     {{year}}
                   </mat-option>
@@ -42,34 +41,73 @@
             </td>
           </tr>
         </table>
+        <div class="space"></div>
+        <mat-divider></mat-divider>
+        <div class="space"></div>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Provisões" class="valor-provisao"
-                 formControlName="fuprTotalGeral" required
+          <input matInput placeholder="Benefícios"
+                 formControlName="fuprBeneficios"
                  currencyMask
-                 [options]="{ prefix: '', thousands: '.', decimal: ',' }"
-                 (change)="upadateHomeHora()">
-          <mat-error *ngIf="isFieldInvalid('fuprTotalGeral')">
-            Informe o valor da provisão
+                 [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false,align:'left'}"
+                 (keyup)="upadateFields()">
+          <mat-error>
+            Informe o valor dos benefícios
           </mat-error>
         </mat-input-container>
 
         <mat-input-container class="full-width-input">
-          <input matInput placeholder="Horas trabalhadas" required (change)="upadateHomeHora()"
-                 formControlName="fuprHoraTotal">
-          <mat-error *ngIf="isFieldInvalid('fuprHoraTotal')">
-            Informe as quantidade de horas trabalhadas
+          <input matInput placeholder="Encargos" class="left"
+                 formControlName="fuprEncargos"
+                 currencyMask
+                 [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false,align:'left'}"
+                 (keyup)="upadateFields()">
+          <mat-error>
+            Informe o valor dos encargos
           </mat-error>
         </mat-input-container>
 
-        <mat-divider style="margin-top:30px"></mat-divider>
-
-        <mat-input-container class="full-width-input" style="margin-top:60px">
-          <span matPrefix class="valor-provisao">R$&nbsp;</span>
-          <input class="valor-provisao" matInput
-                 formControlName="fuprHoraHomem" placeholder="Homem hora">
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Salário"
+                 formControlName="fuprSalario"
+                 currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false,align:'left'}"
+                 (keyup)="upadateFields()">
+          <mat-error>
+            Informe o salário
+          </mat-error>
         </mat-input-container>
 
+        <mat-input-container class="full-width-input">
+          <input matInput placeholder="Horas trabalhadas"
+                 formControlName="fuprHoraTotal"
+                 (keyup)="upadateFields()">
+          <mat-error *ngIf="provisaoForm.get('fuprHoraTotal').hasError('required')">
+            Informe a quantidade de horas trabalhadas
+          </mat-error>
+          <mat-error *ngIf="provisaoForm.get('fuprHoraTotal').hasError('max')">
+            valor não permitido.( máx = 176 horas)
+          </mat-error>
+        </mat-input-container>
+
+        <mat-divider></mat-divider>
+
+        <div class="space"></div>
+
+        <div class="full-width-input">
+          <mat-label class="label-form">Homem/hora</mat-label>
+          <br>
+          <span matPrefix class="valor-provisao">
+            {{provisaoForm.get('fuprHoraHomem').value | currency: 'BRL'}}
+          </span>
+        </div>
+        <div class="space"></div>
+        <div class="full-width-input">
+          <mat-label class="label-form">Provisões</mat-label>
+          <br>
+          <span matPrefix class="valor-provisao">
+           {{provisaoForm.get('fuprTotalGeral').value | currency: 'BRL'}}
+          </span>
+        </div>
       </form>
 
     </mat-card-content>
@@ -81,10 +119,6 @@
           <span>EXCLUIR FOLHA</span>
         </button>
 
-        <button mat-raised-button color="primary" (click)="upadateProvisao(provisaoForm.value)"
-                type="submit" [disabled]="provisaoForm.invalid">
-          SALVAR
-        </button>
       </div>
     </mat-card-actions>
     <mat-card-footer>

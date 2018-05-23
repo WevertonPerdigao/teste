@@ -19,6 +19,7 @@ export class FuncionarioProvisaoService {
   }
 
   findProvisaoByFuprId(fuprId: number): Observable<FuncionarioProvisao> {
+    console.log('código' + fuprId);
     const httpParam = new HttpParams().set('codigo', fuprId.toString());
     return this.http.get<FuncionarioProvisao>(`${GPITBAM_API}/funcionarios/provisao/get`, {params: httpParam});
   }

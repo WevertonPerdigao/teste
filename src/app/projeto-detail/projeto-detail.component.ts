@@ -11,13 +11,11 @@ import {Tipodispendio} from '../models/tipodispendio.model';
 import {Observable} from 'rxjs/Observable';
 import {ProjetoDispendio} from '../models/projetodispendio.model';
 import {LoginService} from '../services/login.service';
-import {Funcionario} from '../models/funcionario.model';
 import {Constants} from '../utils/constants';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/switchMap';
 import {ToolbarService} from '../services/toolbar.service';
 import {Title} from '@angular/platform-browser';
-import {ResumoDispendiosComponent} from './orcamentos/resumo-dispendios/resumo-dispendios.component';
 
 @Component({
   selector: 'app-projeto-detail',

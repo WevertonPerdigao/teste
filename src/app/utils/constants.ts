@@ -1,12 +1,14 @@
 export class Constants {
 
-  static readonly ATIVO = 1;
+  static readonly COD_ATIVO = 1;
 
-  static readonly INATIVO = 2;
+  static readonly COD_INATIVO = 2;
 
   static readonly EM_ANDAMENTO = 3;
 
-  static readonly CONCLUIDO = 4;
+  static readonly COD_CONCLUIDO = 4;
+
+  static readonly INATIVO = 'INATIVO';
 
   static readonly APROVADO = 'APROVADO';
 
@@ -22,11 +24,12 @@ export class Constants {
 
   static readonly TAB_GERAL = 0;
 
-
   static readonly TAB_ORCAMENTOS = 1;
 
   static readonly TAB_ATIVIDADES = 2;
 
+
+  static readonly HORAS_TRABALHADAS_PADRAO = 176;
 
   // static readonly DATE_PATTERN = /^(((((((0?[13578])|(1[02]))[\.\-/]?((0?[1-9])|([12]\d)|(3[01])))|(((0?[469])|(11))[\.\-/]?((0?[1-9])|([12]\d)|(30)))|((0?2)[\.\-/]?((0?[1-9])|(1\d)|(2[0-8]))))[\.\-/]?((\d{2})?([\d][\d]))))|((0?2)[\.\-/]?(29)[\.\-/]?(((19)|(20))?(([02468][048])|([13579][26])))))$/;
 

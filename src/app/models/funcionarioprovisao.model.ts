@@ -8,6 +8,9 @@ export class FuncionarioProvisao {
   fuprReferencia: number;
   fuprTipoFuncionario: string;
   fuprTotalGeral?: number;
+  fuprBeneficios: number;
+  fuprEncargos: number;
+  fuprSalario: number;
 
   constructor() {
   }

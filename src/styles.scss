@@ -105,6 +105,26 @@ html {
   text-align: left !important;
 }
 
+.mat-pseudo-checkbox {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+.mat-pseudo-checkbox-checked::after {
+  width: 8px !important;
+  height: 3px !important;
+}
+
+.mat-form-field {
+  font-size: 16px !important;
+}
+
+.label-form {
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(76, 175, 80, 1);
+}
+
 //.ng-valid[required], .ng-valid.required  {
 //  border-left: 5px solid #42A948; /* green */
 //}

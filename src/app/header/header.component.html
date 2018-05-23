@@ -21,12 +21,10 @@
       <!-- This fills the remaining space of the current row -->
       <span class="example-fill-remaining-space"></span>
 
-
-      <form id="form-search-header" class="search-hearder" *ngIf="boSearch">
+     <form id="form-search-header" class="search-hearder" *ngIf="boSearch">
         <mat-form-field>
           <input id="in-search-header" #inSearch class="in-search"
                  placeholder="" matInput>
-
         </mat-form-field>
         <button id="btn-search-header" mat-button class="btn-search"
                 (keyup.enter)="search(inSearch.value)"
@@ -37,12 +35,8 @@
       <button id="btn-update" #btnupdate mat-button class="btn-search" (keyup.enter)="actionUpdate()"
               (click)="actionUpdate()"
               *ngIf="boUpdate || boCreate">{{boCreate?'CRIAR':'SALVAR'}}
-
       </button>
-
     </mat-toolbar-row>
-
-
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container"

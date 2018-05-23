@@ -16,8 +16,7 @@
 
         <mat-input-container class="full-width-input">
           <mat-select placeholder="Tipo de dispêndio"
-                      formControlName="prdiTidiId" required
-                      [errorStateMatcher]="errorMatcher">
+                      formControlName="prdiTidiId" required>
             <mat-option *ngFor="let tipodispendio of tiposdispendios" [value]="tipodispendio" class="options">
               {{ tipodispendio.tidiNome }}
             </mat-option>

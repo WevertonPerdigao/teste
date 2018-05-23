@@ -3,6 +3,9 @@
   <mat-card class="card-projeto">
     <mat-card-content>
       <form id="form-create-projeto" [formGroup]="projetoForm">
+        <input #anexo id="in-anexo" placeholder="Anexo" type="file" class="mat-input-element" readonly
+               formControlName="anexo" required hidden>
+
         <mat-form-field class="full-width-input">
           <input id="in-nro-termo" matInput placeholder="Termo Aditivo nº"
                  type="text" formControlName="projTermoReferencia" required>
@@ -13,27 +16,13 @@
         </mat-form-field>
 
         <mat-form-field class="full-width-input">
-          <app-input-file formControlName="anexo" placeholder="Anexo"></app-input-file>
+          <!--  <app-input-file formControlName="anexo" placeholder="Anexo"></app-input-file> !-->
+          <input matInput value="{{anexo.files[0]?anexo.files[0].name:''}}" placeholder="Anexo"
+                 (click)="anexo.click()" readonly>
           <mat-icon matSuffix>attach_file</mat-icon>
-          <mat-hint>{{progressValue}}</mat-hint>
-
-          <mat-error>
-            Informe o anexo
-          </mat-error>
+          <mat-error>Informe o anexo</mat-error>
         </mat-form-field>
-        <!--
 
-                <button mat-icon-button
-                        (click)="imgFileInput.click()">
-                  <mat-icon matSuffix>attach_file</mat-icon>
-                  <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
-                </button>
-
-                <div>
-                  <input id="in-anexo" placeholder="Anexo" type="file"
-                         formControlName="anexo" required hidden>
-                  <mat-icon matSuffix>attach_file</mat-icon>
-                </div>  !-->
 
         <mat-form-field class="full-width-input" hintLabel="Max 80 caracteres">
           <input id="in-nome" matInput placeholder="Título"
@@ -95,46 +84,28 @@
         </mat-input-container>
 
         <mat-form-field id="mff-area" class="full-width-input">
-          <mat-chip-list id="mcl-area" #chipListArea>
-            <mat-chip *ngFor="let chipArea of chipsAreas" (remove)="removeArea(chipArea)">
-              {{chipArea.nome}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input id="in-area" [matChipInputFor]="chipListArea" placeholder="Área do projeto"
-                   [matChipInputAddOnBlur]="false"
-                   [matAutocomplete]="autoArea"
-                   #chipInputArea>
-          </mat-chip-list>
-
-          <mat-autocomplete #autoArea="matAutocomplete"
-                            [displayWith]="displayArea" (optionSelected)="addArea($event)">
-            <mat-option *ngFor="let area of areasPesquisa" [value]="area" class="options">
-              <span>{{ area.nome }}</span>
-            </mat-option>
-          </mat-autocomplete>
+          <mat-select placeholder="Área do Projeto" [formControl]="areasSelected" multiple required>
+            <mat-option *ngFor="let area of areasPesquisa" [value]="area">{{area.nome}}</mat-option>
+          </mat-select>
+          <mat-error>Informe a(s) área(s)</mat-error>
         </mat-form-field>
 
 
-        <mat-input-container class="full-width-input">
-          <mat-chip-list #chipList>
-            <mat-chip *ngFor="let tag of chips" (remove)="remove(tag)">
-              {{tag.tiprNome}}
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-            <input id="in-tipo" [matChipInputFor]="chipList" placeholder="Tipo de Projeto"
-                   [matChipInputAddOnBlur]="false"
-                   [matAutocomplete]="autoTipos"
-                   #chipInput>
-          </mat-chip-list>
+        <mat-form-field id="mff-tipo" class="full-width-input">
+          <mat-select placeholder="Tipo de Projeto" [formControl]="tiposSelected" required>
+            <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo">{{tipo.tiprNome}}</mat-option>
+          </mat-select>
+          <mat-error>Informe o tipo</mat-error>
+        </mat-form-field>
 
-          <mat-autocomplete #autoTipos="matAutocomplete"
-                            [displayWith]="displayTipo" (optionSelected)="addTiposProjeto($event)">
-            <mat-option *ngFor="let tipo of tipoProjetos" [value]="tipo" class="options">
-              <span>{{ tipo.tiprNome }}</span>
+        <mat-form-field id="mff-enquadrabilidade" class="full-width-input">
+          <mat-select placeholder="Enquadrabilidade" [formControl]="enquadrabilidadeSelected" multiple required>
+            <mat-option *ngFor="let enquadrabilidade of enquadrabilidades" [value]="enquadrabilidade">
+              {{enquadrabilidade.titulo}}
             </mat-option>
-          </mat-autocomplete>
-        </mat-input-container>
-
+          </mat-select>
+          <mat-error>Informe a enquadrabilidade</mat-error>
+        </mat-form-field>
 
         <mat-input-container class="full-width-input">
           <mat-chip-list #chipListMembro>

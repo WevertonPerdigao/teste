@@ -2,11 +2,10 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {LoginService} from '../services/login.service';
-import {MatButton, MatInput, MatSidenav} from '@angular/material';
+import {MatButton, MatSidenav} from '@angular/material';
 import {SidenavService} from '../services/sidenav.service';
 import {ToolbarService} from '../services/toolbar.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {Location} from '@angular/common';
 import {Title} from '@angular/platform-browser';
 
 @Component({

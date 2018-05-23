@@ -104,10 +104,4 @@ export class Utils {
 
     return mes;
   }
-
-  public static routersStandards(): string[] {
-    return [
-      'projetos',
-      'usuarios'];
-  }
 }
